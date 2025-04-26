@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/window.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/request.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/requests/auth/auth.api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/requests/file/file.api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/assets/images/S" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/TEST.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/url.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/url.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/enums/InputEnum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/InputEnum.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/enums/Role.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/Role.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/errors/NotFound.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/NotFound.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/errors/NotFound.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/NotFound.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/helpers/GenerateBreadCrumbs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/GenerateBreadCrumbs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/hooks/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layouts/HomeLayout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/locale/uz.locale.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/locale/uz.locale.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/Home.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/store/auth/authSlice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/store/language/languageSlice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/store/store.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/styles/TEST.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/TEST.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/types/ApiResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/ApiResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/utils/TEST.css" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mirmaxsudov&quot;
+  }
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="abdurahmon" />
+                    <option name="lastUsedInstant" value="1745604130" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1745604129" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mirmaxsudov/ResumeBuilderFrontend.git&quot;,
+    &quot;accountId&quot;: &quot;dabf5e30-91f7-4072-998a-198a2050bfed&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2wEPDJMHQjGHwoY8cSLt4pBZswZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "abdurahmon",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Abdurahmon/G19 face/Projects/Resume Builder/resume_builder/src/app/(dashboard)/dashboard",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Abdurahmon\\G19 face\\Projects\\Resume Builder\\resume_builder\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(dashboard)\dashboard" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\components\dashboard" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\utils" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\hooks" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\public\assets\images\home" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(dashboard)\app" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\components\home" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\@Resume\components" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\@Resume" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="" />
+      <created>1745603638752</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745603638752</updated>
+      <workItem from="1745603640319" duration="1992000" />
+      <workItem from="1745685849020" duration="4163000" />
+      <workItem from="1745690090049" duration="4804000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/(auth)/login/page.tsx</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
