@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronDown, ChevronUp, CheckCircle, Clock, ChevronRight } from "lucide-react"
-import Image from "next/image"
+import { useState } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  CheckCircle,
+  Clock,
+  ChevronRight,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function OnboardingSteps() {
-  const [expandedStep, setExpandedStep] = useState(0)
+  const [expandedStep, setExpandedStep] = useState(0);
 
   const toggleStep = (index: number) => {
-    setExpandedStep(expandedStep === index ? -1 : index)
-  }
+    setExpandedStep(expandedStep === index ? -1 : index);
+  };
 
   return (
     <div className="space-y-4 mb-10">
@@ -23,7 +29,11 @@ export default function OnboardingSteps() {
             <CheckCircle className="text-blue-500" size={20} />
             <span className="font-medium">Create your first resume</span>
           </div>
-          {expandedStep === 0 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {expandedStep === 0 ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
         </div>
 
         {expandedStep === 0 && (
@@ -31,8 +41,9 @@ export default function OnboardingSteps() {
             <div className="flex items-start">
               <div className="flex-1">
                 <p className="text-gray-600 mb-2">
-                  Create or edit resumes with our easy-to-use builder, 20+ templates and advanced AI capabilities for
-                  customization and job-specific tailoring.
+                  Create or edit resumes with our easy-to-use builder, 20+
+                  templates and advanced AI capabilities for customization and
+                  job-specific tailoring.
                 </p>
               </div>
               <div className="ml-4 flex items-center">
@@ -61,42 +72,67 @@ export default function OnboardingSteps() {
 
       {/* Step 2 - Activate Auto Apply */}
       <div className="border rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md">
-        <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => toggleStep(1)}>
+        <div
+          className="flex items-center justify-between p-4 cursor-pointer"
+          onClick={() => toggleStep(1)}
+        >
           <div className="flex items-center space-x-3">
             <CheckCircle className="text-gray-300" size={20} />
             <span className="font-medium">Activate Auto Apply</span>
           </div>
-          {expandedStep === 1 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {expandedStep === 1 ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
         </div>
       </div>
 
       {/* Step 3 - Explore Job Recommendations */}
       <div className="border rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md">
-        <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => toggleStep(2)}>
+        <div
+          className="flex items-center justify-between p-4 cursor-pointer"
+          onClick={() => toggleStep(2)}
+        >
           <div className="flex items-center space-x-3">
             <CheckCircle className="text-gray-300" size={20} />
-            <span className="font-medium">Explore your personalized job recommendations</span>
+            <span className="font-medium">
+              Explore your personalized job recommendations
+            </span>
           </div>
-          {expandedStep === 2 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {expandedStep === 2 ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
         </div>
       </div>
 
       {/* Step 4 - Complete Assessment */}
       <div className="border rounded-xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md">
-        <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => toggleStep(3)}>
+        <div
+          className="flex items-center justify-between p-4 cursor-pointer"
+          onClick={() => toggleStep(3)}
+        >
           <div className="flex items-center space-x-3">
             <CheckCircle className="text-gray-300" size={20} />
-            <span className="font-medium">Complete your career growth assessment</span>
+            <span className="font-medium">
+              Complete your career growth assessment
+            </span>
           </div>
           <div className="flex items-center">
             <div className="flex items-center mr-4 text-gray-500 text-sm">
               <Clock size={16} className="mr-1" />
               <span>15 min • 11 questions</span>
             </div>
-            {expandedStep === 3 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            {expandedStep === 3 ? (
+              <ChevronUp size={20} />
+            ) : (
+              <ChevronDown size={20} />
+            )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
