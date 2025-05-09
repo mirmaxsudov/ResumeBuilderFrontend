@@ -1,16 +1,21 @@
-import { ChevronRight, MapPin, Bookmark } from "lucide-react"
+import { ChevronRight, MapPin, Bookmark } from "lucide-react";
 
 interface RecommendedJobsProps {
-  hideTitle?: boolean
+  hideTitle?: boolean;
 }
 
-export default function RecommendedJobs({ hideTitle = false }: RecommendedJobsProps) {
+export default function RecommendedJobs({
+  hideTitle = false,
+}: RecommendedJobsProps) {
   return (
     <div className="mb-10">
       {!hideTitle && (
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-800">Recommended Jobs</h2>
-          <a href="#" className="text-blue-600 flex items-center hover:underline">
+          <a
+            href="#"
+            className="text-blue-600 flex items-center hover:underline"
+          >
             See all <ChevronRight size={16} />
           </a>
         </div>
@@ -87,5 +92,5 @@ export default function RecommendedJobs({ hideTitle = false }: RecommendedJobsPr
         </div>
       </div>
     </div>
-  )
+  );
 }
