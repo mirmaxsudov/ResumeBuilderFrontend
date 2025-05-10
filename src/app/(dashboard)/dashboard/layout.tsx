@@ -1,11 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Link from "next/link";
 import { UserCircle, Bell } from "lucide-react";
 import { Button } from "@/components/dashboard/ui/button";
 import Sidebar from "@/components/dashboard/sidebar";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
