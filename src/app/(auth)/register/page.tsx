@@ -11,6 +11,7 @@ import validateEmail from "@/helpers/validateEmail";
 import validatePassword from "@/helpers/validatePassword";
 import VerificationCode from "@/components/auth/register/VerificationCode";
 import { registerWithGoogle, registerWithGithub } from "@/helpers/registerWithGoogle";
+import { register, resendCode, verifyEmail } from "@/api/requests/auth/email/email.auth.api";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -20,6 +21,11 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { showMessage, contextHolder } = useMyNotice();
+  const [resendData, setResendData] = useState<any>({
+    message: "",
+    loading: false
+  });
+
 
   const handleSubmit = async (values: any) => {
     try {
@@ -34,9 +40,7 @@ const RegisterPage = () => {
         }
 
         setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        showMessage("Verification code sent to your email!", NoticeEnum.SUCCESS);
-        setIsVerificationSent(true);
+        await sendVerificationCode();
       } else {
         if (verificationCode.length !== 6) {
           showMessage("Please enter the complete verification code", NoticeEnum.ERROR);
@@ -44,8 +48,7 @@ const RegisterPage = () => {
         }
 
         setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        showMessage("Registration successful!", NoticeEnum.SUCCESS);
+        await verifyEmailHandler();
       }
     } catch (error) {
       showMessage("Something went wrong. Please try again.", NoticeEnum.ERROR);
@@ -54,15 +57,59 @@ const RegisterPage = () => {
     }
   };
 
-  const handleResendCode = () => {
+  const verifyEmailHandler = async () => {
+    try {
+      const response = await verifyEmail(email, verificationCode);
+
+      if (!response.success) {
+        showMessage(response.message, NoticeEnum.ERROR);
+        return;
+      }
+
+      showMessage("Verification successful!", NoticeEnum.SUCCESS);
+      setIsVerificationSent(true);
+      window.location.href = "/dashboard";
+
+    } catch (error: any) {
+      showMessage(error.response.data.message, NoticeEnum.ERROR);
+    }
+  }
+
+  const sendVerificationCode = async () => {
+    try {
+      const response = await register(email, password);
+
+      if (!response.success) {
+        showMessage(response.message, NoticeEnum.ERROR);
+        return;
+      }
+
+      showMessage("Verification code sent to your email!", NoticeEnum.SUCCESS);
+      setIsVerificationSent(true);
+    } catch (error: any) {
+      showMessage(error.response.data.message, NoticeEnum.ERROR);
+    }
+  }
+
+  const handleResendCode = async () => {
     if (!validateEmail(email)) {
       showMessage("Please enter a valid email address", NoticeEnum.ERROR);
       return;
     }
-    showMessage("Sending new verification code...", NoticeEnum.LOADING);
-    setTimeout(() => {
-      showMessage("New verification code sent!", NoticeEnum.SUCCESS);
-    }, 1000);
+    try {
+      showMessage("Sending new verification code...", NoticeEnum.LOADING);
+
+      const response = await resendCode(email, password);
+
+      if (!response.success) {
+        showMessage(response.message, NoticeEnum.ERROR);
+        return;
+      }
+
+      showMessage("Verification code sent successfully!", NoticeEnum.SUCCESS);
+    } catch (error: any) {
+      showMessage(error.response.data.message, NoticeEnum.ERROR);
+    }
   };
 
   return (
@@ -111,7 +158,7 @@ const RegisterPage = () => {
               Register with Google
             </button>
             <button
-              onClick={registerWithGithub}
+
               type="button"
               className="flex-1 py-2 border rounded-md flex items-center justify-center gap-2 text-sm hover:bg-gray-50"
             >

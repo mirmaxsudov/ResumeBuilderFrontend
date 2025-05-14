@@ -25,4 +25,15 @@ const verifyEmail = async (email: string, code: string): Promise<ApiResponse<str
     return response.data;
 }
 
-export { register, verifyEmail };
+const resendCode = async (email: string, password: string): Promise<ApiResponse<string>> => {
+    const response = await $api.post<Promise<ApiResponse<string>>>(BASE_EMAIL_URL + "/resend-code", null, {
+        params: {
+            email,
+            password
+        }
+    })
+
+    return response.data;
+}
+
+export { register, verifyEmail, resendCode };

@@ -23,6 +23,25 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ value, on
         }
     };
 
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const pastedData = e.clipboardData.getData('text').replace(/[^0-9a-zA-Z]/g, "").slice(0, length);
+
+        if (pastedData) {
+            const newValue = value.split("");
+            for (let i = 0; i < pastedData.length; i++) {
+                if (i < length) {
+                    newValue[i] = pastedData[i];
+                }
+            }
+            onChange(newValue.join(""));
+
+            // Focus the next empty input or the last input
+            const nextEmptyIndex = pastedData.length < length ? pastedData.length : length - 1;
+            inputsRef.current[nextEmptyIndex]?.focus();
+        }
+    };
+
     return (
         <div className="flex gap-4 justify-center">
             {Array.from({ length }).map((_, idx) => (
@@ -37,6 +56,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ value, on
                     value={value[idx] || ""}
                     onChange={e => handleChange(e, idx)}
                     onKeyDown={e => handleKeyDown(e, idx)}
+                    onPaste={handlePaste}
                     className="w-12 h-12 text-center border rounded-md text-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
             ))}
