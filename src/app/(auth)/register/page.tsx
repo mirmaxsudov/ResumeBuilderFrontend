@@ -4,7 +4,9 @@ import Image from "next/image";
 import React, { useState, useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import { Input, Button, message, Form } from "antd";
-import { MailOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { NoticeEnum } from "@/enums/NoticeEnum";
+import useMyNotice from "@/hooks/useMyNotice";
 
 type VerificationCodeInputProps = {
   value: string;
@@ -55,8 +57,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ value, on
   );
 };
 
-export type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
-
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -64,41 +64,12 @@ const RegisterPage = () => {
   const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
+  const { showMessage, contextHolder } = useMyNotice();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  const showMessage = (message: string, type: NoticeType = "error") => {
-    switch (type) {
-      case "info": {
-        messageApi.info(message);
-        break;
-      }
-      case "success": {
-        messageApi.success(message);
-        break;
-      }
-      case "error": {
-        messageApi.error(message);
-        break;
-      }
-      case "warning": {
-        messageApi.warning(message);
-        break;
-      }
-      case "loading": {
-        messageApi.loading(message);
-        break;
-      }
-      default: {
-        messageApi.error(message);
-        break;
-      }
-    }
-  }
 
   const validatePassword = (password: string) => {
     return password.length >= 8;
@@ -108,30 +79,30 @@ const RegisterPage = () => {
     try {
       if (!isVerificationSent) {
         if (!validateEmail(email)) {
-          showMessage("Please enter a valid email address", "error");
+          showMessage("Please enter a valid email address", NoticeEnum.ERROR);
           return;
         }
         if (!validatePassword(password)) {
-          showMessage("Password must be at least 8 characters long", "error");
+          showMessage("Password must be at least 8 characters long", NoticeEnum.ERROR);
           return;
         }
 
         setLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        showMessage("Verification code sent to your email!", "success");
+        showMessage("Verification code sent to your email!", NoticeEnum.SUCCESS);
         setIsVerificationSent(true);
       } else {
         if (verificationCode.length !== 6) {
-          showMessage("Please enter the complete verification code", "error");
+          showMessage("Please enter the complete verification code", NoticeEnum.ERROR);
           return;
         }
 
         setLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        showMessage("Registration successful!", "success");
+        showMessage("Registration successful!", NoticeEnum.SUCCESS);
       }
     } catch (error) {
-      showMessage("Something went wrong. Please try again.", "error");
+      showMessage("Something went wrong. Please try again.", NoticeEnum.ERROR);
     } finally {
       setLoading(false);
     }
@@ -139,12 +110,12 @@ const RegisterPage = () => {
 
   const handleResendCode = () => {
     if (!validateEmail(email)) {
-      showMessage("Please enter a valid email address", "error");
+      showMessage("Please enter a valid email address", NoticeEnum.ERROR);
       return;
     }
-    showMessage("Sending new verification code...", "loading");
+    showMessage("Sending new verification code...", NoticeEnum.LOADING);
     setTimeout(() => {
-      showMessage("New verification code sent!", "success");
+      showMessage("New verification code sent!", NoticeEnum.SUCCESS);
     }, 1000);
   };
 
