@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Edit,
   MapPin,
@@ -9,11 +11,139 @@ import {
   Phone,
   Globe,
   Download,
+  Save,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/dashboard/ui/button";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import ResumeLanguageLevel from "@/enums/LanguageEnum";
 
 export default function ProfilePage() {
+  const [editMode, setEditMode] = useState({
+    about: false,
+    experience: false,
+    education: false,
+    certifications: false,
+    skills: false,
+    languages: false,
+  });
+  const [loading, setLoading] = useState({
+    about: false,
+    experience: false,
+    education: false,
+    certifications: false,
+    skills: false,
+    languages: false,
+  });
+
+  const [content, setContent] = useState({
+    about:
+      "Experienced Software Engineer with a passion for building scalable web applications. Skilled in JavaScript, React, and Node.js. Strong problem-solving abilities and a team player with excellent communication skills. Looking for opportunities to contribute to innovative projects and continue growing as a developer.",
+    experience: [
+      {
+        id: 1,
+        title: "Senior Software Engineer",
+        company: "TechCorp Inc.",
+        period: "Jan 2021 - Present",
+        description:
+          "Led the development of a React-based dashboard application. Implemented new features and optimized performance. Mentored junior developers and conducted code reviews.",
+      },
+      {
+        id: 2,
+        title: "Software Engineer",
+        company: "WebSolutions LLC",
+        period: "Mar 2018 - Dec 2020",
+        description:
+          "Developed and maintained web applications using React and Node.js. Collaborated with designers and product managers to implement new features. Improved application performance by 30%.",
+      },
+    ],
+    education: [
+      {
+        id: 1,
+        degree: "Master of Science in Computer Science",
+        institution: "Stanford University",
+        period: "2016 - 2018",
+        description:
+          "Specialized in Software Engineering and Artificial Intelligence. Graduated with honors.",
+      },
+      {
+        id: 2,
+        degree: "Bachelor of Science in Computer Science",
+        institution: "University of California, Berkeley",
+        period: "2012 - 2016",
+        description:
+          "Dean's List, GPA 3.8/4.0. Active member of the Computer Science Club.",
+      },
+    ],
+    certifications: [
+      {
+        id: 1,
+        name: "AWS Certified Solutions Architect",
+        issuer: "Amazon Web Services",
+        year: "2022",
+      },
+      {
+        id: 2,
+        name: "Google Cloud Professional Developer",
+        issuer: "Google Cloud",
+        year: "2021",
+      },
+      {
+        id: 3,
+        name: "React Advanced Certification",
+        issuer: "Meta",
+        year: "2020",
+      },
+    ],
+    skills: [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "TypeScript",
+      "HTML/CSS",
+      "Git",
+      "REST APIs",
+      "SQL",
+    ],
+    languages: [
+      { name: "English", level: "Native", proficiency: 100 },
+      { name: "Spanish", level: "Intermediate", proficiency: 60 },
+      { name: "French", level: "Basic", proficiency: 40 },
+    ],
+  });
+
+  const toggleEditMode = (section: string) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [section]: !prev[section as keyof typeof prev],
+    }));
+  };
+
+  const handleSave = (section: string) => {
+    setLoading((prev) => ({ ...prev, [section]: true }));
+
+    setTimeout(() => {
+      setLoading((prev) => ({ ...prev, [section]: false }));
+      toggleEditMode(section);
+    }, 1000);
+  };
+
+  const handleContentChange = (
+    section: string,
+    value: string | any[],
+    id?: number
+  ) => {
+    if (id !== undefined) {
+      const updatedArray = content[section as keyof typeof content].map(
+        (item: any) => (item.id === id ? { ...item, ...value } : item)
+      );
+      setContent((prev) => ({ ...prev, [section]: updatedArray }));
+    } else {
+      setContent((prev) => ({ ...prev, [section]: value }));
+    }
+  };
+
   return (
     <div className="animate-fadeIn">
       <div className="bg-white rounded-xl shadow-sm mb-6 overflow-hidden">
@@ -105,36 +235,50 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.skills
+                    ? handleSave("skills")
+                    : toggleEditMode("skills")
+                }
+                disabled={loading.skills}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.skills ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.skills ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.skills
+                  ? loading.skills
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                JavaScript
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                React
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                Node.js
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                TypeScript
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                HTML/CSS
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                Git
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                REST APIs
-              </span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                SQL
-              </span>
-            </div>
+            {editMode.skills ? (
+              <textarea
+                className="w-full p-2 border rounded-md"
+                value={content.skills.join(", ")}
+                onChange={(e) =>
+                  handleContentChange(
+                    "skills",
+                    e.target.value.split(",").map((skill) => skill.trim())
+                  )
+                }
+              />
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {content.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Languages */}
@@ -145,39 +289,91 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.languages
+                    ? handleSave("languages")
+                    : toggleEditMode("languages")
+                }
+                disabled={loading.languages}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.languages ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.languages ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.languages
+                  ? loading.languages
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
-            <div className="space-y-3">
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-900">English</span>
-                  <span className="text-gray-500 text-sm">Native</span>
-                </div>
-                <div className="h-2 bg-gray-200 rounded-full">
-                  <div className="h-2 bg-blue-600 rounded-full w-full"></div>
-                </div>
+            {editMode.languages ? (
+              <div className="space-y-3">
+                {content.languages.map((lang, index) => (
+                  <div key={index} className="mb-4">
+                    <div className="flex items-center mb-2">
+                      <input
+                        type="text"
+                        className="w-1/2 p-2 border rounded-md mr-2"
+                        value={lang.name}
+                        onChange={(e) => {
+                          const updatedLanguages = [...content.languages];
+                          updatedLanguages[index].name = e.target.value;
+                          handleContentChange("languages", updatedLanguages);
+                        }}
+                      />
+                      <select
+                        className="w-1/2 p-2 border rounded-md"
+                        value={lang.level}
+                        onChange={(e) => {
+                          const updatedLanguages = [...content.languages];
+                          updatedLanguages[index].level = e.target.value;
+                          updatedLanguages[index].proficiency = +e.target
+                            .value as ResumeLanguageLevel;
+                          handleContentChange("languages", updatedLanguages);
+                        }}
+                      >
+                        {Object.keys(ResumeLanguageLevel)
+                          .filter((k) => !isNaN(Number(k)))
+                          .map((level) => (
+                            <option key={level} value={level}>
+                              {ResumeLanguageLevel[level]}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className="h-2 bg-gray-200 rounded-full">
+                      <div
+                        className="h-2 bg-blue-600 rounded-full"
+                        style={{ width: `${lang.proficiency}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-900">Spanish</span>
-                  <span className="text-gray-500 text-sm">Intermediate</span>
-                </div>
-                <div className="h-2 bg-gray-200 rounded-full">
-                  <div className="h-2 bg-blue-600 rounded-full w-3/5"></div>
-                </div>
+            ) : (
+              <div className="space-y-3">
+                {content.languages.map((lang, index) => (
+                  <div key={index}>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-gray-900">{lang.name}</span>
+                      <span className="text-gray-500 text-sm">
+                        {lang.level}
+                      </span>
+                    </div>
+                    <div className="h-2 bg-gray-200 rounded-full">
+                      <div
+                        className="h-2 bg-blue-600 rounded-full"
+                        style={{ width: `${lang.proficiency}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-900">French</span>
-                  <span className="text-gray-500 text-sm">Basic</span>
-                </div>
-                <div className="h-2 bg-gray-200 rounded-full">
-                  <div className="h-2 bg-blue-600 rounded-full w-2/5"></div>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -191,17 +387,34 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.about ? handleSave("about") : toggleEditMode("about")
+                }
+                disabled={loading.about}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.about ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.about ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.about
+                  ? loading.about
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
-            <p className="text-gray-700">
-              Experienced Software Engineer with a passion for building scalable
-              web applications. Skilled in JavaScript, React, and Node.js.
-              Strong problem-solving abilities and a team player with excellent
-              communication skills. Looking for opportunities to contribute to
-              innovative projects and continue growing as a developer.
-            </p>
+            {editMode.about ? (
+              <textarea
+                className="w-full p-2 border rounded-md min-h-[120px]"
+                value={content.about}
+                onChange={(e) => handleContentChange("about", e.target.value)}
+              />
+            ) : (
+              <p className="text-gray-700">{content.about}</p>
+            )}
           </div>
 
           {/* Experience */}
@@ -214,48 +427,111 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.experience
+                    ? handleSave("experience")
+                    : toggleEditMode("experience")
+                }
+                disabled={loading.experience}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.experience ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.experience ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.experience
+                  ? loading.experience
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
             <div className="space-y-6">
-              <div className="border-l-2 border-blue-500 pl-4 ml-2">
-                <div className="flex items-center mb-1">
-                  <Briefcase size={16} className="text-blue-600 mr-2" />
-                  <h3 className="font-medium text-gray-900">
-                    Senior Software Engineer
-                  </h3>
+              {content.experience.map((exp, index) => (
+                <div
+                  key={exp.id}
+                  className={`border-l-2 ${
+                    index === 0 ? "border-blue-500" : "border-gray-300"
+                  } pl-4 ml-2`}
+                >
+                  {editMode.experience ? (
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md font-medium"
+                        value={exp.title}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "experience",
+                            { title: e.target.value },
+                            exp.id
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md"
+                        value={exp.company}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "experience",
+                            { company: e.target.value },
+                            exp.id
+                          )
+                        }
+                      />
+                      <div className="flex items-center">
+                        <Calendar size={14} className="mr-1 text-gray-500" />
+                        <input
+                          type="text"
+                          className="w-full p-2 border rounded-md text-gray-500 text-sm"
+                          value={exp.period}
+                          onChange={(e) =>
+                            handleContentChange(
+                              "experience",
+                              { period: e.target.value },
+                              exp.id
+                            )
+                          }
+                        />
+                      </div>
+                      <textarea
+                        className="w-full p-2 border rounded-md min-h-[80px]"
+                        value={exp.description}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "experience",
+                            { description: e.target.value },
+                            exp.id
+                          )
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center mb-1">
+                        <Briefcase
+                          size={16}
+                          className={`${
+                            index === 0 ? "text-blue-600" : "text-gray-500"
+                          } mr-2`}
+                        />
+                        <h3 className="font-medium text-gray-900">
+                          {exp.title}
+                        </h3>
+                      </div>
+                      <p className="text-gray-700 mb-1">{exp.company}</p>
+                      <div className="flex items-center text-gray-500 text-sm mb-2">
+                        <Calendar size={14} className="mr-1" />
+                        <span>{exp.period}</span>
+                      </div>
+                      <p className="text-gray-700">{exp.description}</p>
+                    </>
+                  )}
                 </div>
-                <p className="text-gray-700 mb-1">TechCorp Inc.</p>
-                <div className="flex items-center text-gray-500 text-sm mb-2">
-                  <Calendar size={14} className="mr-1" />
-                  <span>Jan 2021 - Present</span>
-                </div>
-                <p className="text-gray-700">
-                  Led the development of a React-based dashboard application.
-                  Implemented new features and optimized performance. Mentored
-                  junior developers and conducted code reviews.
-                </p>
-              </div>
-              <div className="border-l-2 border-gray-300 pl-4 ml-2">
-                <div className="flex items-center mb-1">
-                  <Briefcase size={16} className="text-gray-500 mr-2" />
-                  <h3 className="font-medium text-gray-900">
-                    Software Engineer
-                  </h3>
-                </div>
-                <p className="text-gray-700 mb-1">WebSolutions LLC</p>
-                <div className="flex items-center text-gray-500 text-sm mb-2">
-                  <Calendar size={14} className="mr-1" />
-                  <span>Mar 2018 - Dec 2020</span>
-                </div>
-                <p className="text-gray-700">
-                  Developed and maintained web applications using React and
-                  Node.js. Collaborated with designers and product managers to
-                  implement new features. Improved application performance by
-                  30%.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -267,47 +543,111 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.education
+                    ? handleSave("education")
+                    : toggleEditMode("education")
+                }
+                disabled={loading.education}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.education ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.education ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.education
+                  ? loading.education
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
             <div className="space-y-6">
-              <div className="border-l-2 border-blue-500 pl-4 ml-2">
-                <div className="flex items-center mb-1">
-                  <GraduationCap size={16} className="text-blue-600 mr-2" />
-                  <h3 className="font-medium text-gray-900">
-                    Master of Science in Computer Science
-                  </h3>
+              {content.education.map((edu, index) => (
+                <div
+                  key={edu.id}
+                  className={`border-l-2 ${
+                    index === 0 ? "border-blue-500" : "border-gray-300"
+                  } pl-4 ml-2`}
+                >
+                  {editMode.education ? (
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md font-medium"
+                        value={edu.degree}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "education",
+                            { degree: e.target.value },
+                            edu.id
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md"
+                        value={edu.institution}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "education",
+                            { institution: e.target.value },
+                            edu.id
+                          )
+                        }
+                      />
+                      <div className="flex items-center">
+                        <Calendar size={14} className="mr-1 text-gray-500" />
+                        <input
+                          type="text"
+                          className="w-full p-2 border rounded-md text-gray-500 text-sm"
+                          value={edu.period}
+                          onChange={(e) =>
+                            handleContentChange(
+                              "education",
+                              { period: e.target.value },
+                              edu.id
+                            )
+                          }
+                        />
+                      </div>
+                      <textarea
+                        className="w-full p-2 border rounded-md min-h-[80px]"
+                        value={edu.description}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "education",
+                            { description: e.target.value },
+                            edu.id
+                          )
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center mb-1">
+                        <GraduationCap
+                          size={16}
+                          className={`${
+                            index === 0 ? "text-blue-600" : "text-gray-500"
+                          } mr-2`}
+                        />
+                        <h3 className="font-medium text-gray-900">
+                          {edu.degree}
+                        </h3>
+                      </div>
+                      <p className="text-gray-700 mb-1">{edu.institution}</p>
+                      <div className="flex items-center text-gray-500 text-sm mb-2">
+                        <Calendar size={14} className="mr-1" />
+                        <span>{edu.period}</span>
+                      </div>
+                      <p className="text-gray-700">{edu.description}</p>
+                    </>
+                  )}
                 </div>
-                <p className="text-gray-700 mb-1">Stanford University</p>
-                <div className="flex items-center text-gray-500 text-sm mb-2">
-                  <Calendar size={14} className="mr-1" />
-                  <span>2016 - 2018</span>
-                </div>
-                <p className="text-gray-700">
-                  Specialized in Software Engineering and Artificial
-                  Intelligence. Graduated with honors.
-                </p>
-              </div>
-              <div className="border-l-2 border-gray-300 pl-4 ml-2">
-                <div className="flex items-center mb-1">
-                  <GraduationCap size={16} className="text-gray-500 mr-2" />
-                  <h3 className="font-medium text-gray-900">
-                    Bachelor of Science in Computer Science
-                  </h3>
-                </div>
-                <p className="text-gray-700 mb-1">
-                  University of California, Berkeley
-                </p>
-                <div className="flex items-center text-gray-500 text-sm mb-2">
-                  <Calendar size={14} className="mr-1" />
-                  <span>2012 - 2016</span>
-                </div>
-                <p className="text-gray-700">
-                  Dean's List, GPA 3.8/4.0. Active member of the Computer
-                  Science Club.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -321,40 +661,73 @@ export default function ProfilePage() {
                 variant="ghost"
                 size="sm"
                 className="h-8 px-2 text-blue-600 hover:bg-blue-50"
+                onClick={() =>
+                  editMode.certifications
+                    ? handleSave("certifications")
+                    : toggleEditMode("certifications")
+                }
+                disabled={loading.certifications}
               >
-                <Edit size={14} className="mr-1" /> Edit
+                {loading.certifications ? (
+                  <Loader2 size={14} className="mr-1 animate-spin" />
+                ) : editMode.certifications ? (
+                  <Save size={14} className="mr-1" />
+                ) : (
+                  <Edit size={14} className="mr-1" />
+                )}
+                {editMode.certifications
+                  ? loading.certifications
+                    ? "Saving..."
+                    : "Save"
+                  : "Edit"}
               </Button>
             </div>
             <div className="space-y-4">
-              <div className="flex items-start">
-                <Award className="w-5 h-5 text-blue-600 mt-0.5 mr-3" />
-                <div>
-                  <h3 className="font-medium text-gray-900">
-                    AWS Certified Solutions Architect
-                  </h3>
-                  <p className="text-gray-500 text-sm">
-                    Amazon Web Services • 2022
-                  </p>
+              {content.certifications.map((cert, index) => (
+                <div key={cert.id} className="flex items-start">
+                  <Award className="w-5 h-5 text-blue-600 mt-0.5 mr-3" />
+                  {editMode.certifications ? (
+                    <div className="flex-1 space-y-2">
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md font-medium"
+                        value={cert.name}
+                        onChange={(e) =>
+                          handleContentChange(
+                            "certifications",
+                            { name: e.target.value },
+                            cert.id
+                          )
+                        }
+                      />
+                      <div className="flex items-center">
+                        <input
+                          type="text"
+                          className="w-full p-2 border rounded-md text-gray-500 text-sm"
+                          value={`${cert.issuer} • ${cert.year}`}
+                          onChange={(e) => {
+                            const parts = e.target.value.split("•");
+                            const issuer = parts[0]?.trim() || "";
+                            const year = parts[1]?.trim() || "";
+                            handleContentChange(
+                              "certifications",
+                              { issuer, year },
+                              cert.id
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <h3 className="font-medium text-gray-900">{cert.name}</h3>
+                      <p className="text-gray-500 text-sm">
+                        {cert.issuer} • {cert.year}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="flex items-start">
-                <Award className="w-5 h-5 text-blue-600 mt-0.5 mr-3" />
-                <div>
-                  <h3 className="font-medium text-gray-900">
-                    Google Cloud Professional Developer
-                  </h3>
-                  <p className="text-gray-500 text-sm">Google Cloud • 2021</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <Award className="w-5 h-5 text-blue-600 mt-0.5 mr-3" />
-                <div>
-                  <h3 className="font-medium text-gray-900">
-                    React Advanced Certification
-                  </h3>
-                  <p className="text-gray-500 text-sm">Meta • 2020</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
