@@ -31,10 +31,11 @@ $api.interceptors.response.use(
         isRefreshing = true;
         try {
           const { data } = await axios.post(
-            `${BASE_URL}/api/v1/auth/refresh-token`,
+            `${BASE_URL}/api/v1/auth/refresh`,
             {},
             { withCredentials: true },
           );
+
           const newToken = data.data.token;
 
           Cookies.set("token", newToken, { secure: true, sameSite: "lax" });
