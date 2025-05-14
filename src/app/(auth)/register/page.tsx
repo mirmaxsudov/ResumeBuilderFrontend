@@ -10,6 +10,7 @@ import useMyNotice from "@/hooks/useMyNotice";
 import validateEmail from "@/helpers/validateEmail";
 import validatePassword from "@/helpers/validatePassword";
 import VerificationCode from "@/components/auth/register/VerificationCode";
+import { registerWithGoogle, registerWithGithub } from "@/helpers/registerWithGoogle";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -96,6 +97,7 @@ const RegisterPage = () => {
 
           <div className="flex gap-4">
             <button
+              onClick={registerWithGoogle}
               type="button"
               className="flex-1 py-2 border rounded-md flex items-center justify-center gap-2 text-sm hover:bg-gray-50"
             >
@@ -109,6 +111,7 @@ const RegisterPage = () => {
               Register with Google
             </button>
             <button
+              onClick={registerWithGithub}
               type="button"
               className="flex-1 py-2 border rounded-md flex items-center justify-center gap-2 text-sm hover:bg-gray-50"
             >
