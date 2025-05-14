@@ -1,61 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { FaGithub } from "react-icons/fa";
-import { Input, Button, message, Form } from "antd";
+import { Input, Button, Form } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 import useMyNotice from "@/hooks/useMyNotice";
-
-type VerificationCodeInputProps = {
-  value: string;
-  onChange: (val: string) => void;
-  length?: number;
-};
-
-const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ value, onChange, length = 6 }) => {
-  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
-    const val = e.target.value.replace(/[^0-9a-zA-Z]/g, "").slice(0, 1);
-    const newValue = value.split("");
-    newValue[idx] = val;
-    onChange(newValue.join(""));
-    if (val && idx < length - 1) {
-      inputsRef.current[idx + 1]?.focus();
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
-    if (e.key === "Backspace" && !value[idx] && idx > 0) {
-      const newValue = value.split("");
-      newValue[idx - 1] = "";
-      onChange(newValue.join(""));
-      inputsRef.current[idx - 1]?.focus();
-    }
-  };
-
-  return (
-    <div className="flex gap-4 justify-center">
-      {Array.from({ length }).map((_, idx) => (
-        <input
-          key={idx}
-          ref={el => {
-            inputsRef.current[idx] = el;
-          }}
-          type="text"
-          inputMode="numeric"
-          maxLength={1}
-          value={value[idx] || ""}
-          onChange={e => handleChange(e, idx)}
-          onKeyDown={e => handleKeyDown(e, idx)}
-          className="w-12 h-12 text-center border rounded-md text-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-        />
-      ))}
-    </div>
-  );
-};
+import validateEmail from "@/helpers/validateEmail";
+import validatePassword from "@/helpers/validatePassword";
+import VerificationCode from "@/components/auth/register/VerificationCode";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -65,15 +19,6 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { showMessage, contextHolder } = useMyNotice();
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    return password.length >= 8;
-  };
 
   const handleSubmit = async (values: any) => {
     try {
@@ -218,45 +163,14 @@ const RegisterPage = () => {
               </>
             ) : (
               <>
-                <div className="flex flex-col items-center space-y-2">
-                  <span className="text-gray-700 text-base">Verification code sent to:</span>
-                  <span className="font-semibold text-lg text-indigo-600">{email}</span>
-                </div>
-                <VerificationCodeInput
-                  value={verificationCode}
-                  onChange={setVerificationCode}
-                  length={6}
+                <VerificationCode
+                  email={email}
+                  verificationCode={verificationCode}
+                  setVerificationCode={setVerificationCode}
+                  handleResendCode={handleResendCode}
+                  setIsVerificationSent={setIsVerificationSent}
+                  loading={loading}
                 />
-                <p className="text-sm text-gray-500 text-center">
-                  We've sent a verification code to your email. Please check your inbox.
-                </p>
-                <Button
-                  type="link"
-                  onClick={handleResendCode}
-                  className="w-full text-indigo-600"
-                >
-                  Didn't receive the code? Resend
-                </Button>
-                <div className="flex gap-2 mt-4">
-                  <Button
-                    type="default"
-                    className="w-1/2"
-                    onClick={() => {
-                      setIsVerificationSent(false);
-                      setVerificationCode("");
-                    }}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    className="w-1/2 bg-indigo-600 hover:bg-indigo-700"
-                  >
-                    Verify & Register
-                  </Button>
-                </div>
               </>
             )}
           </div>
