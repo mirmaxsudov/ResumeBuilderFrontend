@@ -5,6 +5,7 @@ enum Role {
   MANAGER = "MANAGER",
   MODERATOR = "MODERATOR",
   SUPER_ADMIN = "SUPER_ADMIN",
+  
 }
 
 export default Role;
