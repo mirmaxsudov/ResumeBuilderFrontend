@@ -221,3 +221,38 @@ strong {
 .animate-slideInRight {
   animation: slideInRight 0.3s ease-out;
 }
+
+/* User Dropdown Styles */
+.user-dropdown .ant-dropdown-menu {
+  padding: 4px;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-dropdown .ant-dropdown-menu-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 2px 0;
+}
+
+.user-dropdown .ant-dropdown-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.user-dropdown .ant-dropdown-menu-item-divider {
+  margin: 4px 0;
+}
+
+.user-dropdown .ant-dropdown-menu-item button {
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-dropdown .ant-dropdown-menu-item button:hover {
+  color: #ef4444;
+}
