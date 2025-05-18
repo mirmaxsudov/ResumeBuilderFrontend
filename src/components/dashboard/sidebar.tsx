@@ -27,6 +27,7 @@ import {
   SheetTrigger,
 } from "@/components/dashboard/ui/sheet";
 import { useAppSelector } from "@/hooks/hooks";
+import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
 
@@ -105,8 +106,8 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         {sidebarState !== "hidden" && (
           <Link href={"/dashboard/profile"} className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
-              Aj
+            <div className="w-10 h-10">
+              {GenerateProfileIcon({ firstName: user.firstName, lastName: user.lastname, size: 30, isRound: true })}
             </div>
             {sidebarState === "expanded" && (
               <div>
