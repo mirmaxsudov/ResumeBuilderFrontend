@@ -1,17 +1,20 @@
+"use client";
+
 import OnboardingSteps from "@/components/dashboard/onboarding-steps";
 import RecommendedJobs from "@/components/dashboard/recommended-jobs";
 import RolePrompt from "@/components/dashboard/role-prompt";
 import DocumentsSection from "@/components/dashboard/documents-section";
 import { NextPage } from "next";
-import Role from "@/enums/Role";
-import ServerAuthChecker from '@/components/auth/ServerAuthChecker'
+import { useAppSelector } from "@/hooks/hooks";
 
 const Dashboard: NextPage = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
-    <ServerAuthChecker roles={[...Object.values(Role)]} withAuth={true}>
+    <>
       <div className="flex justify-between items-start mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Hi, Akbarxoja!</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Hi, {user.firstName || "User"}!</h1>
           <p className="text-gray-500">
             Complete these steps to land your next role
           </p>
@@ -25,7 +28,7 @@ const Dashboard: NextPage = () => {
       <RecommendedJobs />
       <RolePrompt />
       <DocumentsSection />
-    </ServerAuthChecker>
+    </>
   )
 }
 
