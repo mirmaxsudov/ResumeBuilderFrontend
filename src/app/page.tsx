@@ -1,16 +1,21 @@
 import React from "react";
 import Header from "@/components/home/header/Header";
-import InfoAbout from "@/components/home/info/InfoAbout";
 import JoinInfo from "@/components/home/info/JoinInfo";
 import Nav from "@/components/home/nav/Nav";
+import { getCountOfUsers } from "@/api/requests/home/home.api";
+import dynamic from "next/dynamic";
 
-const Home = () => {
+const InfoAbout = dynamic(() => import("@/components/home/info/InfoAbout"));
+
+const Home = async () => {
+  const countOfUsers = (await getCountOfUsers()).data;
+
   return (
     <>
       <Nav />
-      <Header />
+      <Header countOfUsers={countOfUsers} />
       <InfoAbout />
-      <JoinInfo />
+      <JoinInfo countOfUsers={countOfUsers} />
     </>
   );
 };

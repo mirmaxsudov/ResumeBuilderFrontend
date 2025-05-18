@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import languageSlice from "./language/languageSlice.ts";
-import authSlice from "./auth/authSlice.ts";
+import authSlice from "./auth/authSlice";
+import languageSlice from "./language/languageSlice";
 
 export const store = configureStore({
   reducer: {

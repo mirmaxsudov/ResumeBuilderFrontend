@@ -3,7 +3,7 @@ import HeaderImage from "@/assets/images/home/images/header-image.png";
 import Link from "next/link";
 import Image from "next/image";
 
-const Header = () => {
+const Header = ({ countOfUsers }: { countOfUsers: number }) => {
   return (
     <header className="header bg-[#F7F9FC] py-[40px]">
       <div className="max-w-small mx-auto">
@@ -12,7 +12,7 @@ const Header = () => {
             <div className="left">
               <h5 className="text-[14px] font-normal mb-[10px]">
                 <span className="bg-green-500 w-[10px] h-[10px] rounded-full inline-block me-2 animate-ping"></span>{" "}
-                42,501 resumes created today
+                {countOfUsers} resumes created today
               </h5>
               <h1 className="font-bold text-[50px] tracking-wide my-[40px] mt-[20px]">
                 The professional resume builder

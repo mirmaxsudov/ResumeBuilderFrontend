@@ -36,7 +36,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({ value, on
             }
             onChange(newValue.join(""));
 
-            // Focus the next empty input or the last input
             const nextEmptyIndex = pastedData.length < length ? pastedData.length : length - 1;
             inputsRef.current[nextEmptyIndex]?.focus();
         }

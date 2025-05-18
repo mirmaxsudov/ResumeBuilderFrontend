@@ -43,7 +43,7 @@ $api.interceptors.response.use(
           pendingRequests.forEach((cb) => cb(newToken));
           pendingRequests = [];
         } catch (refreshError) {
-          window.location.href = "/auth/login";
+          window.location.href = "/login";
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;

@@ -12,6 +12,8 @@ import validatePassword from "@/helpers/validatePassword";
 import VerificationCode from "@/components/auth/register/VerificationCode";
 import { registerWithGoogle, registerWithGithub } from "@/helpers/registerWithGoogle";
 import { register, resendCode, verifyEmail } from "@/api/requests/auth/email/email.auth.api";
+import { useAppDispatch } from "@/hooks/hooks";
+import { setValues } from "@/store/auth/authSlice";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -21,11 +23,7 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { showMessage, contextHolder } = useMyNotice();
-  const [resendData, setResendData] = useState<any>({
-    message: "",
-    loading: false
-  });
-
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (values: any) => {
     try {
@@ -68,6 +66,12 @@ const RegisterPage = () => {
 
       showMessage("Verification successful!", NoticeEnum.SUCCESS);
       setIsVerificationSent(true);
+
+      dispatch(setValues({
+        token: response.data.accessToken,
+        user: response.data
+      }))
+
       window.location.href = "/dashboard";
 
     } catch (error: any) {

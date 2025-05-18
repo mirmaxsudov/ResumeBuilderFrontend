@@ -2,10 +2,13 @@ import OnboardingSteps from "@/components/dashboard/onboarding-steps";
 import RecommendedJobs from "@/components/dashboard/recommended-jobs";
 import RolePrompt from "@/components/dashboard/role-prompt";
 import DocumentsSection from "@/components/dashboard/documents-section";
+import { NextPage } from "next";
+import Role from "@/enums/Role";
+import ServerAuthChecker from '@/components/auth/ServerAuthChecker'
 
-export default function Dashboard() {
+const Dashboard: NextPage = () => {
   return (
-    <>
+    <ServerAuthChecker roles={[...Object.values(Role)]} withAuth={true}>
       <div className="flex justify-between items-start mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Hi, Akbarxoja!</h1>
@@ -22,6 +25,8 @@ export default function Dashboard() {
       <RecommendedJobs />
       <RolePrompt />
       <DocumentsSection />
-    </>
-  );
+    </ServerAuthChecker>
+  )
 }
+
+export default Dashboard;
