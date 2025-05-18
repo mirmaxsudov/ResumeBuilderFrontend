@@ -10,6 +10,9 @@ const login = async (login: string, password: string): Promise<ApiResponse<AuthU
     `${BASE_AUTH_URL}/login`,
     { login, password },
   )
+
+  console.log(response.data);  
+
   return response.data;
 };
 

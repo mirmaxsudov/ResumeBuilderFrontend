@@ -3,7 +3,7 @@ import Role from "@/enums/Role";
 
 const Template = ({ children }: { children: React.ReactNode }) => {
     return (
-        <AuthChecker roles={[...Object.values(Role)]} withAuth={true}>
+        <AuthChecker roles={[Role.ADMIN, Role.USER]} withAuth={true}>
             {children}
         </AuthChecker>
     )

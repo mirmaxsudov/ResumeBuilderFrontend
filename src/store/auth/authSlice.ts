@@ -22,9 +22,6 @@ const authSlice = createSlice({
             state,
             action: PayloadAction<{ token: string; user: AuthUserPreviewType }>
         ) => {
-
-            console.log(action.payload);
-
             state.token = action.payload.token;
             state.user = action.payload.user;
             Cookies.set("token", action.payload.token, { expires: 7, secure: true })
