@@ -18,6 +18,9 @@ import {
   Menu,
   UserCircle,
   ChevronLeft,
+  Settings,
+  User,
+  LogOut,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/dashboard/ui/button";
@@ -28,6 +31,12 @@ import {
 } from "@/components/dashboard/ui/sheet";
 import { useAppSelector } from "@/hooks/hooks";
 import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
+import { Dropdown } from "antd";
+import type { MenuProps } from "antd";
+import { useAppDispatch } from "@/hooks/hooks";
+import { clearAuth } from "@/store/auth/authSlice";
+import { useRouter } from "next/navigation";
+import { logout } from "@/api/requests/auth/auth.api";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
 
@@ -40,6 +49,8 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarState, setSidebarState] = useState<SidebarState>("expanded");
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     onStateChange?.(sidebarState);
@@ -72,6 +83,42 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
     setSidebarState(newState);
   };
 
+  const handleLogout = async () => {
+    await logout();
+    dispatch(clearAuth());
+    router.push("/login");
+  };
+
+  const profileItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <Link href="/dashboard/profile" className="flex items-center gap-2">
+          <User className="w-4 h-4" />
+          <span>Profile</span>
+        </Link>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <Link href="/dashboard/account" className="flex items-center gap-2">
+          <UserCircle className="w-4 h-4" />
+          <span>Account</span>
+        </Link>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <Link href="/dashboard/settings" className="flex items-center gap-2">
+          <Settings className="w-4 h-4" />
+          <span>Settings</span>
+        </Link>
+      ),
+    },
+  ];
+
   const sidebarItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     {
@@ -103,24 +150,31 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
 
   const SidebarContent = () => (
     <>
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+      <div className="p-4 border-b border-gray-200">
         {sidebarState !== "hidden" && (
-          <Link href={"/dashboard/profile"} className="flex items-center space-x-3">
-            <div className="w-10 h-10">
-              {GenerateProfileIcon({ firstName: user.firstName, lastName: user.lastname, size: 30, isRound: true })}
-            </div>
-            {sidebarState === "expanded" && (
-              <div>
-                <div className="font-medium">{user.firstName || "User"} {user.lastname || "user"}</div>
-                <div className="text-xs text-gray-500">{user.role}</div>
+          <Dropdown
+            menu={{ items: profileItems }}
+            placement="bottomRight"
+            trigger={['click']}
+            overlayClassName="sidebar-profile-dropdown"
+          >
+            <div className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <div className="w-10 h-10">
+                {GenerateProfileIcon({ firstName: user.firstName, lastName: user.lastname, size: 30, isRound: true })}
               </div>
-            )}
-          </Link>
+              {sidebarState === "expanded" && (
+                <div>
+                  <div className="font-medium">{user.firstName || "User"} {user.lastname || "user"}</div>
+                  <div className="text-xs text-gray-500">{user.role}</div>
+                </div>
+              )}
+            </div>
+          </Dropdown>
         )}
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8"
+          className="h-8 w-8 absolute top-4 right-4"
           onClick={() => handleStateChange(
             sidebarState === "expanded"
               ? "collapsed"
@@ -129,7 +183,6 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
                 : "expanded"
           )}
         >
-          <ChevronLeft className={`h-4 w-4 transition-transform ${sidebarState === "hidden" ? "rotate-180" : ""}`} />
         </Button>
       </div>
       <nav className="p-2 overflow-y-auto flex-1">

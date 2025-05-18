@@ -1,66 +1,100 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
+import { Modal, Input, Button, message } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/navigation'
 import { SwitchRoleCardProps } from './SwitchRoleCard'
 
 const SwitchRoleModal = ({
   setIsOpen,
-  item
+  item,
+  currentRole
 }: {
-  setIsOpen: any
+  setIsOpen: (value: boolean) => void
   item: SwitchRoleCardProps
+  currentRole: string
 }) => {
-  return (
-    <>
-      <div
-        id='modal'
-        className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 backdrop-filter backdrop-blur-[5px]'
-        onClick={e => {
-          if (e.target.id === 'modal') setIsOpen(false)
-        }}
-      >
-        <div className='bg-white p-6 rounded-xl shadow-lg w-96'>
-          <h2 className='text-xl font-semibold mb-4'>Salohiddin</h2>
-          <div className='flex items-center justify-between mb-4'>
-            <p className='border border-gray-300 w-32 px-4 py-2 rounded-lg text-center'>
-              Admin
-            </p>
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
-            <p>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='30'
-                height='30'
-                fill='currentColor'
-                viewBox='0 0 16 16'
-              >
-                <path
-                  fill-rule='evenodd'
-                  d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8'
-                />
-              </svg>
-            </p>
-            <p className='border border-gray-300 w-32 px-4 py-2 rounded-lg text-center'>
-              User
-            </p>
+  const handleSwitchRole = async () => {
+    if (!password) {
+      message.error('Please enter your password')
+      return
+    }
+
+    setLoading(true)
+    try {
+      // TODO: Implement your API call here
+      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
+      message.success('Role switched successfully')
+      router.push('/dashboard')
+    } catch (error) {
+      message.error('Failed to switch role')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Modal
+      title="Switch Role"
+      open={true}
+      onCancel={() => setIsOpen(false)}
+      footer={null}
+      width={500}
+    >
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-center flex-1">
+          <div className="text-sm text-gray-500 mb-2">Current Role</div>
+          <div className="border border-gray-300 px-4 py-2 rounded-lg">
+            {currentRole}
           </div>
-          <div className='mb-4'>
-            <input
-              type='password'
-              autoComplete='off'
-              className='border border-gray-300 w-full px-4 py-2 rounded-lg'
-              placeholder='Enter password'
-            />
-          </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className='w-full px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition'
+        </div>
+        <div className="mx-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            viewBox="0 0 16 16"
           >
-            Yopish
-          </button>
+            <path
+              fillRule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"
+            />
+          </svg>
+        </div>
+        <div className="text-center flex-1">
+          <div className="text-sm text-gray-500 mb-2">New Role</div>
+          <div className="border border-gray-300 px-4 py-2 rounded-lg">
+            {item.role}
+          </div>
         </div>
       </div>
-    </>
+
+      <div className="mb-6">
+        <Input.Password
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full"
+        />
+      </div>
+
+      <Button
+        type="primary"
+        danger
+        block
+        onClick={handleSwitchRole}
+        loading={loading}
+        icon={loading ? <LoadingOutlined /> : null}
+      >
+        Switch Role
+      </Button>
+    </Modal>
   )
 }
 
