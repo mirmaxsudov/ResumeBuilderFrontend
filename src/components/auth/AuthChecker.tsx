@@ -1,6 +1,9 @@
+'use client'
+
 import Role from '@/enums/Role'
-import { redirect } from 'next/navigation'
-import Cookies from 'js-cookie'
+import { redirect, useRouter } from 'next/navigation'
+import { useAppSelector } from '@/hooks/hooks'
+import { useEffect } from 'react'
 
 type AuthCheckerProps = {
     children: React.ReactNode
@@ -8,26 +11,42 @@ type AuthCheckerProps = {
     withAuth: boolean
 }
 
-export default async function AuthChecker({
+export default function AuthChecker({
     children,
     roles,
     withAuth
 }: AuthCheckerProps) {
-    if (!withAuth) {
-        return <>{children}</>
-    }
+    const router = useRouter();
+    const { token, user } = useAppSelector((state) => state.auth);
 
-    const token = Cookies.get('token')
-    const user = (Cookies.get('user')) ? JSON.parse(Cookies.get('user')!) : null
+    useEffect(() => {
+        if (!withAuth) return;
+
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        if (user && user.roles) {
+            const hasRequiredRole = user.roles.some((role: Role) => roles.includes(role));
+            if (!hasRequiredRole)
+                router.push('/forbidden');
+        }
+
+    }, [token, user, roles, withAuth, router]);
+
+    if (!withAuth)
+        return <>{children}</>;
 
     if (!token)
-        redirect('/login')
+        return null;
 
-    const hasRequiredRole = user.roles.some((role: Role) => roles.includes(role))
-
-    if (!hasRequiredRole) {
-        redirect('/forbidden')
+    if (user && user.roles) {
+        const hasRequiredRole = user.roles.some((role: Role) => roles.includes(role));
+        if (!hasRequiredRole) {
+            return null;
+        }
     }
 
-    return <>{children}</>
+    return <>{children}</>;
 }

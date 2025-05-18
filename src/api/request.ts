@@ -43,6 +43,8 @@ $api.interceptors.response.use(
           pendingRequests.forEach((cb) => cb(newToken));
           pendingRequests = [];
         } catch (refreshError) {
+          Cookies.remove("token");
+          Cookies.remove("user");
           window.location.href = "/login";
           return Promise.reject(refreshError);
         } finally {
