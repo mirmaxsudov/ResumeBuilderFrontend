@@ -1,20 +1,19 @@
+'use client'
+
 import type React from "react";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { UserCircle, Bell } from "lucide-react";
 import { Button } from "@/components/dashboard/ui/button";
 import Sidebar from "@/components/dashboard/sidebar";
-
-export const metadata: Metadata = {
-  title: "Resume Builder Dashboard",
-  description: "Resume builder and job search platform",
-};
+import { useState } from "react";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [sidebarState, setSidebarState] = useState<"expanded" | "collapsed" | "hidden">("expanded");
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="fixed top-0 left-0 right-0 h-16 border-b border-gray-200 bg-white z-30 shadow-sm">
@@ -67,9 +66,16 @@ export default function RootLayout({
         </div>
       </header>
       <div className="flex pt-16">
-        <Sidebar />
-        <main className="flex-1 ml-0 md:ml-64 min-h-[calc(100vh-64px)] overflow-auto bg-gray-50">
-          <div className="max-w-6xl mx-auto p-6 animate-fadeIn">
+        <Sidebar onStateChange={setSidebarState} />
+        <main
+          className={`flex-1 min-h-[calc(100vh-64px)] overflow-auto bg-gray-50 transition-all duration-300 ${sidebarState === "expanded"
+            ? "md:ml-64"
+            : sidebarState === "collapsed"
+              ? "md:ml-20"
+              : "md:ml-0"
+            }`}
+        >
+          <div className="max-w-full mx-auto p-6 animate-fadeIn">
             {children}
           </div>
         </main>
