@@ -35,28 +35,28 @@ export default function Sidebar() {
     {
       icon: FileText,
       label: "Documents",
-      href: "/documents",
+      href: "/dashboard/documents",
       hasSubmenu: true,
     },
-    { icon: Briefcase, label: "Jobs", href: "/jobs" },
-    { icon: LineChart, label: "Job Tracker", href: "/job-tracker" },
-    { icon: Send, label: "Auto Apply", href: "/auto-apply" },
-    { icon: MessageSquare, label: "Interview Prep", href: "/interview-prep" },
-    { icon: DollarSign, label: "Salary Analyzer", href: "/salary-analyzer" },
+    { icon: Briefcase, label: "Jobs", href: "/dashboard/jobs" },
+    { icon: LineChart, label: "Job Tracker", href: "/dashboard/job-tracker" },
+    { icon: Send, label: "Auto Apply", href: "/dashboard/auto-apply" },
+    { icon: MessageSquare, label: "Interview Prep", href: "/dashboard/interview-prep" },
+    { icon: DollarSign, label: "Salary Analyzer", href: "/dashboard/salary-analyzer" },
     {
       icon: Share2,
       label: "Resume Distribution",
-      href: "/resume-distribution",
+      href: "/dashboard/resume-distribution",
     },
     {
       icon: Search,
       label: "Job Search Method",
-      href: "/job-search-method",
+      href: "/dashboard/job-search-method",
       hasSubmenu: true,
     },
-    { icon: HelpCircle, label: "Coaching", href: "/coaching" },
-    { icon: UserCircle, label: "Profile", href: "/profile" },
-    { icon: MoreHorizontal, label: "Other", href: "/other", hasSubmenu: true },
+    { icon: HelpCircle, label: "Coaching", href: "/dashboard/coaching" },
+    { icon: UserCircle, label: "Profile", href: "/dashboard/profile" },
+    { icon: MoreHorizontal, label: "Other", href: "/dashboard/other", hasSubmenu: true },
   ];
 
   const SidebarContent = () => (
@@ -81,11 +81,10 @@ export default function Sidebar() {
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className={`flex items-center justify-between space-x-3 px-3 py-2 rounded-lg ${
-                    isActive
-                      ? "nav-item-active bg-blue-50 text-blue-600"
-                      : "nav-item-inactive"
-                  } nav-item`}
+                  className={`flex items-center justify-between space-x-3 px-3 py-2 rounded-lg ${isActive
+                    ? "nav-item-active bg-blue-50 text-blue-600"
+                    : "nav-item-inactive"
+                    } nav-item`}
                   onClick={() => setMobileOpen(false)}
                 >
                   <div className="flex items-center space-x-3">
