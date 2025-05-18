@@ -2,7 +2,7 @@
 
 import type React from "react";
 import Link from "next/link";
-import { UserCircle, Bell, LogOut, User, Briefcase } from "lucide-react";
+import { UserCircle, Bell, LogOut, User, Briefcase, Settings, Share2, ArrowRight, ArrowLeftRight } from "lucide-react";
 import { Button, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import Sidebar from "@/components/dashboard/sidebar";
@@ -47,10 +47,28 @@ export default function RootLayout({
       ),
     },
     {
+      key: '3',
+      label: (
+        <Link href="/dashboard/switch-role" className="flex items-center gap-2">
+          <ArrowLeftRight className="w-4 h-4" />
+          <span>Switch Role</span>
+        </Link>
+      )
+    },
+    {
+      key: '4',
+      label: (
+        <Link href="/dashboard/settings" className="flex items-center gap-2">
+          <Settings className="w-4 h-4" />
+          <span>Settings</span>
+        </Link>
+      )
+    },
+    {
       type: 'divider',
     },
     {
-      key: '3',
+      key: '5',
       label: (
         <button onClick={handleLogout} className="flex items-center gap-2 w-full text-red-500">
           <LogOut className="w-4 h-4" />
