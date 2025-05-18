@@ -58,7 +58,7 @@ const Page = () => {
               </div>
               <div
                 className={clsx(
-                  'transition-all duration-300 border border-gray-300 rounded-lg shadow-sm px-2 py-1',
+                  'transition-all duration-300',
                   isFocused ? 'w-72' : 'w-[108px]'
                 )}
               >
