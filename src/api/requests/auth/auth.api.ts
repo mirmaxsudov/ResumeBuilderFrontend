@@ -24,7 +24,7 @@ const changeRole = async (role: Role): Promise<ApiResponse<AuthUserPreviewType>>
 }
 
 const logout = async (): Promise<ApiResponse<null>> => {
-  const response = await $api.patch<ApiResponse<null>>(
+  const response = await $api.post<ApiResponse<null>>(
     `${BASE_AUTH_URL}/logout`,
     null,
   );

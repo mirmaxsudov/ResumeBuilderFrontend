@@ -13,13 +13,15 @@ import {
   Download,
   Save,
 } from "lucide-react";
-import Image from "next/image";
 import { Button } from "@/components/dashboard/ui/button";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import ResumeLanguageLevel from "@/enums/LanguageEnum";
+import { useAppSelector } from "@/hooks/hooks";
+import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
 
-export default function ProfilePage() {
+function ProfilePage() {
+  const { user } = useAppSelector((state) => state.auth);
   const [editMode, setEditMode] = useState({
     about: false,
     experience: false,
@@ -36,7 +38,6 @@ export default function ProfilePage() {
     skills: false,
     languages: false,
   });
-
   const [content, setContent] = useState({
     about:
       "Experienced Software Engineer with a passion for building scalable web applications. Skilled in JavaScript, React, and Node.js. Strong problem-solving abilities and a team player with excellent communication skills. Looking for opportunities to contribute to innovative projects and continue growing as a developer.",
@@ -151,21 +152,17 @@ export default function ProfilePage() {
         <div className="px-6 pb-6 relative">
           <div className="flex flex-col md:flex-row items-start md:items-end">
             <div className="absolute -top-16 left-6 w-32 h-32 rounded-xl overflow-hidden border-4 border-white shadow-md bg-white">
-              <Image
-                src="/placeholder.svg?height=128&width=128"
-                alt="Profile"
-                width={128}
-                height={128}
-                className="object-cover"
-              />
+              {
+                GenerateProfileIcon({ firstName: user.firstName, lastName: user.lastname })
+              }
             </div>
             <div className="mt-20 md:mt-0 md:ml-36 flex-1">
               <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">
-                    Akbarxoja Joraxojayev
+                    {user.firstName || "User"} {user.lastname || "user"}
                   </h1>
-                  <p className="text-gray-600">Software Engineer</p>
+                  <p className="text-gray-600">{user.email}</p>
                 </div>
                 <div className="mt-4 md:mt-0 flex space-x-3">
                   <Button
@@ -174,7 +171,7 @@ export default function ProfilePage() {
                   >
                     <Download size={16} className="mr-2" /> Download Resume
                   </Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700 rounded-full shadow-sm btn-hover">
+                  <Button className="bg-blue-600 hover:bg-blue-700 rounded-full shadow-sm btn-hover text-white">
                     <Edit size={16} className="mr-2" /> Edit Profile
                   </Button>
                 </div>
@@ -452,9 +449,8 @@ export default function ProfilePage() {
               {content.experience.map((exp, index) => (
                 <div
                   key={exp.id}
-                  className={`border-l-2 ${
-                    index === 0 ? "border-blue-500" : "border-gray-300"
-                  } pl-4 ml-2`}
+                  className={`border-l-2 ${index === 0 ? "border-blue-500" : "border-gray-300"
+                    } pl-4 ml-2`}
                 >
                   {editMode.experience ? (
                     <div className="space-y-3">
@@ -514,9 +510,8 @@ export default function ProfilePage() {
                       <div className="flex items-center mb-1">
                         <Briefcase
                           size={16}
-                          className={`${
-                            index === 0 ? "text-blue-600" : "text-gray-500"
-                          } mr-2`}
+                          className={`${index === 0 ? "text-blue-600" : "text-gray-500"
+                            } mr-2`}
                         />
                         <h3 className="font-medium text-gray-900">
                           {exp.title}
@@ -568,9 +563,8 @@ export default function ProfilePage() {
               {content.education.map((edu, index) => (
                 <div
                   key={edu.id}
-                  className={`border-l-2 ${
-                    index === 0 ? "border-blue-500" : "border-gray-300"
-                  } pl-4 ml-2`}
+                  className={`border-l-2 ${index === 0 ? "border-blue-500" : "border-gray-300"
+                    } pl-4 ml-2`}
                 >
                   {editMode.education ? (
                     <div className="space-y-3">
@@ -630,9 +624,8 @@ export default function ProfilePage() {
                       <div className="flex items-center mb-1">
                         <GraduationCap
                           size={16}
-                          className={`${
-                            index === 0 ? "text-blue-600" : "text-gray-500"
-                          } mr-2`}
+                          className={`${index === 0 ? "text-blue-600" : "text-gray-500"
+                            } mr-2`}
                         />
                         <h3 className="font-medium text-gray-900">
                           {edu.degree}
@@ -735,3 +728,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default ProfilePage;
