@@ -19,9 +19,12 @@ import { Loader2 } from "lucide-react";
 import ResumeLanguageLevel from "@/enums/LanguageEnum";
 import { useAppSelector } from "@/hooks/hooks";
 import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
+import ProfileImageEditor from "@/components/profile/ProfileImageEditorProps ";
 
 function ProfilePage() {
   const { user } = useAppSelector((state) => state.auth);
+  // const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const [editMode, setEditMode] = useState({
     about: false,
     experience: false,
@@ -145,8 +148,25 @@ function ProfilePage() {
     }
   };
 
+  // const handleSaveForBlob = (blob: Blob) => {
+  //   const url = URL.createObjectURL(blob);
+  //   setPreviewUrl(url);
+  // };
+
   return (
     <div className="animate-fadeIn">
+      {/* <ProfileImageEditor onSave={handleSaveForBlob} initialImageUrl={null} />
+
+      {previewUrl && (
+        <div style={{ marginTop: '24px' }}>
+          <h2>Preview of Cropped Image:</h2>
+          <img
+            src={previewUrl}
+            alt="Cropped Preview"
+            style={{ width: '150px', borderRadius: '50%' }}
+          />
+        </div>
+      )} */}
       <div className="bg-white rounded-xl shadow-sm mb-6 overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
         <div className="px-6 pb-6 relative">
