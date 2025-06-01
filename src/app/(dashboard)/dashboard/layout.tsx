@@ -11,6 +11,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { clearAuth } from "@/store/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { logout } from "@/api/requests/auth/auth.api";
+import { NotificationDropdown } from "@/components/dashboard/NotificationDropdown";
 
 export default function RootLayout({
   children,
@@ -114,12 +115,7 @@ export default function RootLayout({
             <Button className="bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-sm btn-hover">
               Upgrade Now
             </Button>
-            <Link href="/profile" className="relative">
-              <Bell className="h-5 w-5 text-gray-600 hover:text-blue-600 transition-colors" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                3
-              </span>
-            </Link>
+            <NotificationDropdown />
             <Dropdown
               menu={{ items }}
               placement="bottomRight"
