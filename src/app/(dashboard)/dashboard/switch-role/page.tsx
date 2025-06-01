@@ -4,15 +4,13 @@ import SwitchRoleCard from '@/components/dashboard/swich-role/SwitchRoleCard'
 import clsx from 'clsx'
 import SwitchRoleModal from '@/components/dashboard/swich-role/SwitchRoleModal'
 import NotFound from '@/components/dashboard/swich-role/NotFound'
-import { Input } from 'antd'
+import { Input, message } from 'antd'
 import { useAppSelector } from '@/hooks/hooks';
-
-const roles = [
-  { role: 'ADMIN', lastTime: '4 days ago' },
-  { role: 'HR', lastTime: '6 days ago' },
-  { role: 'USER', lastTime: '1 week ago' },
-  { role: 'MODERATOR', lastTime: '20 days ago' }
-]
+import useMyNotice from '@/hooks/useMyNotice'
+import { NoticeEnum } from '@/enums/NoticeEnum'
+import { getMyRoles } from '@/api/requests/auth/auth.api'
+import { MyRoleResponse } from '@/types/auth/MyRoleResponse'
+import axios, { AxiosError, isAxiosError } from 'axios'
 
 const Page = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -20,11 +18,13 @@ const Page = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [modalItem, setModalItem] = useState<any>(null)
-  const [filteredRoles, setFilteredRoles] = useState<any[]>(roles)
-  const searchInputRef = useRef<any>(null)
+  const [filteredRoles, setFilteredRoles] = useState<MyRoleResponse[]>([])
+  const searchInputRef = useRef<any>(null);
+  const { contextHolder, showMessage } = useMyNotice();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const res = roles.filter(role =>
+    const res = filteredRoles?.filter(role =>
       role.role.toLowerCase().includes(searchTerm.toLowerCase())
     )
     setFilteredRoles(res)
@@ -40,7 +40,27 @@ const Page = () => {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (loading)
+      fetchMyRoles();
+  }, [loading]);
+
+  const fetchMyRoles = async () => {
+    try {
+      const response = await getMyRoles();      
+      setFilteredRoles(response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        showMessage(error.response?.data.message, NoticeEnum.ERROR);
+      } else {
+        showMessage('An unexpected error occurred', NoticeEnum.ERROR);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -90,7 +110,7 @@ const Page = () => {
                     setModalItem={setModalItem}
                     key={index}
                     role={item.role}
-                    lastTime={item.lastTime}
+                    lastTime={item.lastLoginAt}
                     currentRole={user?.role}
                   />
                 ))}
@@ -109,6 +129,7 @@ const Page = () => {
           currentRole={user.role}
         />
       )}
+      {contextHolder}
     </>
   )
 }

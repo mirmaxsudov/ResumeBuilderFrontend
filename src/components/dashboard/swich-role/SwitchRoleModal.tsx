@@ -5,6 +5,11 @@ import { Modal, Input, Button, message } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/navigation'
 import { SwitchRoleCardProps } from './SwitchRoleCard'
+import { changeRole } from '@/api/requests/auth/auth.api'
+import { useAppDispatch } from '@/hooks/hooks'
+import { setValues } from '@/store/auth/authSlice'
+import useMyNotice from '@/hooks/useMyNotice'
+import { NoticeEnum } from '@/enums/NoticeEnum'
 
 const SwitchRoleModal = ({
   setIsOpen,
@@ -17,7 +22,9 @@ const SwitchRoleModal = ({
 }) => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const dispatch = useAppDispatch();
   const router = useRouter()
+  const { showMessage, contextHolder } = useMyNotice();
 
   const handleSwitchRole = async () => {
     if (!password) {
@@ -27,12 +34,12 @@ const SwitchRoleModal = ({
 
     setLoading(true)
     try {
-      // TODO: Implement your API call here
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
+      const data = await changeRole(item.role, password)
+      dispatch(setValues({ token: data.data.accessToken, user: data.data }))
       message.success('Role switched successfully')
       router.push('/dashboard')
     } catch (error) {
-      message.error('Failed to switch role')
+      showMessage(error?.response.data.message, NoticeEnum.ERROR);
     } finally {
       setLoading(false)
     }
@@ -94,6 +101,7 @@ const SwitchRoleModal = ({
       >
         Switch Role
       </Button>
+      {contextHolder}
     </Modal>
   )
 }

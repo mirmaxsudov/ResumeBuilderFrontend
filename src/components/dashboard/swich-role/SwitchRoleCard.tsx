@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Dispatch, SetStateAction } from 'react'
-import SwitchRoleModal from './SwitchRoleModal'
 import Role from '@/enums/Role'
+import formatDate from '@/helpers/formatDate'
 
 export interface SwitchRoleCardProps {
   role: string
-  lastTime: string
+  lastTime: Date,
   setIsOpen: Dispatch<SetStateAction<boolean>>
   setModalItem: Dispatch<SetStateAction<any>>
   currentRole: Role
@@ -37,7 +37,7 @@ const SwitchRoleCard: React.FC<SwitchRoleCardProps> = ({
       <div className='bg-gray-100 p-6 rounded-2xl shadow-md text-center'>
         <div className='text-lg font-bold text-gray-700 mb-2'>{role}</div>
         <div className='text-sm text-gray-500 mb-4'>{
-          currentRole === role ? 'Current Role' : 'Last Time: ' + lastTime
+          currentRole === role ? 'Current Role' : formatDate(lastTime)
         }</div>
         {currentRole !== role ? (
           <button
