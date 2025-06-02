@@ -365,16 +365,10 @@ export default function CreateResumePage() {
                         removeCustomSection={removeCustomSection}
                     />
                 </div>
-
-                {/* Right Panel - Preview */}
                 <div className="w-[55%] px-[40px] bg-gray-100 overflow-y-auto">
-                    {/* <Resume1 data={{}} /> */}
                     <div className="scale-100">
-                        {/* <Resume7/> */}
                         <Resume6 />
-                        {/* <Resume8/> */}
                     </div>
-                    {/* <ResumePreview resumeData={resumeData} /> */}
                 </div>
             </div>
         </div>
