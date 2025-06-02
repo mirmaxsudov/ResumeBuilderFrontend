@@ -6,6 +6,10 @@ import { Download, Menu, Settings } from "lucide-react";
 import { useResumeScore } from "@/hooks/use-resume-score";
 import { ResumeForm } from "@/components/resume/resume-form";
 import { ResumePreview } from "@/components/resume/resume-preview";
+import Resume1 from "@/@Resume/components/templates/Resume1";
+import Resume6 from "@/@Resume/components/templates/Resume6";
+import Resume7 from "@/@Resume/components/teplates/Resume7";
+import Resume8 from "@/@Resume/components/templates/Resume8";
 
 export interface PersonalDetails {
     jobTitle: string;
@@ -350,11 +354,8 @@ export default function CreateResumePage() {
                     </div>
                 </div>
             </header>
-
-            {/* Main Content */}
             <div className="flex h-[calc(100vh-73px)]">
-                {/* Left Panel - Form */}
-                <div className="w-1/2 bg-white border-r border-gray-200 overflow-y-auto">
+                <div className="w-[45%] bg-white border-r border-gray-200 overflow-y-auto">
                     <ResumeForm
                         resumeData={resumeData}
                         updateResumeData={updateResumeData}
@@ -366,8 +367,14 @@ export default function CreateResumePage() {
                 </div>
 
                 {/* Right Panel - Preview */}
-                <div className="w-1/2 bg-gray-100 overflow-y-auto">
-                    <ResumePreview resumeData={resumeData} />
+                <div className="w-[55%] px-[40px] bg-gray-100 overflow-y-auto">
+                    {/* <Resume1 data={{}} /> */}
+                    <div className="scale-100">
+                        {/* <Resume7/> */}
+                        <Resume6 />
+                        {/* <Resume8/> */}
+                    </div>
+                    {/* <ResumePreview resumeData={resumeData} /> */}
                 </div>
             </div>
         </div>

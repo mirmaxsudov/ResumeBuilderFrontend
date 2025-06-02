@@ -1,12 +1,12 @@
 import React from "react";
 
-import ResumePhoto from "../../assets/images/image 265 (2).png";
+// import ResumePhoto from "../../assets/images/image 265 (2).png";
 const Resume6 = () => {
   const data = {
     image: {
       id: 1,
-      isExists: true,
-      url: ResumePhoto,
+      isExists: false,
+      // url: ResumePhoto,
     },
     info: {
       firstName: "Rick",
