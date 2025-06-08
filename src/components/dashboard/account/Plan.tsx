@@ -16,7 +16,7 @@ const Plan = () => {
                     </p>
                 </div>
                 <div>
-                    <Button variant="outline" className="bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300" onClick={() => showMessage("ASAP, may will be free for all users.", NoticeEnum.INFO)}>
+                    <Button variant="outline" className="bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300" onClick={() => showMessage("ASAP, may will be open for all users.", NoticeEnum.INFO)}>
                         Upgrade
                     </Button>
                 </div>
