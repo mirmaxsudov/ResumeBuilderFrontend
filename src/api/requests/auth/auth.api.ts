@@ -30,6 +30,11 @@ const changeRole = async (role: Role | string, password: string): Promise<ApiRes
   return response.data;
 }
 
+const getMe = async (): Promise<ApiResponse<AuthUserPreviewType>> => {
+  const response = await $api.get<ApiResponse<AuthUserPreviewType>>(BASE_AUTH_URL + "/me");
+  return response.data;
+}
+
 const logout = async (): Promise<ApiResponse<null>> => {
   const response = await $api.post<ApiResponse<null>>(
     `${BASE_AUTH_URL}/logout`,
@@ -43,4 +48,4 @@ const getMyRoles = async (): Promise<ApiResponse<MyRoleResponse[]>> => {
   return response.data;
 }
 
-export { login, logout, changeRole, getMyRoles };
+export { login, logout, changeRole, getMyRoles, getMe };

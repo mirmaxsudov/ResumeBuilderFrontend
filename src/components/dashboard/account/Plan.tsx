@@ -1,17 +1,9 @@
-import { Button, notification } from "antd";
+import useMyNotice from "@/hooks/useMyNotice";
+import { Button } from "../ui/button";
+import { NoticeEnum } from "@/enums/NoticeEnum";
 
 const Plan = () => {
-    const [api] = notification.useNotification();
-
-    const openNotification = () => {
-        api.open({
-            message: 'Notification Title',
-            description:
-                'I will never close automatically. This is a purposely very very long description that has many many characters and words.',
-            duration: 0,
-        });
-    };
-
+    const { contextHolder, showMessage } = useMyNotice();
     return (
         <>
             <div className="bg-[#fff] p-[20px] rounded-[10px] flex justify-between items-center gap-[100px] shadow-md mt-[20px]">
@@ -24,10 +16,11 @@ const Plan = () => {
                     </p>
                 </div>
                 <div>
-                    <Button type="primary" onClick={openNotification}>
+                    <Button variant="outline" className="bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300" onClick={() => showMessage("ASAP, may will be free for all users.", NoticeEnum.INFO)}>
                         Upgrade
                     </Button>
                 </div>
+                {contextHolder}
             </div>
         </>
     )
