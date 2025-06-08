@@ -30,7 +30,7 @@ function ProfilePage() {
     <div className="animate-fadeIn">
 
       <div className="bg-white rounded-xl shadow-sm mb-6 overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+        <div className="h-32 bg-gradient-to-r from-blue-500 to-indigo-600"  ></div>
         <div className="px-6 pb-6 relative">
           <div className="flex flex-col md:flex-row items-start md:items-end">
             <div className="absolute -top-16 left-6 w-32 h-32 rounded-xl overflow-hidden border-4 border-white shadow-md bg-white">

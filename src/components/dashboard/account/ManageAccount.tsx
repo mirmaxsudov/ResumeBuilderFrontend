@@ -14,7 +14,7 @@ const ManageAccount = () => {
     const { user, token } = useAppSelector(state => state.auth);
     const [loading, setLoading] = useState<boolean>(false);
     const { contextHolder, showMessage } = useMyNotice();
-    const [req, setReq] = useState<AccountRequest>({ email: user.email } as AccountRequest);
+    const [req, setReq] = useState<AccountRequest>({ email: user.email, firstname: user.firstName, lastname: user.lastname } as AccountRequest);
     const dispatch = useAppDispatch();
 
     const handleSave = async () => {
