@@ -1,12 +1,3 @@
-/* components/ProfileImageEditor.module.css */
-
-.container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    font-family: sans-serif;
-}
-
 .uploadBtn {
     display: inline-block;
     padding: 10px 16px;

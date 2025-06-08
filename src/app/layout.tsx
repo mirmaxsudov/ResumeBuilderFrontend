@@ -4,6 +4,7 @@ import '@ant-design/v5-patch-for-react-19';
 import 'antd/dist/reset.css';
 import "./globals.css";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
+import useMyNotice from "@/hooks/useMyNotice";
 
 const inter = Inter({ subsets: ["latin"] });
 

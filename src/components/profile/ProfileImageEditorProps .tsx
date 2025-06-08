@@ -101,7 +101,6 @@ const ProfileImageEditor: React.FC<ProfileImageEditorProps> = ({
                             showGrid={true}
                         />
                     </div>
-
                     <div className={styles.controls}>
                         <div className={styles.controlItem}>
                             <label htmlFor="zoomRange">Zoom</label>
@@ -115,7 +114,6 @@ const ProfileImageEditor: React.FC<ProfileImageEditorProps> = ({
                                 onChange={(e) => setZoom(Number(e.target.value))}
                             />
                         </div>
-
                         <div className={styles.controlItem}>
                             <label htmlFor="rotationRange">Rotate</label>
                             <input
@@ -128,7 +126,6 @@ const ProfileImageEditor: React.FC<ProfileImageEditorProps> = ({
                                 onChange={(e) => setRotation(Number(e.target.value))}
                             />
                         </div>
-
                         <div className={styles.buttonRow}>
                             <button className={styles.grayBtn} onClick={onUploadNew}>
                                 Upload New

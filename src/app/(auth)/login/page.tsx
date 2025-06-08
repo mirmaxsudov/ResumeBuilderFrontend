@@ -13,6 +13,7 @@ import { login } from "@/api/requests/auth/auth.api";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { setValues } from "@/store/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { registerWithGoogle } from "@/helpers/registerWithGoogle";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -50,7 +51,7 @@ const Login = () => {
       }
 
       showMessage("Successfully logged in!", NoticeEnum.SUCCESS);
-      
+
       dispatch(setValues({
         token: response.data.accessToken,
         user: response.data
@@ -68,7 +69,6 @@ const Login = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {contextHolder}
-
       <div
         className="hidden md:flex w-1/2 bg-cover bg-center items-center justify-center text-white p-10"
         style={{ backgroundImage: `url('/images/auth/bgOfAuth.png')` }}
@@ -99,7 +99,7 @@ const Login = () => {
             <button
               type="button"
               className="flex-1 py-2 border rounded-md flex items-center justify-center gap-2 text-sm hover:bg-gray-50"
-              onClick={() => window.location.href = "/oauth2/authorization/google"}
+              onClick={() => registerWithGoogle()}
             >
               <Image
                 src="https://www.svgrepo.com/show/355037/google.svg"

@@ -90,26 +90,6 @@ export default function RootLayout({
               </div>
               <span className="font-semibold text-gray-800">Resume</span>
             </Link>
-            <nav className="hidden md:flex space-x-6">
-              <Link
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-              >
-                Find a New Job
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-              >
-                Excel at Your Job
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-              >
-                Switch Career
-              </Link>
-            </nav>
           </div>
           <div className="flex items-center space-x-4">
             <Button className="bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-sm btn-hover">

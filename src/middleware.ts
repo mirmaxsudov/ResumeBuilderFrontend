@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import Role from '@/enums/Role'
 
 // Add paths that don't require authentication
-const publicPaths = ['/login', '/register', '/forbidden']
+const publicPaths = ['/login', '/register', '/forbidden', '/callback']
 
 export function middleware(request: NextRequest) {
     const token = request.cookies.get('token')?.value
