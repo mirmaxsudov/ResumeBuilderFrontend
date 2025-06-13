@@ -74,7 +74,7 @@ export function LanguagesForm({ data, onChange }: LanguagesFormProps) {
       {data.items.length === 0 && (
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center gap-2 text-blue-600">
-            <GripVertical className="h-4 w-4" />
+            <GripVertical className="h-4 w-4 bg-white" />
             <span className="text-sm">(Not specified)</span>
           </div>
         </div>
@@ -112,7 +112,7 @@ export function LanguagesForm({ data, onChange }: LanguagesFormProps) {
                 <SelectTrigger className="bg-gray-50">
                   <SelectValue placeholder="Select level" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   {languageLevels.map((level) => (
                     <SelectItem key={level} value={level}>
                       {formatLevelText(level)}
