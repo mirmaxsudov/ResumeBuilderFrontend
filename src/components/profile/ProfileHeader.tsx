@@ -20,6 +20,9 @@ const ProfileHeader = () => {
     const handleSaveProfileImage = async (croppedBlob: Blob) => {
         console.log("Saving profile image...");
         setLoadings({ ...loadings, openProfileImageEditor: false });
+
+        // Send To Backend
+        // Store AuthSlice profile image
     };
 
     return <div className="bg-white rounded-xl shadow-sm mb-6 overflow-hidden">

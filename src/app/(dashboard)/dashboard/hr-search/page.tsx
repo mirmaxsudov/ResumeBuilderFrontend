@@ -89,17 +89,16 @@ const page = () => {
         <h2 className="text-xl font-bold text-gray-800 mb-4">Resumes 1000</h2>
         <div className="flex flex-wrap gap-5">
           {
-            resumeArr.map((item)=>(
+            resumeArr.map((item) => (
               <div className="border rounded-lg flex flex-col items-center py-2 px-4">
-              <h2 className="font-semibold py-2 text-gray-800">Kamola Ibrohimova</h2>
-              <div className="">
-                <Image className="rounded-lg w-[240px] object-contain" src={ResumeImg} alt="" />
+                <h2 className="font-semibold py-2 text-gray-800">Kamola Ibrohimova</h2>
+                <div className="">
+                  <Image className="rounded-lg w-[240px] object-contain" src={ResumeImg} alt="" />
+                </div>
+                <button className="bg-blue-500 text-white w-full rounded-lg text-[14px] p-[6px] mt-3">Show</button>
               </div>
-              <button className="bg-blue-500 text-white w-full rounded-lg text-[14px] p-[6px] mt-3">Show</button>
-            </div>
             ))
           }
-         
         </div>
       </div>
     </div>
