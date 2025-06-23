@@ -1,9 +1,9 @@
-import $api from "@/app/api/request";
+import $api from "@/api/request";
 import ApiResponse from "@/types/ApiResponse";
 
 const BASE_FILE_URL: string = "/api/v1/attachment";
 
-const uploadFile = async (file: File): Promise<number> => {
+const uploadFile = async (file: File | Blob): Promise<number> => {
   const formData = new FormData();
   formData.append("file", file);
 
