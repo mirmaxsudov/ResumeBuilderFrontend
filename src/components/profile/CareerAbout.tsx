@@ -10,7 +10,6 @@ import { updateSummary } from "@/api/requests/profile/profile.api";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 import clsx from "clsx";
 import { Dialog, DialogHeader, DialogDescription, DialogTitle, DialogContent, DialogFooter } from "../dashboard/ui/dialog";
-import { Input } from "../dashboard/ui/input";
 import { Textarea } from "../dashboard/ui/textarea";
 
 const CareerAbout = () => {
@@ -114,6 +113,7 @@ const CareerAbout = () => {
                         e.stopPropagation();
                         setIsEditModalOpen(true);
                         setIsDropdownOpen(false);
+                        setEditForm({ ...editForm, newSummary: editForm.summary })
                     }}>
                         <Edit className="mr-2 h-4 w-4" />
                         <span>Edit</span>
