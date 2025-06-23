@@ -25,7 +25,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "../dashboard/ui/dialog";
-import { CareerProfileResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
+import { UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
 import { updateContact } from "@/api/requests/profile/profile.api";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
@@ -181,10 +181,12 @@ export default function CareerContactInfo() {
 
             <div className="space-y-3">
                 <div className="flex items-start">
-                    <Mail className="w-5 h-5 text-gray-500 mt-0.5 mr-3" />
-                    <div>
+                    <Mail className="w-5 h-5 text-gray-500 mt-0.5 mr-3 flex-shrink-0" />
+                    <div className="flex-1 min-w-0 max-w-[100%]">
                         <p className="text-sm text-gray-500">Email</p>
-                        <p title={user.email} className="text-gray-900 line-clamp-1">{user.email.substring(0, 30)}</p>
+                        <p className="break-words">
+                            {user.email}
+                        </p>
                     </div>
                 </div>
                 <div className="flex items-start">
@@ -200,7 +202,7 @@ export default function CareerContactInfo() {
                     <MapPin className="w-5 h-5 text-gray-500 mt-0.5 mr-3" />
                     <div>
                         <p className="text-sm text-gray-500">Location</p>
-                        <p className="text-gray-900">
+                        <p className="text-gray-900 break-words">
                             {displayLocation || "Unknown"}
                         </p>
                     </div>
@@ -211,7 +213,7 @@ export default function CareerContactInfo() {
                         <p className="text-sm text-gray-500">Website</p>
                         <a
                             href={displayWebsiteLink || "#"}
-                            className="text-blue-600 hover:underline"
+                            className="text-blue-600 hover:underline break-words"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
