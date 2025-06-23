@@ -20,3 +20,12 @@ export const updateContact = async (req: UpdateContactRequestType, id: number): 
     const response = await $api.put(BASE_URL + "/update-contact/" + id, req);
     return response.data;
 }
+
+export const updateSummary = async (careerId: number, summary: string, title: string): Promise<ApiResponse<string>> => {
+    const response = await $api.put<ApiResponse<string>>(BASE_URL + "/update-summary/" + careerId, summary, {
+        params: {
+            title
+        }
+    });
+    return response.data;
+}

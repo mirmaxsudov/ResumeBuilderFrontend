@@ -36,7 +36,6 @@ export default function CareerContactInfo() {
     const { contextHolder, showMessage } = useMyNotice();
     const { user } = useAppSelector(state => state.auth);
     const setCareerContact = useCareerProfile(state => state.setCareerContact);
-    const setCareer = useCareerProfile(state => state.setCareer);
     const careerData = useCareerProfile(state => state.data);
 
     const [editForm, setEditForm] = useState<UpdateContactRequestType>({
