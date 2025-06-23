@@ -6,7 +6,9 @@ export interface CareerBase {
     title: string;
 }
 
-export interface CareerProfileType {
+export interface CareerProfileResponseType {
+    id: number,
+    contactTitle: string,
     linearGradietBG: string,
     firstname: string,
     lastname: string,
@@ -65,3 +67,13 @@ export interface LangaugeResponseItem extends CareerBase {
     priority: number,
     level: ResumeLanguageLevel;
 }
+
+// Updates
+
+export interface UpdateContactRequestType {
+    title: string,
+    phoneNumber: string,
+    location: string,
+    website: string,
+    websiteLink: string
+} 
