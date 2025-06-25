@@ -10,10 +10,22 @@ interface CareerProfileStore {
     setProfileImage: (image: ImageAttachmentResponse) => void;
     setSkills: (title: string, skills: string[]) => void;
     setLangauges: (language: LanguageResponseType) => void;
+    deleteProfileImage: () => void;
 }
 
 export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
     data: {} as CareerProfileResponseType,
+    deleteProfileImage: () => {
+        const currentData = get().data;
+        if (!currentData)
+            return;
+        set({
+            data: {
+                ...currentData,
+                profileImage: null
+            }
+        })
+    },
     setLangauges: (language: LanguageResponseType) => {
         const currentData = get().data;
         if (!currentData)

@@ -61,3 +61,12 @@ export const updateLanguages = async (
     const respone = await $api.put<ApiResponse<LanguageResponseType>>(BASE_URL + "/update-languages/" + careerId, requestBody);
     return respone.data;
 }
+
+// Deletes
+
+export const deleteProfileImage = async (
+    careerId: number
+) => {
+    const response = await $api.delete<ApiResponse<String>>(BASE_URL + "/delete-profile/" + careerId);
+    return response.data;
+}
