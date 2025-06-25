@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 function ProfilePage() {
   const [loading, setLoading] = useState<boolean>(true);
-  const { setCareer } = useCareerProfile();
+  const setCareer = useCareerProfile(state => state.setCareer);
 
   useEffect(() => {
     if (loading)
@@ -19,6 +19,8 @@ function ProfilePage() {
   const fetchData = async () => {
     try {
       const response = await getCareerProfile();
+      console.log(response.data);
+      
       setCareer(response.data);
     } catch (e) {
       console.log(e);

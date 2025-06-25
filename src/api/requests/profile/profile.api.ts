@@ -1,7 +1,7 @@
 import $api from "@/api/request";
 import ApiResponse from "@/types/ApiResponse";
 import { ImageAttachmentResponse } from "@/types/attachment/ImageAttachmentType";
-import { CareerBase, CareerProfileResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
+import { CareerBase, CareerProfileResponseType, LanguageResponseType, UpdateContactRequestType, UpdateLanguageRequestType } from "@/types/careerProfile/CareerProfileType";
 
 const BASE_URL: string = "/api/v1/career-profile";
 
@@ -41,4 +41,23 @@ export const updateCareerImages = async (
         }
     });
     return response.data;
+}
+
+export const updateSkills = async (
+    careerId: number,
+    body: {
+        title: string,
+        skills: string[]
+    }
+) => {
+    const response = await $api.put(BASE_URL + "/update-skills/" + careerId, body);
+    return response.data;
+}
+
+export const updateLanguages = async (
+    careerId: number,
+    requestBody: UpdateLanguageRequestType
+): Promise<ApiResponse<LanguageResponseType>> => {
+    const respone = await $api.put<ApiResponse<LanguageResponseType>>(BASE_URL + "/update-languages/" + careerId, requestBody);
+    return respone.data;
 }
