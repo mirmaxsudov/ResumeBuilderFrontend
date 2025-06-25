@@ -287,3 +287,12 @@ strong {
 .sidebar-profile-dropdown .ant-dropdown-menu-item a:hover {
   color: #2563eb;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}

@@ -26,8 +26,6 @@ const CareerAbout = () => {
         newSummary: ""
     });
 
-    console.log(summary);
-
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -52,6 +50,7 @@ const CareerAbout = () => {
 
     const handleTitleSave = async () => {
         setIsEditingTitle(false);
+        setEditForm({ ...editForm, newSummary: "" })
         await update();
     };
 
@@ -71,7 +70,7 @@ const CareerAbout = () => {
         setSaveLoading(true);
         try {
             if (!editForm) return;
-            const response = await updateSummary(id, editForm.newSummary || editForm.summary || "", editForm.title);
+            const response = await updateSummary(id, editForm.newSummary || editForm.summary || summary.summary || "", editForm.title);
             setSummary(editForm);
             showMessage(response.data, NoticeEnum.SUCCESS);
         } catch (e) {
@@ -102,7 +101,8 @@ const CareerAbout = () => {
                 >
                     {editForm.title}
                 </h2>
-            )}  <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+            )}
+            <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
                         <MoreVertical className="h-4 w-4 text-black" />
@@ -132,7 +132,11 @@ const CareerAbout = () => {
             {
                 "text-center": !editForm.summary
             }
-        ])}>{!editForm.summary ? "There is no summary" : editForm.summary}</p>
+        ])}>{!editForm.summary && "There is no summary"}</p>
+        <p className="text-gray-700" dangerouslySetInnerHTML={{
+            __html: editForm.summary
+        }}>
+        </p>
 
         <Dialog
             open={isEditModalOpen}

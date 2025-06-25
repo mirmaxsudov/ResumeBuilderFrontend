@@ -1,17 +1,44 @@
 import { create } from "zustand";
-import { CareerProfileResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
+import { CareerProfileResponseType, LanguageResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
 import { ImageAttachmentResponse } from "@/types/attachment/ImageAttachmentType";
 
 interface CareerProfileStore {
     data: CareerProfileResponseType;
     setCareer: (career: CareerProfileResponseType) => void;
     setCareerContact: (contact: UpdateContactRequestType) => void;
-    setSummary: (summary: { newSummary: string, title: string }) => void;
+    setSummary: (summary: { newSummary: string, summary: string, title: string }) => void;
     setProfileImage: (image: ImageAttachmentResponse) => void;
+    setSkills: (title: string, skills: string[]) => void;
+    setLangauges: (language: LanguageResponseType) => void;
 }
 
 export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
     data: {} as CareerProfileResponseType,
+    setLangauges: (language: LanguageResponseType) => {
+        const currentData = get().data;
+        if (!currentData)
+            return;
+        set({
+            data: {
+                ...currentData,
+                language: {
+                    ...language
+                }
+            }
+        })
+    },
+    setSkills: (title: string, skills: string[]) => {
+        const currentDate = get().data;
+        if (!currentDate)
+            return;
+        set({
+            data: {
+                ...currentDate,
+                skillsTitle: title,
+                skills
+            }
+        })
+    },
     setCareer: (career: CareerProfileResponseType) => {
         set({ data: career });
     },
@@ -28,7 +55,7 @@ export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
             }
         })
     },
-    setSummary: (summaryData: { newSummary: string, title: string }) => {
+    setSummary: (summaryData: { newSummary: string, summary: string, title: string }) => {
         const currentData = get().data;
         if (!currentData)
             return;
@@ -39,7 +66,7 @@ export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
                 summary: {
                     ...currentData.summary,
                     title: summaryData.title,
-                    summary: summaryData.newSummary
+                    summary: summaryData.newSummary || summaryData.summary
                 }
             }
         })

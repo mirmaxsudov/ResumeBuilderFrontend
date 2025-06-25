@@ -17,6 +17,7 @@ export interface CareerProfileResponseType {
     address: string,
     website: string,
     websiteLink: string,
+    skillsTitle: string,
     skills: string[],
     thumbnailImage: ImageAttachmentResponse,
     profileImage: ImageAttachmentResponse,
@@ -63,9 +64,18 @@ export interface LanguageResponseType extends CareerBase {
     items: LangaugeResponseItem[]
 }
 
-export interface LangaugeResponseItem extends CareerBase {
+export interface LangaugeResponseItem {
+    id: number;
     priority: number,
     level: ResumeLanguageLevel;
+    name: string;
+}
+
+export interface LanaguageRequestItem {
+    id: number;
+    priority: number,
+    level: ResumeLanguageLevel;
+    title: string;
 }
 
 // Updates
@@ -76,4 +86,9 @@ export interface UpdateContactRequestType {
     location: string,
     website: string,
     websiteLink: string
-} 
+}
+
+export interface UpdateLanguageRequestType {
+    title: string,
+    items: LanaguageRequestItem[];
+}
