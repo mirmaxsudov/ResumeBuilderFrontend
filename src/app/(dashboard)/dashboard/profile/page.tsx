@@ -4,7 +4,6 @@ import { getCareerProfile } from "@/api/requests/profile/profile.api";
 import ProfileContent from "@/components/profile/ProfileContent";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { CareerProfileResponseType } from "@/types/careerProfile/CareerProfileType";
 import { useEffect, useState } from "react";
 
 function ProfilePage() {
@@ -19,8 +18,6 @@ function ProfilePage() {
   const fetchData = async () => {
     try {
       const response = await getCareerProfile();
-      console.log(response.data);
-      
       setCareer(response.data);
     } catch (e) {
       console.log(e);

@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import ProfileImageEditor from "./ProfileImageEditorProps ";
 import { uploadFile } from "@/api/requests/file/file.api";
-import { updateCareerImages } from "@/api/requests/profile/profile.api";
+import { deleteProfileImage as deleteProfileImageApi, updateCareerImages } from "@/api/requests/profile/profile.api";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
@@ -20,9 +20,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Edit, Edit2Icon, Trash } from "lucide-react";
 
 const CareerProfileImage = () => {
-    const { data, setProfileImage } = useCareerProfile(state => state)
+    const { data, setProfileImage, deleteProfileImage } = useCareerProfile(state => state)
     const [loadings, setLoadings] = useState({
         openProfileImageEditor: false,
+        profileDelete: false
     });
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isEditorOpen, setEditorOpen] = useState(false);
@@ -44,6 +45,25 @@ const CareerProfileImage = () => {
         }
     };
 
+    const deleteProfileImg = async () => {
+        setLoadings({
+            ...loadings,
+            profileDelete: true
+        })
+        try {
+            const response = await deleteProfileImageApi(data.id);
+            deleteProfileImage();
+            showMessage(response.message, NoticeEnum.SUCCESS);
+        } catch (e) {
+            showMessage("Something went wrong!", NoticeEnum.ERROR);
+        } finally {
+            setLoadings({
+                ...loadings,
+                profileDelete: false
+            })
+        }
+    }
+
     return <div className="absolute -top-16 left-6 w-32 h-32 rounded-xl overflow-hidden border-4 border-white shadow-md bg-white cursor-pointer group"
     >
         <div className="relative size-full">
@@ -63,21 +83,23 @@ const CareerProfileImage = () => {
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-[#fff]" align="end">
-                    <DropdownMenuItem onClick={(e) => {
-                        e.stopPropagation();
-                        setEditorOpen(true);
-                        setDropdownOpen(false);
-                    }}>
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setEditorOpen(true);
+                            setDropdownOpen(false);
+                        }}>
                         <Edit className="mr-2 h-4 w-4" />
                         <span>Upload</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-500" onClick={(e) => {
+                    <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={(e) => {
                         e.stopPropagation();
-                        setDropdownOpen(false);
+                        deleteProfileImg();
                     }}>
                         <Trash className="mr-2 h-4 w-4" />
-                        <span>Delete</span>
+                        <span>{loadings.profileDelete ? "Deleting ..." : "Delete"}</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

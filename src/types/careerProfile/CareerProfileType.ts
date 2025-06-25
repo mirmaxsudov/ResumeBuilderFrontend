@@ -20,7 +20,7 @@ export interface CareerProfileResponseType {
     skillsTitle: string,
     skills: string[],
     thumbnailImage: ImageAttachmentResponse,
-    profileImage: ImageAttachmentResponse,
+    profileImage: ImageAttachmentResponse | null,
     resumes: CareerBase[],
     summary: SummaryResponseType,
     language: LanguageResponseType,
