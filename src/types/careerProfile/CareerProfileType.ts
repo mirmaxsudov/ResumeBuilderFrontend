@@ -75,7 +75,7 @@ export interface LanaguageRequestItem {
     id: number;
     priority: number,
     level: ResumeLanguageLevel;
-    title: string;
+    name: string;
 }
 
 // Updates
