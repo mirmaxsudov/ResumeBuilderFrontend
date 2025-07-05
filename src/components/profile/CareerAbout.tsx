@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Edit, MoreVertical } from "lucide-react";
+import { Eye, Edit, MoreVertical, EyeOff, Shrink } from "lucide-react";
 import { Button } from "../dashboard/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
 import useMyNotice from "@/hooks/useMyNotice";
@@ -10,7 +10,7 @@ import { updateSummary } from "@/api/requests/profile/profile.api";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 import clsx from "clsx";
 import { Dialog, DialogHeader, DialogDescription, DialogTitle, DialogContent, DialogFooter } from "../dashboard/ui/dialog";
-import { Textarea } from "../dashboard/ui/textarea";
+import { RichTextEditor } from "../resume/rich-text-editor";
 
 const CareerAbout = () => {
     const { contextHolder, showMessage } = useMyNotice();
@@ -31,6 +31,7 @@ const CareerAbout = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
     const titleRef = useRef<HTMLInputElement>(null);
+    const [isShowMore, setIsShowMore] = useState(false);
 
     useEffect(() => {
         if (summary) {
@@ -120,10 +121,17 @@ const CareerAbout = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:cursor-pointer" onClick={(e) => {
                         e.stopPropagation();
-                        console.log("Select clicked");
                     }}>
                         <Eye className="mr-2 h-4 w-4" />
                         <span>Select</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="hover:cursor-pointer" onClick={(e) => {
+                        e.stopPropagation();
+                        setIsShowMore(!isShowMore);
+                        setIsDropdownOpen(false);
+                    }}>
+                        <Shrink className="mr-2 h-4 w-4" />
+                        <span>Show more</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
@@ -133,10 +141,26 @@ const CareerAbout = () => {
                 "text-center": !editForm.summary
             }
         ])}>{!editForm.summary && "There is no summary"}</p>
-        <p className="text-gray-700" dangerouslySetInnerHTML={{
+        <p className={clsx("text-gray-700", [
+            {
+                "line-clamp-5": !isShowMore
+            }
+        ])} dangerouslySetInnerHTML={{
             __html: editForm.summary
         }}>
         </p>
+
+        <Dialog open={isShowMore} onOpenChange={setIsShowMore}>
+            <DialogContent className="bg-[#fff] max-w-[800px]">
+                <DialogHeader>
+                    <DialogTitle>Summary</DialogTitle>
+                </DialogHeader>
+                <DialogDescription className="max-h-[500px] overflow-y-auto scrollbar-hide border border-[#E0E0E0] p-2 rounded-[12px] text-sm" dangerouslySetInnerHTML={{
+                    __html: editForm.summary
+                }}>
+                </DialogDescription>
+            </DialogContent>
+        </Dialog>
 
         <Dialog
             open={isEditModalOpen}
@@ -161,11 +185,13 @@ const CareerAbout = () => {
                     }}
                 >
                     <div>
-                        <label className="block text-sm font-medium mb-1">Email</label>
-                        <Textarea
-                            className="w-full border rounded-md px-3 py-2 bg-gray-100"
-                            defaultValue={editForm.newSummary || editForm.summary}
-                            onChange={e => setEditForm({ ...editForm, newSummary: e.target.value })}
+                        <label className="block text-sm font-medium mb-1">Summary</label>
+                        <RichTextEditor
+                            value={editForm.newSummary || editForm.summary}
+                            onChange={(value) => setEditForm({ ...editForm, newSummary: value })}
+                            placeholder="Enter your summary..."
+                            className="w-full"
+                            minHeight="200px"
                         />
                     </div>
                     <DialogFooter className="flex justify-end gap-2">

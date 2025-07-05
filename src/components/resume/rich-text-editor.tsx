@@ -154,7 +154,29 @@ export function RichTextEditor({
 
       try {
         editorRef.current.focus();
-        document.execCommand(command, false, value);
+        const success = document.execCommand(command, false, value);
+
+        if (!success && command === "insertHTML" && value) {
+          // Fallback for insertHTML if execCommand fails
+          const selection = window.getSelection();
+          if (selection && selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = value;
+            
+            // Insert the HTML content
+            const fragment = document.createDocumentFragment();
+            while (tempDiv.firstChild) {
+              fragment.appendChild(tempDiv.firstChild);
+            }
+            
+            range.deleteContents();
+            range.insertNode(fragment);
+            
+            // Restore selection
+            restoreSelection(savedRange);
+          }
+        }
 
         const content = editorRef.current.innerHTML;
         onChange(content);
@@ -168,7 +190,7 @@ export function RichTextEditor({
         console.warn("Command execution failed:", error);
       }
     },
-    [onChange, saveToHistory, updateFormatState, saveSelection]
+    [onChange, saveToHistory, updateFormatState, saveSelection, restoreSelection]
   );
 
   // Handle formatting buttons
@@ -219,15 +241,51 @@ export function RichTextEditor({
 
   // Insert link
   const insertLink = useCallback(() => {
-    if (linkUrl) {
+    if (linkUrl && editorRef.current) {
       const displayText = linkText || linkUrl;
       const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline;">${displayText}</a>`;
-      executeCommand("insertHTML", linkHtml);
+      
+      // Try to use execCommand first, fallback to manual insertion
+      try {
+        editorRef.current.focus();
+        const success = document.execCommand("insertHTML", false, linkHtml);
+        
+        if (!success) {
+          // Fallback: manually insert the link at cursor position
+          const selection = window.getSelection();
+          if (selection && selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const linkElement = document.createElement('a');
+            linkElement.href = linkUrl;
+            linkElement.target = '_blank';
+            linkElement.rel = 'noopener noreferrer';
+            linkElement.style.color = '#2563eb';
+            linkElement.style.textDecoration = 'underline';
+            linkElement.textContent = displayText;
+            
+            range.deleteContents();
+            range.insertNode(linkElement);
+            
+            // Move cursor after the link
+            range.setStartAfter(linkElement);
+            range.setEndAfter(linkElement);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+        }
+        
+        // Update content and save to history
+        const content = editorRef.current.innerHTML;
+        onChange(content);
+        saveToHistory(content);
+      } catch (error) {
+        console.warn("Link insertion failed:", error);
+      }
     }
     setShowLinkDialog(false);
     setLinkText("");
     setLinkUrl("");
-  }, [linkText, linkUrl, executeCommand]);
+  }, [linkText, linkUrl, onChange, saveToHistory]);
 
   // Handle input changes
   const handleInput = useCallback(() => {
@@ -302,6 +360,10 @@ export function RichTextEditor({
             e.preventDefault();
             handleFormat("underline");
             break;
+          case "k":
+            e.preventDefault();
+            handleLink();
+            break;
           case "z":
             if (e.shiftKey) {
               e.preventDefault();
@@ -318,7 +380,7 @@ export function RichTextEditor({
         }
       }
     },
-    [handleFormat, handleUndo, handleRedo]
+    [handleFormat, handleUndo, handleRedo, handleLink]
   );
 
   // Update editor content when value prop changes (only if different)
@@ -355,7 +417,7 @@ export function RichTextEditor({
   }, [isFocused, updateFormatState, isUpdating]);
 
   const currentLength = getTextContent(value);
-  const isOverLimit = maxLength ? currentLength > maxLength : false;
+  const isOverLimit = maxLength ? currentLength.length > maxLength : false;
 
   return (
     <TooltipProvider>
@@ -525,12 +587,12 @@ export function RichTextEditor({
                 size="sm"
                 className="h-8 w-8 p-0"
                 onClick={handleLink}
-                title="Insert Link"
+                title="Insert Link (Ctrl+K)"
               >
                 <Link className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Insert Link</TooltipContent>
+            <TooltipContent>Insert Link (Ctrl+K)</TooltipContent>
           </Tooltip>
 
           {/* Clear Formatting */}
@@ -617,7 +679,7 @@ export function RichTextEditor({
 
         {/* Link Dialog */}
         <Dialog open={showLinkDialog} onOpenChange={setShowLinkDialog}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] bg-[#fff]">
             <DialogHeader>
               <DialogTitle>Insert Link</DialogTitle>
               <DialogDescription>
