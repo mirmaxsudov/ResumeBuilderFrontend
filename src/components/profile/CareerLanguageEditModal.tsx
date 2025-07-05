@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../dashboard/ui/button";
 import {
@@ -42,6 +42,7 @@ interface Props {
     setIsDropdownOpen: (open: boolean) => void;
     saveLoading: boolean;
     editedItems: LanguageResponseItem[];
+    setEditedItems: (items: LanguageResponseItem[]) => void;
     setSaveLoading: (open: boolean) => void
 }
 
@@ -60,6 +61,9 @@ export default function CareerLanguageEditModal({
             item: it,
         }))
     );
+    
+    const [draggedItem, setDraggedItem] = useState<string | null>(null);
+    const [dragOverItem, setDragOverItem] = useState<string | null>(null);
 
     useEffect(() => {
         setItems(
@@ -125,6 +129,50 @@ export default function CareerLanguageEditModal({
         );
     };
 
+    const handleDragStart = (e: React.DragEvent, key: string) => {
+        setDraggedItem(key);
+        e.dataTransfer.effectAllowed = "move";
+    };
+
+    const handleDragOver = (e: React.DragEvent, key: string) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        setDragOverItem(key);
+    };
+
+    const handleDragLeave = () => {
+        setDragOverItem(null);
+    };
+
+    const handleDrop = (e: React.DragEvent, dropKey: string) => {
+        e.preventDefault();
+        if (!draggedItem || draggedItem === dropKey) {
+            setDraggedItem(null);
+            setDragOverItem(null);
+            return;
+        }
+
+        setItems((prev) => {
+            const draggedIndex = prev.findIndex(item => item.key === draggedItem);
+            const dropIndex = prev.findIndex(item => item.key === dropKey);
+            
+            if (draggedIndex === -1 || dropIndex === -1) return prev;
+
+            const newItems = [...prev];
+            const [draggedItemData] = newItems.splice(draggedIndex, 1);
+            newItems.splice(dropIndex, 0, draggedItemData);
+
+            // Update priorities based on new order
+            return newItems.map((item, idx) => ({
+                ...item,
+                item: { ...item.item, priority: idx + 1 }
+            }));
+        });
+
+        setDraggedItem(null);
+        setDragOverItem(null);
+    };
+
     return (
         <Dialog
             open={isEditModalOpen}
@@ -137,7 +185,7 @@ export default function CareerLanguageEditModal({
                 <DialogHeader>
                     <DialogTitle>Edit Languages</DialogTitle>
                     <DialogDescription>
-                        Drag to reorder, edit name/level, delete, or add.
+                        Drag and drop to reorder languages, edit name/level, delete, or add new ones.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -152,7 +200,16 @@ export default function CareerLanguageEditModal({
                     {items.map(({ key, item }) => (
                         <div
                             key={key}
-                            className="flex items-center gap-3 bg-gray-50 rounded-lg p-3 mb-2 shadow-sm"
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, key)}
+                            onDragOver={(e) => handleDragOver(e, key)}
+                            onDragLeave={handleDragLeave}
+                            onDrop={(e) => handleDrop(e, key)}
+                            className={`flex items-center gap-3 bg-gray-50 rounded-lg p-3 mb-2 shadow-sm transition-all duration-200 ${
+                                draggedItem === key ? 'opacity-50 scale-95' : ''
+                            } ${
+                                dragOverItem === key && draggedItem !== key ? 'bg-blue-100 border-2 border-blue-300' : ''
+                            }`}
                         >
                             <GripVertical className="w-5 h-5 text-gray-400 cursor-grab" />
 

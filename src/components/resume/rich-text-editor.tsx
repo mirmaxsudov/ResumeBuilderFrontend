@@ -163,16 +163,16 @@ export function RichTextEditor({
             const range = selection.getRangeAt(0);
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = value;
-            
+
             // Insert the HTML content
             const fragment = document.createDocumentFragment();
             while (tempDiv.firstChild) {
               fragment.appendChild(tempDiv.firstChild);
             }
-            
+
             range.deleteContents();
             range.insertNode(fragment);
-            
+
             // Restore selection
             restoreSelection(savedRange);
           }
@@ -244,12 +244,12 @@ export function RichTextEditor({
     if (linkUrl && editorRef.current) {
       const displayText = linkText || linkUrl;
       const linkHtml = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline;">${displayText}</a>`;
-      
+
       // Try to use execCommand first, fallback to manual insertion
       try {
         editorRef.current.focus();
         const success = document.execCommand("insertHTML", false, linkHtml);
-        
+
         if (!success) {
           // Fallback: manually insert the link at cursor position
           const selection = window.getSelection();
@@ -262,10 +262,10 @@ export function RichTextEditor({
             linkElement.style.color = '#2563eb';
             linkElement.style.textDecoration = 'underline';
             linkElement.textContent = displayText;
-            
+
             range.deleteContents();
             range.insertNode(linkElement);
-            
+
             // Move cursor after the link
             range.setStartAfter(linkElement);
             range.setEndAfter(linkElement);
@@ -273,7 +273,7 @@ export function RichTextEditor({
             selection.addRange(range);
           }
         }
-        
+
         // Update content and save to history
         const content = editorRef.current.innerHTML;
         onChange(content);

@@ -1,6 +1,7 @@
-import { Eye, Edit, MoreVertical } from "lucide-react";
+import { Eye, Edit, MoreVertical, Briefcase, Calendar } from "lucide-react";
 import { Button } from "../dashboard/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
+import { contentData } from "./data";
 
 const CareerExperience = () => {
     return <div className="bg-white rounded-xl shadow-sm p-6">
@@ -32,7 +33,7 @@ const CareerExperience = () => {
             </DropdownMenu>
         </div>
         <div className="space-y-6">
-            {/* {content.experience.map((exp, index) => (
+            {contentData.experience.map((exp, index) => (
                 <div
                     key={exp.id}
                     className={`border-l-2 ${index === 0 ? "border-blue-500" : "border-gray-300"
@@ -59,7 +60,7 @@ const CareerExperience = () => {
                         </>
                     )}
                 </div>
-            ))} */}
+            ))}
         </div>
     </div>
 }
