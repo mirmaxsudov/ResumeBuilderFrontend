@@ -40,8 +40,12 @@ const CareerSkills = () => {
     }, [isEditingTitle]);
 
     const handleTitleSave = async () => {
+        if (!title) {
+            showMessage("Title could not be empty");
+            return;
+        }
         setIsEditingTitle(false);
-        await update();
+        await updateJustTitle();
     };
 
     const handleTitleKeyDown = (
@@ -53,6 +57,28 @@ const CareerSkills = () => {
 
     const handleEditFormSave = async () => await update()
 
+    const updateJustTitle = async () => {
+        setSaveLoading(true);
+        try {
+            if (!title) {
+                showMessage("Skills title could not be empty");
+                return;
+            }
+            const req = {
+                title,
+                skills
+            }
+
+            const response = await updateSkills(data.id, req);
+            setSkills(title, skills);
+            showMessage(response.data, NoticeEnum.SUCCESS);
+        } catch (e) {
+            showMessage("Something went wrong", NoticeEnum.ERROR);
+        } finally {
+            setSaveLoading(false);
+        }
+    }
+
     const update = async () => {
         setSaveLoading(true);
         try {
@@ -60,10 +86,12 @@ const CareerSkills = () => {
                 showMessage("Skills title could not be empty");
                 return;
             }
-            const response = await updateSkills(data.id, {
+            const req = {
                 title,
                 skills: editedSkills
-            });
+            }
+
+            const response = await updateSkills(data.id, req);
             setCareerSkills(editedSkills);
             setSkills(title, editedSkills);
             showMessage(response.data, NoticeEnum.SUCCESS);
