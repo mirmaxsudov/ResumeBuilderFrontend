@@ -4,19 +4,17 @@ import { Edit, Eye, MoreVertical } from "lucide-react";
 import { Button } from "../dashboard/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { useAppSelector } from "@/hooks/hooks";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogDescription, DialogTitle, DialogContent, DialogHeader, DialogFooter } from "../dashboard/ui/dialog";
-import { Textarea } from "../dashboard/ui/textarea";
 import clsx from "clsx";
 import { TagsInput } from "./TagsInput";
 import { updateSkills } from "@/api/requests/profile/profile.api";
 
 const CareerSkills = () => {
     const { contextHolder, showMessage } = useMyNotice();
-    const data = useCareerProfile(state => state.data);
+        const data = useCareerProfile(state => state.data);
     const setSkills = useCareerProfile(state => state.setSkills);
     const [skills, setCareerSkills] = useState<string[]>([]);
     const [title, setTitle] = useState(data.skillsTitle);
