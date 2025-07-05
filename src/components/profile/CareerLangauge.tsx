@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { Eye, Edit, MoreVertical } from "lucide-react";

@@ -4,19 +4,17 @@ import { Edit, Eye, MoreVertical } from "lucide-react";
 import { Button } from "../dashboard/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { useAppSelector } from "@/hooks/hooks";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogDescription, DialogTitle, DialogContent, DialogHeader, DialogFooter } from "../dashboard/ui/dialog";
-import { Textarea } from "../dashboard/ui/textarea";
 import clsx from "clsx";
 import { TagsInput } from "./TagsInput";
 import { updateSkills } from "@/api/requests/profile/profile.api";
 
 const CareerSkills = () => {
     const { contextHolder, showMessage } = useMyNotice();
-    const data = useCareerProfile(state => state.data);
+        const data = useCareerProfile(state => state.data);
     const setSkills = useCareerProfile(state => state.setSkills);
     const [skills, setCareerSkills] = useState<string[]>([]);
     const [title, setTitle] = useState(data.skillsTitle);
@@ -40,8 +38,12 @@ const CareerSkills = () => {
     }, [isEditingTitle]);
 
     const handleTitleSave = async () => {
+        if (!title) {
+            showMessage("Title could not be empty");
+            return;
+        }
         setIsEditingTitle(false);
-        await update();
+        await updateJustTitle();
     };
 
     const handleTitleKeyDown = (
@@ -53,6 +55,28 @@ const CareerSkills = () => {
 
     const handleEditFormSave = async () => await update()
 
+    const updateJustTitle = async () => {
+        setSaveLoading(true);
+        try {
+            if (!title) {
+                showMessage("Skills title could not be empty");
+                return;
+            }
+            const req = {
+                title,
+                skills
+            }
+
+            const response = await updateSkills(data.id, req);
+            setSkills(title, skills);
+            showMessage(response.data, NoticeEnum.SUCCESS);
+        } catch (e) {
+            showMessage("Something went wrong", NoticeEnum.ERROR);
+        } finally {
+            setSaveLoading(false);
+        }
+    }
+
     const update = async () => {
         setSaveLoading(true);
         try {
@@ -60,10 +84,12 @@ const CareerSkills = () => {
                 showMessage("Skills title could not be empty");
                 return;
             }
-            const response = await updateSkills(data.id, {
+            const req = {
                 title,
                 skills: editedSkills
-            });
+            }
+
+            const response = await updateSkills(data.id, req);
             setCareerSkills(editedSkills);
             setSkills(title, editedSkills);
             showMessage(response.data, NoticeEnum.SUCCESS);
