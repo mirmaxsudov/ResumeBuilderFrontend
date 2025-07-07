@@ -335,10 +335,8 @@ export default function EmploymentEditModal({
                             disabled={saveLoading}
                             onClick={async (e) => {
                                 e.preventDefault();
-                                if (onSave) {
+                                if (onSave)
                                     await onSave();
-                                    // await handleUpdate();
-                                }
                             }}
                         >
                             {saveLoading ? "Saving..." : "Save"}
