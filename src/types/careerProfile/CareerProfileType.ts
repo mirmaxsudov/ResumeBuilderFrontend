@@ -47,7 +47,7 @@ export interface ExperienceResponseType extends CareerBase {
 }
 
 export interface ExperienceItemResponse {
-    id: number,
+    id: number | null,
     jobTitle: string,
     startDate: string,
     endDate: string,
@@ -92,3 +92,5 @@ export interface UpdateLanguageRequestType {
     title: string,
     items: LanaguageRequestItem[];
 }
+
+export type UpdateExperienceType = Omit<ExperienceResponseType, "id">   

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CareerProfileResponseType, LanguageResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
+import { CareerProfileResponseType, ExperienceResponseType, LanguageResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
 import { ImageAttachmentResponse } from "@/types/attachment/ImageAttachmentType";
 
 interface CareerProfileStore {
@@ -10,11 +10,26 @@ interface CareerProfileStore {
     setProfileImage: (image: ImageAttachmentResponse) => void;
     setSkills: (title: string, skills: string[]) => void;
     setLangauges: (language: LanguageResponseType) => void;
+    setExperiences: (experience: ExperienceResponseType) => void;
     deleteProfileImage: () => void;
 }
 
 export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
     data: {} as CareerProfileResponseType,
+    setExperiences: (experience: ExperienceResponseType) => {
+        const currentData = get().data;
+        if (!currentData)
+            return;
+
+        set({
+            data: {
+                ...currentData,
+                experience: {
+                    ...experience
+                }
+            }
+        })
+    },
     deleteProfileImage: () => {
         const currentData = get().data;
         if (!currentData)
