@@ -1,15 +1,15 @@
+"use client"
+
 import { Eye, Edit, MoreVertical, Briefcase, Calendar } from "lucide-react";
 import { Button } from "../dashboard/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
-import { contentData } from "./data";
 import useMyNotice from "@/hooks/useMyNotice";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
 import { useEffect, useRef, useState } from "react";
 import { ExperienceItemResponse } from "@/types/careerProfile/CareerProfileType";
 import { updateExperience } from "@/api/requests/profile/profile.api";
 import { NoticeEnum } from "@/enums/NoticeEnum";
-import EmploymentEditModal, { EmploymentResponseItem } from "./employment-edit-modal";
-import { transformApiToEmploymentItem, transformEmploymentItemToApi } from "@/utils/employmentUtils";
+import EmploymentEditModal from "./EmploymentEditModal";
 
 const CareerExperience = () => {
     const { contextHolder, showMessage } = useMyNotice();
@@ -27,9 +27,16 @@ const CareerExperience = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const [saveLoading, setSaveLoading] = useState<boolean>(false);
-    const [editedEmploymentItems, setEditedEmploymentItems] = useState<EmploymentResponseItem[]>([]);
+    const [editedEmploymentItems, setEditedEmploymentItems] = useState<ExperienceItemResponse[]>([]);
     // Refs
     const titleRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (saveLoading) {
+            handleSaveEmployment()
+            setSaveLoading(false);
+        }
+    }, [saveLoading]);
 
     useEffect(() => {
         if (data.experience) {
@@ -39,7 +46,7 @@ const CareerExperience = () => {
             const transformedItems = data.experience.items.map(item => ({
                 id: item.id,
                 jobTitle: item.jobTitle,
-                companyName: "", // API doesn't have companyName, we'll need to add it
+                companyName: "",
                 startDate: item.startDate,
                 endDate: item.endDate,
                 priority: item.priority,
@@ -73,7 +80,6 @@ const CareerExperience = () => {
     }
 
     // Saves or updates
-
     const handleSaveJustTitle = async () => {
         if (!title) {
             showMessage("You should enter title", NoticeEnum.SUCCESS);
@@ -87,9 +93,9 @@ const CareerExperience = () => {
             setZustandExperiences(response.data);
             showMessage("Successfully updated", NoticeEnum.SUCCESS);
         } catch (e) {
-            console.log(e);
+            showMessage("Something went wrong!")
         } finally {
-
+            setSaveLoading(false);
         }
     }
 
@@ -102,17 +108,15 @@ const CareerExperience = () => {
         try {
             setSaveLoading(true);
 
-            const apiItems = editedEmploymentItems
-                .filter(item => item.id !== null) // Filter out items with null id
-                .map(item => ({
-                    id: item.id as number, // Cast to number since we filtered nulls
-                    jobTitle: item.jobTitle,
-                    startDate: item.startDate,
-                    endDate: item.currentJob ? "" : item.endDate,
-                    priority: item.priority,
-                    description: item.description,
-                    currentJob: item.currentJob,
-                }));
+            const apiItems = editedEmploymentItems.map(item => ({
+                id: item.id === null ? null : item.id, // preserve null for new, number for existing
+                jobTitle: item.jobTitle,
+                startDate: item.startDate,
+                endDate: item.currentJob ? "" : item.endDate,
+                priority: item.priority,
+                description: item.description,
+                currentJob: item.currentJob,
+            }));
 
             const response = await updateExperience(data.id, {
                 title,
@@ -120,7 +124,7 @@ const CareerExperience = () => {
             });
 
             setZustandExperiences(response.data);
-            setExperiences(apiItems);
+            setExperiences(response.data.items);
             showMessage("Employment history updated successfully", NoticeEnum.SUCCESS);
         } catch (e) {
             console.log(e);
@@ -181,32 +185,30 @@ const CareerExperience = () => {
                 </DropdownMenu>
             </div>
             <div className="space-y-6">
-                {contentData.experience.map((exp, index) => (
+                {experiences.map((exp, index) => (
                     <div
                         key={exp.id}
-                        className={`border-l-2 ${index === 0 ? "border-blue-500" : "border-gray-300"
+                        className={`border-l-2 ${exp.currentJob ? "border-blue-500" : "border-gray-300"
                             } pl-4 ml-2`}
                     >
-                        {(
-                            <>
-                                <div className="flex items-center mb-1">
-                                    <Briefcase
-                                        size={16}
-                                        className={`${index === 0 ? "text-blue-600" : "text-gray-500"
-                                            } mr-2`}
-                                    />
-                                    <h3 className="font-medium text-gray-900">
-                                        {exp.title}
-                                    </h3>
-                                </div>
-                                <p className="text-gray-700 mb-1">{exp.company}</p>
-                                <div className="flex items-center text-gray-500 text-sm mb-2">
-                                    <Calendar size={14} className="mr-1" />
-                                    <span>{exp.period}</span>
-                                </div>
-                                <p className="text-gray-700">{exp.description}</p>
-                            </>
-                        )}
+                        <div className="flex items-center mb-1">
+                            <Briefcase
+                                size={16}
+                                className={`${exp.currentJob ? "text-blue-600" : "text-gray-500"
+                                    } mr-2`}
+                            />
+                            <h3 className="font-medium text-gray-900">
+                                {exp.jobTitle}
+                            </h3>
+                            {exp.currentJob && (
+                                <span className="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded">Current</span>
+                            )}
+                        </div>
+                        <div className="flex items-center text-gray-500 text-sm mb-2">
+                            <Calendar size={14} className="mr-1" />
+                            <span>{exp.startDate} - {exp.currentJob ? "Present" : exp.endDate}</span>
+                        </div>
+                        <p className="text-gray-700">{exp.description}</p>
                     </div>
                 ))}
             </div>
@@ -220,6 +222,7 @@ const CareerExperience = () => {
             editedItems={editedEmploymentItems}
             setEditedItems={setEditedEmploymentItems}
             setSaveLoading={setSaveLoading}
+            handleUpdate={handleSaveEmployment}
         />
 
         {contextHolder}

@@ -47,7 +47,7 @@ export interface ExperienceResponseType extends CareerBase {
 }
 
 export interface ExperienceItemResponse {
-    id: number,
+    id: number | null,
     jobTitle: string,
     startDate: string,
     endDate: string,

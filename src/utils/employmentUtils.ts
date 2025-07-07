@@ -1,4 +1,4 @@
-import { EmploymentResponseItem } from "@/components/profile/employment-edit-modal";
+import { EmploymentResponseItem } from "@/components/profile/EmploymentEditModal";
 
 /**
  * Transforms API employment data to the format expected by the edit modal
