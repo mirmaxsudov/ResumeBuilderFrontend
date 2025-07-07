@@ -92,3 +92,5 @@ export interface UpdateLanguageRequestType {
     title: string,
     items: LanaguageRequestItem[];
 }
+
+export type UpdateExperienceType = Omit<ExperienceResponseType, "id">   

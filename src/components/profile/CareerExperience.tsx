@@ -4,33 +4,168 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { contentData } from "./data";
 import useMyNotice from "@/hooks/useMyNotice";
 import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ExperienceItemResponse } from "@/types/careerProfile/CareerProfileType";
+import { updateExperience } from "@/api/requests/profile/profile.api";
+import { NoticeEnum } from "@/enums/NoticeEnum";
+import EmploymentEditModal, { EmploymentResponseItem } from "./employment-edit-modal";
+import { transformApiToEmploymentItem, transformEmploymentItemToApi } from "@/utils/employmentUtils";
 
 const CareerExperience = () => {
     const { contextHolder, showMessage } = useMyNotice();
+    // Zustand
     const data = useCareerProfile(state => state.data);
+    const setZustandExperiences = useCareerProfile(state => state.setExperiences);
+
+    // states
+    // Title
+    const [title, setTitle] = useState<string>("Experience");
+    const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+    // Experience items
+    const [experiences, setExperiences] = useState<ExperienceItemResponse[]>([]);
+    // Edit modal states
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+    const [saveLoading, setSaveLoading] = useState<boolean>(false);
+    const [editedEmploymentItems, setEditedEmploymentItems] = useState<EmploymentResponseItem[]>([]);
+    // Refs
+    const titleRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (data) {
-            // Todo => Set experience values to state. 
+        if (data.experience) {
+            setTitle(data.experience.title);
+            setExperiences(data.experience.items);
+
+            const transformedItems = data.experience.items.map(item => ({
+                id: item.id,
+                jobTitle: item.jobTitle,
+                companyName: "", // API doesn't have companyName, we'll need to add it
+                startDate: item.startDate,
+                endDate: item.endDate,
+                priority: item.priority,
+                description: item.description,
+                currentJob: item.currentJob,
+            }));
+            setEditedEmploymentItems(transformedItems);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (isEditingTitle && titleRef.current)
+            titleRef.current.focus();
+    }, [isEditingTitle]);
+
+    const handleTitleSave = () => {
+        if (!title) {
+            showMessage("You should enter title", NoticeEnum.ERROR);
+            return;
+        }
+
+        setIsEditingTitle(false);
+        handleSaveJustTitle();
+    }
+
+    const handleTitleKeyDown = (
+        e: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (e.key === "Enter") handleTitleSave();
+        if (e.key === "Escape") setIsEditingTitle(false);
+    }
+
+    // Saves or updates
+
+    const handleSaveJustTitle = async () => {
+        if (!title) {
+            showMessage("You should enter title", NoticeEnum.SUCCESS);
+            return;
+        }
+        try {
+            const response = await updateExperience(data.id, {
+                title,
+                items: experiences
+            });
+            setZustandExperiences(response.data);
+            showMessage("Successfully updated", NoticeEnum.SUCCESS);
+        } catch (e) {
+            console.log(e);
+        } finally {
+
+        }
+    }
+
+    const handleEditEmployment = () => {
+        setIsEditModalOpen(true);
+        setIsDropdownOpen(false);
+    };
+
+    const handleSaveEmployment = async () => {
+        try {
+            setSaveLoading(true);
+
+            const apiItems = editedEmploymentItems
+                .filter(item => item.id !== null) // Filter out items with null id
+                .map(item => ({
+                    id: item.id as number, // Cast to number since we filtered nulls
+                    jobTitle: item.jobTitle,
+                    startDate: item.startDate,
+                    endDate: item.currentJob ? "" : item.endDate,
+                    priority: item.priority,
+                    description: item.description,
+                    currentJob: item.currentJob,
+                }));
+
+            const response = await updateExperience(data.id, {
+                title,
+                items: apiItems
+            });
+
+            setZustandExperiences(response.data);
+            setExperiences(apiItems);
+            showMessage("Employment history updated successfully", NoticeEnum.SUCCESS);
+        } catch (e) {
+            console.log(e);
+            showMessage("Failed to update employment history", NoticeEnum.ERROR);
+        } finally {
+            setSaveLoading(false);
+        }
+    };
 
     return <>
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-900">
-                    Experience
-                </h2>
-                <DropdownMenu>
+                {isEditingTitle ? (
+                    <input
+                        ref={titleRef}
+                        className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
+                        value={title}
+                        onChange={(e) =>
+                            setTitle(d => e.target.value)
+                        }
+                        onBlur={handleTitleSave}
+                        onKeyDown={handleTitleKeyDown}
+                    />
+                ) : (
+                    <h2
+                        className="text-lg font-semibold mb-4 text-gray-900 cursor-pointer"
+                        onClick={() => setIsEditingTitle(true)}
+                        title={title}
+                    >
+                        {title}
+                    </h2>
+                )}
+                <DropdownMenu open={isDropdownOpen} onOpenChange={() => {
+                    setIsDropdownOpen(!isDropdownOpen)
+                }}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
                             <MoreVertical className="h-4 w-4 text-black" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-[#fff]" align="end">
-                        <DropdownMenuItem onClick={(e) => {
+                        <DropdownMenuItem className="cursor-pointer" onClick={(e) => {
                             e.stopPropagation();
+                            setIsDropdownOpen(false);
+                            handleEditEmployment();
                         }}>
                             <Edit className="mr-2 h-4 w-4" />
                             <span>Edit</span>
@@ -76,6 +211,17 @@ const CareerExperience = () => {
                 ))}
             </div>
         </div>
+
+        <EmploymentEditModal
+            isEditModalOpen={isEditModalOpen}
+            setIsEditModalOpen={setIsEditModalOpen}
+            setIsDropdownOpen={setIsDropdownOpen}
+            saveLoading={saveLoading}
+            editedItems={editedEmploymentItems}
+            setEditedItems={setEditedEmploymentItems}
+            setSaveLoading={setSaveLoading}
+        />
+
         {contextHolder}
     </>
 }
