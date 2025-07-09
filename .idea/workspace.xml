@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Fixed dashboard/Sidebar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/requests/auth/auth.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/requests/auth/auth.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/register/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/settings/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/settings/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +140,7 @@
       <workItem from="1746446324213" duration="14000" />
       <workItem from="1746449178226" duration="4504000" />
       <workItem from="1746625402886" duration="31000" />
+      <workItem from="1752079550844" duration="3992000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />

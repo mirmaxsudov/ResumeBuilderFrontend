@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {
     Eye,
     Edit,
@@ -10,7 +10,7 @@ import {
     Phone,
     Globe,
 } from "lucide-react";
-import { Button } from "../dashboard/ui/button";
+import {Button} from "../dashboard/ui/button";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -25,16 +25,16 @@ import {
     DialogTitle,
     DialogDescription,
 } from "../dashboard/ui/dialog";
-import { UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
-import { updateContact } from "@/api/requests/profile/profile.api";
+import {UpdateContactRequestType} from "@/types/careerProfile/CareerProfileType";
+import {updateContact} from "@/api/requests/profile/profile.api";
 import useMyNotice from "@/hooks/useMyNotice";
-import { NoticeEnum } from "@/enums/NoticeEnum";
-import { useAppSelector } from "@/hooks/hooks";
-import { useCareerProfile } from "@/store/zustand/useCareerProfile";
+import {NoticeEnum} from "@/enums/NoticeEnum";
+import {useAppSelector} from "@/hooks/hooks";
+import {useCareerProfile} from "@/store/zustand/useCareerProfile";
 
 export default function CareerContactInfo() {
-    const { contextHolder, showMessage } = useMyNotice();
-    const { user } = useAppSelector(state => state.auth);
+    const {contextHolder, showMessage} = useMyNotice();
+    const {user} = useAppSelector(state => state.auth);
     const setCareerContact = useCareerProfile(state => state.setCareerContact);
     const careerData = useCareerProfile(state => state.data);
 
@@ -72,7 +72,7 @@ export default function CareerContactInfo() {
 
     const handleTitleSave = async () => {
         setIsEditingTitle(false);
-        await update({ ...editForm, title: editForm.title });
+        await update({...editForm, title: editForm.title});
     };
 
     const handleTitleKeyDown = (
@@ -102,8 +102,8 @@ export default function CareerContactInfo() {
     const handleEditFormChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const { name, value } = e.target;
-        setEditForm((prev) => ({ ...prev, [name]: value }));
+        const {name, value} = e.target;
+        setEditForm((prev) => ({...prev, [name]: value}));
     };
 
     const update = async (payload: UpdateContactRequestType) => {
@@ -135,7 +135,7 @@ export default function CareerContactInfo() {
                         className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
                         value={editForm.title}
                         onChange={(e) =>
-                            setEditForm((d) => ({ ...d, title: e.target.value }))
+                            setEditForm((d) => ({...d, title: e.target.value}))
                         }
                         onBlur={handleTitleSave}
                         onKeyDown={handleTitleKeyDown}
@@ -153,7 +153,7 @@ export default function CareerContactInfo() {
                 <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreVertical className="h-4 w-4 text-black" />
+                            <MoreVertical className="h-4 w-4 text-black"/>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="bg-white">
@@ -165,13 +165,13 @@ export default function CareerContactInfo() {
                             }}
                         >
                             <div className="flex items-center gap-2">
-                                <Edit className="h-4 w-4" />
+                                <Edit className="h-4 w-4"/>
                                 <span>Edit</span>
                             </div>
                         </DropdownMenuItem>
 
                         <DropdownMenuItem onClick={() => console.log("Select clicked")}>
-                            <Eye className="h-4 w-4 mr-2" />
+                            <Eye className="h-4 w-4 mr-2"/>
                             <span>Select</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -180,7 +180,7 @@ export default function CareerContactInfo() {
 
             <div className="space-y-3">
                 <div className="flex items-start">
-                    <Mail className="w-5 h-5 text-gray-500 mt-0.5 mr-3 flex-shrink-0" />
+                    <Mail className="w-5 h-5 text-gray-500 mt-0.5 mr-3 flex-shrink-0"/>
                     <div className="flex-1 min-w-0 max-w-[100%]">
                         <p className="text-sm text-gray-500">Email</p>
                         <p className="break-words">
@@ -189,7 +189,7 @@ export default function CareerContactInfo() {
                     </div>
                 </div>
                 <div className="flex items-start">
-                    <Phone className="w-5 h-5 text-gray-500 mt-0.5 mr-3" />
+                    <Phone className="w-5 h-5 text-gray-500 mt-0.5 mr-3"/>
                     <div>
                         <p className="text-sm text-gray-500">Phone</p>
                         <p className="text-gray-900">
@@ -198,7 +198,7 @@ export default function CareerContactInfo() {
                     </div>
                 </div>
                 <div className="flex items-start">
-                    <MapPin className="w-5 h-5 text-gray-500 mt-0.5 mr-3" />
+                    <MapPin className="w-5 h-5 text-gray-500 mt-0.5 mr-3"/>
                     <div>
                         <p className="text-sm text-gray-500">Location</p>
                         <p className="text-gray-900 break-words">
@@ -207,7 +207,7 @@ export default function CareerContactInfo() {
                     </div>
                 </div>
                 <div className="flex items-start">
-                    <Globe className="w-5 h-5 text-gray-500 mt-0.5 mr-3" />
+                    <Globe className="w-5 h-5 text-gray-500 mt-0.5 mr-3"/>
                     <div>
                         <p className="text-sm text-gray-500">Website</p>
                         <a
