@@ -68,7 +68,7 @@ export default function ChangePasswordModalForRegisteredUser(
 
     return (
         <Dialog open={isOpen} onOpenChange={setOpenModal}>
-            <DialogContent className="sm:max-w-[425px] bg-white">
+            <DialogContent className="bg-white px-3 py-4">
                 <DialogHeader>
                     <DialogTitle className="text-xl">
                         Change Your Account Password
@@ -126,7 +126,7 @@ export default function ChangePasswordModalForRegisteredUser(
                     <Button
                         type="submit"
                         variant="outline"
-                        className="mt-4"
+                        className="mt-4 bg-[#2563EB] text-[#fff]"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? "Changing..." : "Change Password"}

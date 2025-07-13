@@ -1,29 +1,16 @@
 "use client";
 
-import React, {useState, useRef, useEffect} from "react";
-import {
-    Eye,
-    Edit,
-    MoreVertical,
-    Mail,
-    MapPin,
-    Phone,
-    Globe,
-} from "lucide-react";
+import React, {useEffect, useRef, useState} from "react";
+import {Edit, Eye, Globe, Mail, MapPin, MoreVertical, Phone,} from "lucide-react";
 import {Button} from "../dashboard/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem,
-} from "../dashboard/ui/dropdown-menu";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "../dashboard/ui/dropdown-menu";
 import {
     Dialog,
     DialogContent,
-    DialogHeader,
-    DialogFooter,
-    DialogTitle,
     DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "../dashboard/ui/dialog";
 import {UpdateContactRequestType} from "@/types/careerProfile/CareerProfileType";
 import {updateContact} from "@/api/requests/profile/profile.api";
@@ -71,6 +58,11 @@ export default function CareerContactInfo() {
     }, [isEditingTitle]);
 
     const handleTitleSave = async () => {
+        if (!editForm.title || !editForm.title.trim()) {
+            showMessage("Title should not be empty.", NoticeEnum.ERROR);
+            return;
+        }
+
         setIsEditingTitle(false);
         await update({...editForm, title: editForm.title});
     };
@@ -110,6 +102,7 @@ export default function CareerContactInfo() {
         setSaveLoading(true);
         try {
             if (!careerData) return;
+            payload.title = payload.title.trim();
             const response = await updateContact(payload, careerData.id);
             setCareerContact(payload);
             showMessage(response.data, NoticeEnum.SUCCESS);

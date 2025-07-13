@@ -1,18 +1,18 @@
 "use client"
 
-import { Eye, Edit, MoreVertical, Briefcase, Calendar } from "lucide-react";
-import { Button } from "../dashboard/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
+import {Eye, Edit, MoreVertical, Briefcase, Calendar} from "lucide-react";
+import {Button} from "../dashboard/ui/button";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../dashboard/ui/dropdown-menu";
 import useMyNotice from "@/hooks/useMyNotice";
-import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { useEffect, useRef, useState } from "react";
-import { ExperienceItemResponse } from "@/types/careerProfile/CareerProfileType";
-import { updateExperience } from "@/api/requests/profile/profile.api";
-import { NoticeEnum } from "@/enums/NoticeEnum";
+import {useCareerProfile} from "@/store/zustand/useCareerProfile";
+import {useEffect, useRef, useState} from "react";
+import {ExperienceItemResponse} from "@/types/careerProfile/CareerProfileType";
+import {updateExperience} from "@/api/requests/profile/profile.api";
+import {NoticeEnum} from "@/enums/NoticeEnum";
 import EmploymentEditModal from "./EmploymentEditModal";
 
 const CareerExperience = () => {
-    const { contextHolder, showMessage } = useMyNotice();
+    const {contextHolder, showMessage} = useMyNotice();
     // Zustand
     const data = useCareerProfile(state => state.data);
     const setZustandExperiences = useCareerProfile(state => state.setExperiences);
@@ -63,7 +63,7 @@ const CareerExperience = () => {
     }, [isEditingTitle]);
 
     const handleTitleSave = () => {
-        if (!title) {
+        if (!title || !title.trim()) {
             showMessage("You should enter title", NoticeEnum.ERROR);
             return;
         }
@@ -87,7 +87,7 @@ const CareerExperience = () => {
         }
         try {
             const response = await updateExperience(data.id, {
-                title,
+                title: title.trim(),
                 items: experiences
             });
             setZustandExperiences(response.data);
@@ -162,7 +162,7 @@ const CareerExperience = () => {
                 }}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreVertical className="h-4 w-4 text-black" />
+                            <MoreVertical className="h-4 w-4 text-black"/>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-[#fff]" align="end">
@@ -171,14 +171,14 @@ const CareerExperience = () => {
                             setIsDropdownOpen(false);
                             handleEditEmployment();
                         }}>
-                            <Edit className="mr-2 h-4 w-4" />
+                            <Edit className="mr-2 h-4 w-4"/>
                             <span>Edit</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={(e) => {
                             e.stopPropagation();
                             console.log("Select clicked");
                         }}>
-                            <Eye className="mr-2 h-4 w-4" />
+                            <Eye className="mr-2 h-4 w-4"/>
                             <span>Select</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -189,23 +189,24 @@ const CareerExperience = () => {
                     <div
                         key={exp.id}
                         className={`border-l-2 ${exp.currentJob ? "border-blue-500" : "border-gray-300"
-                            } pl-4 ml-2`}
+                        } pl-4 ml-2`}
                     >
                         <div className="flex items-center mb-1">
                             <Briefcase
                                 size={16}
                                 className={`${exp.currentJob ? "text-blue-600" : "text-gray-500"
-                                    } mr-2`}
+                                } mr-2`}
                             />
                             <h3 className="font-medium text-gray-900">
                                 {exp.jobTitle}
                             </h3>
                             {exp.currentJob && (
-                                <span className="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded">Current</span>
+                                <span
+                                    className="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded">Current</span>
                             )}
                         </div>
                         <div className="flex items-center text-gray-500 text-sm mb-2">
-                            <Calendar size={14} className="mr-1" />
+                            <Calendar size={14} className="mr-1"/>
                             <span>{exp.startDate} - {exp.currentJob ? "Present" : exp.endDate}</span>
                         </div>
                         <p className="text-gray-700">{exp.description}</p>

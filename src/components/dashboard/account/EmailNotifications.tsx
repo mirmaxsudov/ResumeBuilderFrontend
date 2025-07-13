@@ -1,8 +1,12 @@
-import { Switch } from "@mui/material";
-import { Button } from "../ui/button";
-import { useState } from "react";
+import {Switch} from "@mui/material";
+import {Button} from "../ui/button";
+import {useEffect, useState} from "react";
+import {get, update} from "@/api/requests/account/email-notification.api";
+import useMyNotice from "@/hooks/useMyNotice";
+import {NoticeEnum} from "@/enums/NoticeEnum";
 
 const EmailNotifications = () => {
+    const [loading, setLoading] = useState<boolean>(true);
     const [notifications, setNotifications] = useState([
         {
             id: 1,
@@ -21,12 +25,47 @@ const EmailNotifications = () => {
             enabled: false
         }
     ]);
+    const {contextHolder, showMessage} = useMyNotice();
 
-    const handleToggle = (id: number) => {
+    useEffect(() => {
+        if (loading)
+            fetchData();
+    }, [loading]);
+
+    const fetchData = async () => {
+        try {
+            const response = await get();
+            const data = response.data;
+
+            setNotifications([
+                {...notifications[0], enabled: data.updateAndOffers},
+                {...notifications[1], enabled: data.resumeAnalytics},
+                {...notifications[2], enabled: data.resumeAndJobTipsNewsletter},
+            ])
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleToggle = async (id: number) => {
         const updatedNotifications = notifications.map(notification =>
-            notification.id === id ? { ...notification, enabled: !notification.enabled } : notification
+            notification.id === id ? {...notification, enabled: !notification.enabled} : notification
         );
-        setNotifications(updatedNotifications);
+
+        try {
+            const response = await update({
+                updateAndOffers: notifications[0].enabled,
+                resumeAnalytics: notifications[1].enabled,
+                resumeAndJobTipsNewsletter: notifications[2].enabled,
+                careerPlans: false
+            })
+            showMessage(response.message, NoticeEnum.SUCCESS);
+            setNotifications(updatedNotifications);
+        } catch (e) {
+            showMessage("Something went wrong!");
+        }
     };
 
     return (
@@ -47,10 +86,10 @@ const EmailNotifications = () => {
                                 </p>
                             </div>
                             <div>
-                                <Switch checked={notification.enabled} onChange={() => handleToggle(notification.id)} />
+                                <Switch checked={notification.enabled} onChange={() => handleToggle(notification.id)}/>
                             </div>
                         </div>
-                        {<div className="w-full h-[1px] bg-gray-200" />}
+                        {<div className="w-full h-[1px] bg-gray-200"/>}
                     </>
                 ))}
                 <div className="flex justify-between items-center">
@@ -69,6 +108,7 @@ const EmailNotifications = () => {
                     </div>
                 </div>
             </div>
+            {contextHolder}
         </>
     )
 }

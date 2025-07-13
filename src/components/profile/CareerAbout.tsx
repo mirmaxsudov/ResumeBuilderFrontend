@@ -1,21 +1,28 @@
 "use client";
 
-import { Eye, Edit, MoreVertical, EyeOff, Shrink } from "lucide-react";
-import { Button } from "../dashboard/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
+import {Eye, Edit, MoreVertical, EyeOff, Shrink} from "lucide-react";
+import {Button} from "../dashboard/ui/button";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../dashboard/ui/dropdown-menu";
 import useMyNotice from "@/hooks/useMyNotice";
-import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { useEffect, useRef, useState } from "react";
-import { updateSummary } from "@/api/requests/profile/profile.api";
-import { NoticeEnum } from "@/enums/NoticeEnum";
+import {useCareerProfile} from "@/store/zustand/useCareerProfile";
+import {useEffect, useRef, useState} from "react";
+import {updateSummary} from "@/api/requests/profile/profile.api";
+import {NoticeEnum} from "@/enums/NoticeEnum";
 import clsx from "clsx";
-import { Dialog, DialogHeader, DialogDescription, DialogTitle, DialogContent, DialogFooter } from "../dashboard/ui/dialog";
-import { RichTextEditor } from "../resume/rich-text-editor";
+import {
+    Dialog,
+    DialogHeader,
+    DialogDescription,
+    DialogTitle,
+    DialogContent,
+    DialogFooter
+} from "../dashboard/ui/dialog";
+import {RichTextEditor} from "../resume/rich-text-editor";
 
 const CareerAbout = () => {
-    const { contextHolder, showMessage } = useMyNotice();
+    const {contextHolder, showMessage} = useMyNotice();
     const setSummary = useCareerProfile(state => state.setSummary);
-    const { summary, id } = useCareerProfile(state => state.data);
+    const {summary, id} = useCareerProfile(state => state.data);
     const [editForm, setEditForm] = useState<{
         title: string,
         summary: string,
@@ -44,14 +51,17 @@ const CareerAbout = () => {
     }, [summary]);
 
     useEffect(() => {
-        if (isEditingTitle && titleRef.current) {
+        if (isEditingTitle && titleRef.current)
             titleRef.current.focus();
-        }
     }, [isEditingTitle]);
 
     const handleTitleSave = async () => {
+        if (!editForm.title || !editForm.title.trim()) {
+            showMessage("Title should not be empty.");
+            return;
+        }
         setIsEditingTitle(false);
-        setEditForm({ ...editForm, newSummary: "" })
+        setEditForm({...editForm, newSummary: ""})
         await update();
     };
 
@@ -63,7 +73,7 @@ const CareerAbout = () => {
     };
 
     const handleEditFormSave = async () => {
-        setEditForm({ ...editForm, newSummary: "" })
+        setEditForm({...editForm, newSummary: ""})
         await update()
     }
 
@@ -71,7 +81,7 @@ const CareerAbout = () => {
         setSaveLoading(true);
         try {
             if (!editForm) return;
-            const response = await updateSummary(id, editForm.newSummary || editForm.summary || summary.summary || "", editForm.title);
+            const response = await updateSummary(id, editForm.newSummary || editForm.summary || summary.summary || "", editForm.title.trim());
             setSummary(editForm);
             showMessage(response.data, NoticeEnum.SUCCESS);
         } catch (e) {
@@ -89,7 +99,7 @@ const CareerAbout = () => {
                     className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
                     value={editForm.title}
                     onChange={(e) =>
-                        setEditForm((d) => ({ ...d, title: e.target.value }))
+                        setEditForm((d) => ({...d, title: e.target.value}))
                     }
                     onBlur={handleTitleSave}
                     onKeyDown={handleTitleKeyDown}
@@ -106,7 +116,7 @@ const CareerAbout = () => {
             <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreVertical className="h-4 w-4 text-black" />
+                        <MoreVertical className="h-4 w-4 text-black"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-[#fff]" align="end">
@@ -114,15 +124,15 @@ const CareerAbout = () => {
                         e.stopPropagation();
                         setIsEditModalOpen(true);
                         setIsDropdownOpen(false);
-                        setEditForm({ ...editForm, newSummary: editForm.summary })
+                        setEditForm({...editForm, newSummary: editForm.summary})
                     }}>
-                        <Edit className="mr-2 h-4 w-4" />
+                        <Edit className="mr-2 h-4 w-4"/>
                         <span>Edit</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:cursor-pointer" onClick={(e) => {
                         e.stopPropagation();
                     }}>
-                        <Eye className="mr-2 h-4 w-4" />
+                        <Eye className="mr-2 h-4 w-4"/>
                         <span>Select</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:cursor-pointer" onClick={(e) => {
@@ -130,7 +140,7 @@ const CareerAbout = () => {
                         setIsShowMore(!isShowMore);
                         setIsDropdownOpen(false);
                     }}>
-                        <Shrink className="mr-2 h-4 w-4" />
+                        <Shrink className="mr-2 h-4 w-4"/>
                         <span>Show more</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -155,9 +165,11 @@ const CareerAbout = () => {
                 <DialogHeader>
                     <DialogTitle>Summary</DialogTitle>
                 </DialogHeader>
-                <DialogDescription className="max-h-[500px] overflow-y-auto scrollbar-hide border border-[#E0E0E0] p-2 rounded-[12px] text-sm" dangerouslySetInnerHTML={{
-                    __html: editForm.summary
-                }}>
+                <DialogDescription
+                    className="max-h-[500px] overflow-y-auto scrollbar-hide border border-[#E0E0E0] p-2 rounded-[12px] text-sm"
+                    dangerouslySetInnerHTML={{
+                        __html: editForm.summary
+                    }}>
                 </DialogDescription>
             </DialogContent>
         </Dialog>
@@ -188,7 +200,7 @@ const CareerAbout = () => {
                         <label className="block text-sm font-medium mb-1">Summary</label>
                         <RichTextEditor
                             value={editForm.newSummary || editForm.summary}
-                            onChange={(value) => setEditForm({ ...editForm, newSummary: value })}
+                            onChange={(value) => setEditForm({...editForm, newSummary: value})}
                             placeholder="Enter your summary..."
                             className="w-full"
                             minHeight="200px"

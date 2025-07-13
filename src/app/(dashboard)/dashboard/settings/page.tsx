@@ -59,8 +59,11 @@ const SettingsPage = () => {
                 </TabsContent>
 
                 <TabsContent value="appearance" className="bg-white p-6 rounded-lg shadow">
-                    <h3 className="text-xl font-semibold mb-2">Appearance</h3>
-                    <p className="text-gray-600">Switch between light and dark themes.</p>
+                    <h1 className={"font-bold text-2xl text-center text-[60px] tracking-wider"}>
+                        Soon
+                    </h1>
+                    {/*<h3 className="text-xl font-semibold mb-2">Appearance</h3>*/}
+                    {/*<p className="text-gray-600">Switch between light and dark themes.</p>*/}
                 </TabsContent>
 
                 <TabsContent value="security" className="bg-white p-6 rounded-lg shadow">
