@@ -1,4 +1,3 @@
-import { CareerProfileResponseType } from "@/types/careerProfile/CareerProfileType";
 import CareerAbout from "./CareerAbout";
 import CareerExperience from "./CareerExperience";
 import CareerEducation from "./CareerEducation";

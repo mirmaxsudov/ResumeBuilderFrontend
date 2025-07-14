@@ -1,5 +1,5 @@
 import $api from "@/api/request";
-import { AccountRequest, AccountResponse } from "@/types/account/AccountType";
+import {AccountRequest, AccountResponse} from "@/types/account/AccountType";
 import ApiResponse from "@/types/ApiResponse";
 
 const BASE_ACCOUNT_URL: string = "/api/v1/account";
@@ -9,4 +9,4 @@ const update = async (accountReq: AccountRequest): Promise<ApiResponse<AccountRe
     return response.data;
 }
 
-export { update };
+export {update};

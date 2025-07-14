@@ -1,20 +1,27 @@
 "use client";
 
-import { Edit, Eye, MoreVertical } from "lucide-react";
-import { Button } from "../dashboard/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
-import { useCareerProfile } from "@/store/zustand/useCareerProfile";
+import {Edit, Eye, MoreVertical} from "lucide-react";
+import {Button} from "../dashboard/ui/button";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../dashboard/ui/dropdown-menu";
+import {useCareerProfile} from "@/store/zustand/useCareerProfile";
 import useMyNotice from "@/hooks/useMyNotice";
-import { NoticeEnum } from "@/enums/NoticeEnum";
-import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogDescription, DialogTitle, DialogContent, DialogHeader, DialogFooter } from "../dashboard/ui/dialog";
+import {NoticeEnum} from "@/enums/NoticeEnum";
+import {useEffect, useRef, useState} from "react";
+import {
+    Dialog,
+    DialogDescription,
+    DialogTitle,
+    DialogContent,
+    DialogHeader,
+    DialogFooter
+} from "../dashboard/ui/dialog";
 import clsx from "clsx";
-import { TagsInput } from "./TagsInput";
-import { updateSkills } from "@/api/requests/profile/profile.api";
+import {TagsInput} from "./TagsInput";
+import {updateSkills} from "@/api/requests/profile/profile.api";
 
 const CareerSkills = () => {
-    const { contextHolder, showMessage } = useMyNotice();
-        const data = useCareerProfile(state => state.data);
+    const {contextHolder, showMessage} = useMyNotice();
+    const data = useCareerProfile(state => state.data);
     const setSkills = useCareerProfile(state => state.setSkills);
     const [skills, setCareerSkills] = useState<string[]>([]);
     const [title, setTitle] = useState(data.skillsTitle);
@@ -38,7 +45,7 @@ const CareerSkills = () => {
     }, [isEditingTitle]);
 
     const handleTitleSave = async () => {
-        if (!title) {
+        if (!title || !title.trim()) {
             showMessage("Title could not be empty");
             return;
         }
@@ -63,7 +70,7 @@ const CareerSkills = () => {
                 return;
             }
             const req = {
-                title,
+                title: title.trim(),
                 skills
             }
 
@@ -125,7 +132,7 @@ const CareerSkills = () => {
             <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreVertical className="h-4 w-4 text-black" />
+                        <MoreVertical className="h-4 w-4 text-black"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-[#fff]" align="end">
@@ -136,14 +143,14 @@ const CareerSkills = () => {
                         setEditedSkills(skills);
 
                     }}>
-                        <Edit className="mr-2 h-4 w-4" />
+                        <Edit className="mr-2 h-4 w-4"/>
                         <span>Edit</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={(e) => {
                         e.stopPropagation();
                         showMessage("Exists soon", NoticeEnum.INFO)
                     }}>
-                        <Eye className="mr-2 h-4 w-4" />
+                        <Eye className="mr-2 h-4 w-4"/>
                         <span>Select</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -192,7 +199,7 @@ const CareerSkills = () => {
                 >
                     <div>
                         <label className="block text-sm font-medium mb-1">Skills</label>
-                        <TagsInput tags={editedSkills} setTags={setEditedSkills} />
+                        <TagsInput tags={editedSkills} setTags={setEditedSkills}/>
                     </div>
                     <DialogFooter className="flex justify-end gap-2">
                         <Button
