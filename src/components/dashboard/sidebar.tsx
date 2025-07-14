@@ -29,6 +29,7 @@ import {Dropdown} from "antd";
 import type {MenuProps} from "antd";
 import Role from "@/enums/Role";
 import {GrUserAdmin} from "react-icons/gr";
+import {BiChat} from "react-icons/bi";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
 
@@ -138,6 +139,12 @@ export default function Sidebar({onStateChange}: SidebarProps) {
                     label: "HRs"
                 }
             ],
+            allowedRoles: [Role.ADMIN, Role.SUPER_ADMIN]
+        },
+        {
+            icon: BiChat,
+            label: "Hr chats",
+            href: "/dashboard/hr-chats",
             allowedRoles: [Role.ADMIN, Role.SUPER_ADMIN]
         },
         {

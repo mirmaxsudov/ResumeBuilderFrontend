@@ -1,16 +1,16 @@
 'use client'
-import React, {useEffect, useMemo, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import SwitchRoleCard from '@/components/dashboard/swich-role/SwitchRoleCard'
 import clsx from 'clsx'
 import SwitchRoleModal from '@/components/dashboard/swich-role/SwitchRoleModal'
 import NotFound from '@/components/dashboard/swich-role/NotFound'
-import {Input, message} from 'antd'
+import {Input} from 'antd'
 import {useAppSelector} from '@/hooks/hooks';
 import useMyNotice from '@/hooks/useMyNotice'
 import {NoticeEnum} from '@/enums/NoticeEnum'
 import {getMyRoles} from '@/api/requests/auth/auth.api'
 import {MyRoleResponse} from '@/types/auth/MyRoleResponse'
-import axios, {AxiosError, isAxiosError} from 'axios'
+import axios from 'axios'
 
 const Page = () => {
     const {user} = useAppSelector((state) => state.auth);
@@ -23,6 +23,11 @@ const Page = () => {
     const {contextHolder, showMessage} = useMyNotice();
     const [loading, setLoading] = useState<boolean>(true);
     const [roles, setRoles] = useState<MyRoleResponse[]>([]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => setRoles([...roles]), 1000)
+        return () => clearInterval(intervalId);
+    }, []);
 
     useEffect(() => {
         if (!searchTerm) {

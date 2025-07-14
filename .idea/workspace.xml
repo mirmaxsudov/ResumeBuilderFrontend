@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Implemented Email Notification with backend.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Enhanced account page.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/requests/auth/auth.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/requests/auth/auth.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/become-hr/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/become-hr/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/profile/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/switch-role/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/switch-role/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/account/ManageAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/account/ManageAccount.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/formatDate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/formatDate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/account/EmailNotificationType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/account/EmailNotificationType.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/EmploymentEditModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/EmploymentEditModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +148,7 @@
       <workItem from="1752168376999" duration="1406000" />
       <workItem from="1752310594437" duration="598000" />
       <workItem from="1752410166936" duration="10372000" />
-      <workItem from="1752463230031" duration="1123000" />
+      <workItem from="1752463230031" duration="18533000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -183,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752421479693</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Abdurahmon: Enhanced account page.">
+      <option name="closed" value="true" />
+      <created>1752464896692</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752464896692</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,7 +201,8 @@
     <MESSAGE value="Fixed dashboard/Sidebar" />
     <MESSAGE value="Abdurahmon: Enhanced settings &amp; almost done security tab." />
     <MESSAGE value="Abdurahmon: Implemented Email Notification with backend." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Implemented Email Notification with backend." />
+    <MESSAGE value="Abdurahmon: Enhanced account page." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Enhanced account page." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

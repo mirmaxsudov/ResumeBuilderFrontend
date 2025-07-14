@@ -11,13 +11,14 @@ export interface SwitchRoleCardProps {
     currentRole: Role
 }
 
-const SwitchRoleCard: React.FC<SwitchRoleCardProps> = ({
-                                                           role,
-                                                           lastTime,
-                                                           setIsOpen,
-                                                           setModalItem,
-                                                           currentRole
-                                                       }: any) => {
+const SwitchRoleCard: React.FC<SwitchRoleCardProps> = (
+    {
+        role,
+        lastTime,
+        setIsOpen,
+        setModalItem,
+        currentRole
+    }: any) => {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
