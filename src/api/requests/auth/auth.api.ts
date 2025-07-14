@@ -17,13 +17,14 @@ const login = async (login: string, password: string): Promise<ApiResponse<AuthU
     return response.data;
 };
 
-const changeRole = async (role: Role | string, password: string): Promise<ApiResponse<AuthUserPreviewType>> => {
+const changeRole = async (role: Role | string, password: string, email: string): Promise<ApiResponse<AuthUserPreviewType>> => {
     const response = await $api.patch<ApiResponse<AuthUserPreviewType>>(
         `${BASE_AUTH_URL}/${role}/change-role`,
         null,
         {
             params: {
-                password
+                password,
+                email
             }
         }
     )

@@ -1,6 +1,9 @@
 const formatDate = (date: Date): string => {
+    if (!date)
+        return "Never"
+
     const now = new Date().getTime();
-    const diffInSeconds = Math.floor((now - date.getTime()) / 1000);
+    const diffInSeconds = Math.floor((now - new Date(date).getTime()) / 1000);
 
     if (diffInSeconds < 60) {
         const seconds = diffInSeconds;
