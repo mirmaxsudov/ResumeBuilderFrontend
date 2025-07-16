@@ -18,3 +18,11 @@ export type BecomeHrMessageResponse = {
     ],
     createdAt: string
 }
+
+export type BecomeHrChatAdminPreview = {
+    id: number,
+    firstname: string,
+    description: string,
+    companyName: string,
+    chatId: number
+}

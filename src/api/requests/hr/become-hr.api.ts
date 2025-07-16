@@ -1,6 +1,6 @@
 import ApiResponse from "@/types/ApiResponse";
 import $api from "@/api/request";
-import {BecomeHrMessageResponse, BecomeHrResponse} from "@/types/hr/BecomeHrType";
+import {BecomeHrChatAdminPreview, BecomeHrMessageResponse, BecomeHrResponse} from "@/types/hr/BecomeHrType";
 
 const BASE_URL: string = "/api/v1/become-hr";
 
@@ -22,4 +22,15 @@ const getChatMessages = async (chatId: number): Promise<ApiResponse<BecomeHrMess
     return response.data;
 }
 
-export {getBecomeHr, newBecomeHr, getChatMessages};
+const getBecomeHrChatsAdmin = async (): Promise<ApiResponse<{
+    total: number,
+    chats: BecomeHrChatAdminPreview[]
+}>> => {
+    const response = await $api.get<ApiResponse<{
+        total: number,
+        chats: BecomeHrChatAdminPreview[]
+    }>>("/api/v1/hr/chats/hr-chats-admin");
+    return response.data;
+}
+
+export {getBecomeHr, newBecomeHr, getChatMessages, getBecomeHrChatsAdmin};

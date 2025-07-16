@@ -68,7 +68,7 @@ export default function ChatWindow(
                                 } p-3`}
                             >
                                 {/* Text */}
-                                {m.text && <p className="whitespace-pre-wrap">{m.text}</p>}
+                                {m.text && <p className="whitespace-pre-wrap break-all">{m.text}</p>}
 
                                 {/* Attachments */}
                                 {m.attachments?.map((att) => {
