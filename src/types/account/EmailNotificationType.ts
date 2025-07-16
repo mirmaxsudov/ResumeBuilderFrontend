@@ -8,5 +8,6 @@ export interface EmailNotificationResponse {
 export interface EmailNotificationRequest extends EmailNotificationResponse {
     careerPlans: boolean,
     updateAndOffers: boolean,
-    resumeAndJobTipsNewsletter: boolean
+    resumeAndJobTipsNewsletter: boolean,
+    resumeAnalytics: boolean
 }
