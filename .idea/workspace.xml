@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Enhanced account page.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added new logics.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/become-hr/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/become-hr/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/profile/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/switch-role/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/switch-role/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/swich-role/SwitchRoleCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/EmploymentEditModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/EmploymentEditModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -148,7 +144,8 @@
       <workItem from="1752168376999" duration="1406000" />
       <workItem from="1752310594437" duration="598000" />
       <workItem from="1752410166936" duration="10372000" />
-      <workItem from="1752463230031" duration="18533000" />
+      <workItem from="1752463230031" duration="18668000" />
+      <workItem from="1752636807906" duration="19663000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -190,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752464896692</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Abdurahmon: Added new logics.">
+      <option name="closed" value="true" />
+      <created>1752495609665</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1752495609665</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +207,8 @@
     <MESSAGE value="Abdurahmon: Enhanced settings &amp; almost done security tab." />
     <MESSAGE value="Abdurahmon: Implemented Email Notification with backend." />
     <MESSAGE value="Abdurahmon: Enhanced account page." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Enhanced account page." />
+    <MESSAGE value="Abdurahmon: Added new logics." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added new logics." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

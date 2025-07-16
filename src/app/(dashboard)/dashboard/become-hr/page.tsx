@@ -8,6 +8,11 @@ import Image from "next/image";
 import {Input} from "@/components/dashboard/ui/input";
 import {Textarea} from "@/components/dashboard/ui/textarea";
 import {z} from "zod";
+import ChatWindow from "@/components/become-hr/ChatWindow";
+import {getBecomeHr, getChatMessages, newBecomeHr} from "@/api/requests/hr/become-hr.api";
+import {BecomeHrResponse} from "@/types/hr/BecomeHrType";
+import {TopLoader} from "@/helpers/TopLoader";
+import ChatBecomeHr from "@/components/become-hr/ChatBecomeHr";
 
 const steps = ['Information', 'Enter your details', 'Chat with us'];
 
@@ -21,6 +26,17 @@ const BecomeHrPage = () => {
     const [companyName, setCompanyName] = useState<string>("");
     const [desc, setDesc] = useState<string>("")
     const [errors, setErrors] = useState<{ [k: string]: string }>({});
+    const [isAlreadyBecomeHr, setIsAlreadyBecomeHr] = useState<boolean>(false);
+    const [becomeHrResponse, setBecomeHrResponse] = useState<BecomeHrResponse | null>(null);
+    const [loadings, setLoadings] = useState<{ [k: string]: boolean }>({
+        isAlreadyBecomeHrLoading: true,
+        newBecomeHrLoading: false
+    });
+
+    useEffect(() => {
+        if (loadings.isAlreadyBecomeHrLoading)
+            fetchBecomeHr();
+    }, [loadings]);
 
     useEffect(() => {
         const result = BecomeHrZodSchema.safeParse({
@@ -40,7 +56,24 @@ const BecomeHrPage = () => {
             setErrors({});
     }, [companyName, desc]);
 
-    const handleNext = () => {
+    const fetchBecomeHr = async () => {
+        try {
+            const response = await getBecomeHr();
+            if (response.data) {
+                const {companyName, description} = response.data;
+                setBecomeHrResponse(response.data);
+                setIsAlreadyBecomeHr(true);
+                setCompanyName(companyName);
+                setDesc(description);
+            }
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoadings(prev => ({...prev, isAlreadyBecomeHrLoading: false}));
+        }
+    }
+
+    const handleNext = async () => {
         if (activeStep === steps.length)
             return
 
@@ -50,7 +83,7 @@ const BecomeHrPage = () => {
                 desc: desc.trim()
             })
 
-            if (!result.success) {
+            if (!isAlreadyBecomeHr && !result.success) {
                 const errs: { [k: string]: string } = {};
                 result.error.issues.forEach(issue => {
                     if (issue.path.length > 0)
@@ -62,6 +95,26 @@ const BecomeHrPage = () => {
                 return;
             } else
                 setErrors({});
+
+            // Here we create new Become Hr request if it doesn't exist
+            if (!isAlreadyBecomeHr) {
+                setLoadings({
+                    ...loadings,
+                    newBecomeHrLoading: true
+                })
+                try {
+                    const response = await newBecomeHr(companyName, desc);
+                    setBecomeHrResponse(response.data);
+                    setIsAlreadyBecomeHr(true);
+                } catch (e) {
+                    console.log(e);
+                } finally {
+                    setLoadings({
+                        ...loadings,
+                        newBecomeHrLoading: false
+                    });
+                }
+            }
         }
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -124,8 +177,9 @@ const BecomeHrPage = () => {
                     <div className="text-center md:text-left space-y-4">
                         <div>
                             <Input
-                                value={companyName}
                                 className={"mb-1"}
+                                value={companyName}
+                                disabled={isAlreadyBecomeHr}
                                 onChange={e => setCompanyName(e.target.value)}
                                 placeholder={"Enter your company name"}/>
                             {errors.companyName && <p className="text-red-600 text-sm">{errors.companyName}</p>}
@@ -133,6 +187,7 @@ const BecomeHrPage = () => {
                         <div>
                             <Textarea
                                 value={desc}
+                                disabled={isAlreadyBecomeHr}
                                 onChange={e => setDesc(e.target.value)}
                                 rows={16} maxLength={1000} className={"resize-none mb-1"}
                                 placeholder={"Enter about your company"}/>
@@ -155,9 +210,9 @@ const BecomeHrPage = () => {
                             rows={16} maxLength={1000} className={"resize-none"}
                             placeholder={"Enter about your company"}/>
                     </div>
-                    {/* Right Chat content */}
-                    <div>
-                        Chat
+                    <div className={"h-full"}>
+                        {isAlreadyBecomeHr &&
+                            <ChatBecomeHr params={{chatId: becomeHrResponse ? becomeHrResponse.chatId : -1}}/>}
                     </div>
                 </div>}
             </div>
@@ -171,10 +226,12 @@ const BecomeHrPage = () => {
                     Back
                 </Button>
                 {activeStep !== steps.length - 1 && (
-                    <Button variant={"outline"}
-                            className={"bg-[#2563EB] text-[#fff] hover:bg-[#3b82f6] transition-all duration-300"}
-                            onClick={handleNext}>
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    <Button
+                        disabled={loadings.newBecomeHrLoading}
+                        variant={"outline"}
+                        className={"bg-[#2563EB] text-[#fff] hover:bg-[#3b82f6] transition-all duration-300"}
+                        onClick={handleNext}>
+                        {loadings.newBecomeHrLoading ? "Creating..." : activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                 )}
             </div>
