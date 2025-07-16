@@ -155,7 +155,7 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             submenuItems: [
                 {icon: FileUser, label: "My Resumes", href: "/resume/my-resumes"},
                 {icon: FileText, label: "Resumes", href: "/resume/create-resume"},
-                {icon: NotebookPen, label: "Cover Pages", href: "/resume/cover-page"},
+                {icon: NotebookPen, label: "Cover Pages", href: "/resume/cover-page.tsx"},
             ],
             allowedRoles: [Role.HR, Role.ADMIN, Role.USER, Role.SUPER_ADMIN, Role.MANAGER]
         },

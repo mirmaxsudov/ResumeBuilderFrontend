@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added based websocket logic and start to implement hr chat.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added chat for admins using websocket.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/requests/hr/become-hr.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/requests/hr/become-hr.api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/hr-chats/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/hr-chats/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/hr/BecomeHrType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/hr/BecomeHrType.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,11 +105,11 @@
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\public\assets\images\home" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(publicProfile)\profile" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(dashboard)\app" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\components\home" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\@Resume\components" />
-      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\@Resume" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -148,7 +145,7 @@
       <workItem from="1752410166936" duration="10372000" />
       <workItem from="1752463230031" duration="18668000" />
       <workItem from="1752636807906" duration="19917000" />
-      <workItem from="1752684909644" duration="4318000" />
+      <workItem from="1752684909644" duration="6806000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -206,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752677906288</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Abdurahmon: Added chat for admins using websocket.">
+      <option name="closed" value="true" />
+      <created>1752689846200</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1752689846200</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,7 +225,8 @@
     <MESSAGE value="Abdurahmon: Enhanced account page." />
     <MESSAGE value="Abdurahmon: Added new logics." />
     <MESSAGE value="Abdurahmon: Added based websocket logic and start to implement hr chat." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added based websocket logic and start to implement hr chat." />
+    <MESSAGE value="Abdurahmon: Added chat for admins using websocket." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added chat for admins using websocket." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

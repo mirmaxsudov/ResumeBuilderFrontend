@@ -67,6 +67,7 @@ export default function HrChatsPage() {
                                 <TableHead>Description</TableHead>
                                 <TableHead>Company</TableHead>
                                 <TableHead className="w-24">Action</TableHead>
+                                <TableHead className="w-12">Make a HR</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -94,10 +95,19 @@ export default function HrChatsPage() {
                                     <TableCell>
                                         <Button
                                             size="sm"
-                                            variant="secondary"
+                                            variant="outline"
                                             onClick={() => handleOpenChat(c.chatId)}
                                         >
                                             Chat
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => alert("Soon... this feature is not implemented yet")}
+                                        >
+                                            Make HR
                                         </Button>
                                     </TableCell>
                                 </TableRow>
