@@ -67,7 +67,8 @@ export default function AdminChatBecomeHr({params}: AdminChatBecomeHrProps) {
         let attachments: number[] = [];
         if (files.length) {
             try {
-                attachments = await uploadFiles(files);
+                const response = await uploadFiles(files);
+                attachments = response.data;
             } catch (e) {
                 console.error("upload failed", e);
             }
@@ -77,7 +78,7 @@ export default function AdminChatBecomeHr({params}: AdminChatBecomeHrProps) {
             chatId,
             senderId: user!.userId,
             text,
-            attachments,
+            attachments: attachments.map(id => ({id})),
         };
 
         clientRef.current?.publish({

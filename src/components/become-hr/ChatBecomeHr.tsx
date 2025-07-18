@@ -53,11 +53,6 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
                     }
                 );
                 subscriptionRef.current = sub;
-
-                // optionally subscribe to admin notifications
-                // client.subscribe("/topic/admins", (msg) => {
-                //     console.log("admin notification:", msg.body);
-                // });
             },
             onStompError: (frame) => {
                 console.error("Broker error", frame);
@@ -80,7 +75,8 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
         let attachments: number[] = [];
         if (files.length) {
             try {
-                attachments = await uploadFiles(files);
+                const response = await uploadFiles(files);
+                attachments = response.data;
             } catch (e) {
                 console.error("upload failed", e);
             }
@@ -90,7 +86,7 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
             chatId,
             senderId: user!.userId,
             text,
-            attachments,
+            attachments: attachments.map(id => ({id})),
         };
 
         clientRef.current?.publish({

@@ -82,8 +82,8 @@ export default function ChatWindow(
                                             {/*    />*/}
                                             {/*) : (*/}
                                             <a
-                                                href={""}
-                                                download={true}
+                                                href={"http://localhost:8008/api/v1/attachment/download/" + att.id}
+                                                download
                                                 className="flex items-center space-x-2 bg-gray-200 p-2 rounded hover:bg-gray-300"
                                             >
                                                 <PaperclipIcon className="h-5 w-5 text-gray-600"/>

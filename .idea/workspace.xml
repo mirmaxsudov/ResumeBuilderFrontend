@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added chat for admins using websocket.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added public user profile files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/hr-chats/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/hr-chats/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/requests/file/file.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/requests/file/file.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/become-hr/AdminChatBecomeHr.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/AdminChatBecomeHr.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,6 +148,8 @@
       <workItem from="1752463230031" duration="18668000" />
       <workItem from="1752636807906" duration="19917000" />
       <workItem from="1752684909644" duration="6806000" />
+      <workItem from="1752692243192" duration="63000" />
+      <workItem from="1752811841473" duration="2546000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -211,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752689846200</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Abdurahmon: Added public user profile files.">
+      <option name="closed" value="true" />
+      <created>1752692264979</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1752692264979</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,7 +238,8 @@
     <MESSAGE value="Abdurahmon: Added new logics." />
     <MESSAGE value="Abdurahmon: Added based websocket logic and start to implement hr chat." />
     <MESSAGE value="Abdurahmon: Added chat for admins using websocket." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added chat for admins using websocket." />
+    <MESSAGE value="Abdurahmon: Added public user profile files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added public user profile files." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
