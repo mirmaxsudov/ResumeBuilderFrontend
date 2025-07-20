@@ -20,7 +20,7 @@ const Page = () => {
     const [modalItem, setModalItem] = useState(null)
     const [filteredRoles, setFilteredRoles] = useState<MyRoleResponse[]>([])
     const searchInputRef = useRef(null);
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const [loading, setLoading] = useState<boolean>(true);
     const [roles, setRoles] = useState<MyRoleResponse[]>([]);
 
@@ -140,7 +140,6 @@ const Page = () => {
                     currentRole={user.role}
                 />
             )}
-            {contextHolder}
         </>
     )
 }

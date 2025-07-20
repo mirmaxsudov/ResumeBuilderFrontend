@@ -18,7 +18,6 @@ import ChangePasswordModalForRegisteredUser from "@/components/settings/ChangePa
 
 const SettingsPage = () => {
     const [isOpenPasswordModal, setOpenPasswordModal] = useState<boolean>(false);
-    const {contextHolder} = useMyNotice();
 
     return (
         <div className="p-6 space-y-6">
@@ -116,7 +115,6 @@ const SettingsPage = () => {
                         isOpen={isOpenPasswordModal}/>
                 </TabsContent>
             </Tabs>
-            {contextHolder}
         </div>
     );
 };

@@ -22,7 +22,7 @@ const RegisterPage = () => {
     const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [form] = Form.useForm();
-    const {showMessage, contextHolder} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const dispatch = useAppDispatch();
 
     const handleSubmit = async (values: any) => {
@@ -118,8 +118,6 @@ const RegisterPage = () => {
 
     return (
         <div className="flex min-h-screen bg-gray-100">
-            {contextHolder}
-
             <div
                 className="hidden md:flex w-1/2 bg-cover bg-center items-center justify-center text-white p-10"
                 style={{backgroundImage: `url('/images/auth/bgOfAuth.png')`}}

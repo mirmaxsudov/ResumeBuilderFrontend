@@ -25,7 +25,7 @@ const EmailNotifications = () => {
             enabled: false
         }
     ]);
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
 
     useEffect(() => {
         if (loading)
@@ -108,7 +108,6 @@ const EmailNotifications = () => {
                     </div>
                 </div>
             </div>
-            {contextHolder}
         </>
     )
 }

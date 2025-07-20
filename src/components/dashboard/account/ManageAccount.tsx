@@ -19,7 +19,7 @@ const ManageAccount = () => {
         firstname: user.firstName,
         lastname: user.lastname
     });
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const [req, setReq] = useState<AccountRequest>({
         email: user.email,
         firstname: user.firstName,
@@ -103,7 +103,6 @@ const ManageAccount = () => {
                     </>}
                     </Button>
                 </div>
-                {contextHolder}
             </div>
         </>
     )
