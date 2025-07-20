@@ -25,7 +25,7 @@ const SwitchRoleModal = ({
     const user = useAppSelector(state => state.auth.user);
     const dispatch = useAppDispatch();
     const router = useRouter()
-    const {showMessage, contextHolder} = useMyNotice();
+    const {showMessage} = useMyNotice();
 
     const handleSwitchRole = async () => {
         if (!password) {
@@ -97,7 +97,6 @@ const SwitchRoleModal = ({
             >
                 Switch Role
             </Button>
-            {contextHolder}
         </Modal>
     )
 }

@@ -1,27 +1,27 @@
 // @ts-nocheck
 "use client";
 
-import { Eye, Edit, MoreVertical } from "lucide-react";
-import { Button } from "../dashboard/ui/button";
+import {Eye, Edit, MoreVertical} from "lucide-react";
+import {Button} from "../dashboard/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "../dashboard/ui/dropdown-menu";
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import useMyNotice from "@/hooks/useMyNotice";
-import { NoticeEnum } from "@/enums/NoticeEnum";
-import { useCareerProfile } from "@/store/zustand/useCareerProfile";
-import { LangaugeResponseItem } from "@/types/careerProfile/CareerProfileType";
-import { lanLevelToNum } from "@/helpers/LanLevelToNum";
+import {NoticeEnum} from "@/enums/NoticeEnum";
+import {useCareerProfile} from "@/store/zustand/useCareerProfile";
+import {LangaugeResponseItem} from "@/types/careerProfile/CareerProfileType";
+import {lanLevelToNum} from "@/helpers/LanLevelToNum";
 import CareerLanguageEditModal from "./CareerLanguageEditModal";
-import { updateLanguages } from "@/api/requests/profile/profile.api";
+import {updateLanguages} from "@/api/requests/profile/profile.api";
 
 export default function CareerLanguage() {
     const data = useCareerProfile((s) => s.data)!;
     const setLanguageStore = useCareerProfile((s) => s.setLangauges);
-    const { contextHolder, showMessage } = useMyNotice();
+    const {showMessage} = useMyNotice();
 
     const [title, setTitle] = useState<string>(data.language?.title || "");
     const [items, setItems] = useState<LangaugeResponseItem[]>([]);
@@ -101,7 +101,7 @@ export default function CareerLanguage() {
                 <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreVertical className="h-4 w-4" />
+                            <MoreVertical className="h-4 w-4"/>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-white" align="end">
@@ -113,7 +113,7 @@ export default function CareerLanguage() {
                                 setEditedItems(items);
                             }}
                         >
-                            <Edit className="mr-2 h-4 w-4" /> Edit
+                            <Edit className="mr-2 h-4 w-4"/> Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={(e) => {
@@ -122,7 +122,7 @@ export default function CareerLanguage() {
                                 setIsDropdownOpen(false);
                             }}
                         >
-                            <Eye className="mr-2 h-4 w-4" /> Select
+                            <Eye className="mr-2 h-4 w-4"/> Select
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -140,7 +140,7 @@ export default function CareerLanguage() {
                             <div className="h-2 bg-gray-200 rounded-full transition-all duration-300">
                                 <div
                                     className="h-2 bg-blue-600 rounded-full transition-all duration-300"
-                                    style={{ width: `${lanLevelToNum(item.level)}%` }}
+                                    style={{width: `${lanLevelToNum(item.level)}%`}}
                                 ></div>
                             </div>
                         </div>
@@ -156,7 +156,6 @@ export default function CareerLanguage() {
                 editedItems={editedItems}
                 setEditedItems={setEditedItems}
             />
-            {contextHolder}
         </div>
     );
 }

@@ -20,7 +20,7 @@ import {
 import {RichTextEditor} from "../resume/rich-text-editor";
 
 const CareerAbout = () => {
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const setSummary = useCareerProfile(state => state.setSummary);
     const {summary, id} = useCareerProfile(state => state.data);
     const [editForm, setEditForm] = useState<{
@@ -221,7 +221,6 @@ const CareerAbout = () => {
                 </form>
             </DialogContent>
         </Dialog>
-        {contextHolder}
     </div>
 }
 

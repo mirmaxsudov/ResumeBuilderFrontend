@@ -12,7 +12,7 @@ import {NoticeEnum} from "@/enums/NoticeEnum";
 import EmploymentEditModal from "./EmploymentEditModal";
 
 const CareerExperience = () => {
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     // Zustand
     const data = useCareerProfile(state => state.data);
     const setZustandExperiences = useCareerProfile(state => state.setExperiences);
@@ -225,8 +225,6 @@ const CareerExperience = () => {
             setSaveLoading={setSaveLoading}
             handleUpdate={handleSaveEmployment}
         />
-
-        {contextHolder}
     </>
 }
 

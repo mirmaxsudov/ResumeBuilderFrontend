@@ -49,7 +49,7 @@ export default function ChangePasswordModalForRegisteredUser(
     } = useForm<PasswordForm>({
         resolver: zodResolver(passwordSchema),
     });
-    const {showMessage, contextHolder} = useMyNotice();
+    const {showMessage} = useMyNotice();
 
     useEffect(() => {
         if (!isOpen) reset();
@@ -133,7 +133,6 @@ export default function ChangePasswordModalForRegisteredUser(
                     </Button>
                 </form>
             </DialogContent>
-            {contextHolder}
         </Dialog>
     );
 }

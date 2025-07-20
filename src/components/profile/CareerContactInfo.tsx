@@ -20,7 +20,7 @@ import {useAppSelector} from "@/hooks/hooks";
 import {useCareerProfile} from "@/store/zustand/useCareerProfile";
 
 export default function CareerContactInfo() {
-    const {contextHolder, showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const {user} = useAppSelector(state => state.auth);
     const setCareerContact = useCareerProfile(state => state.setCareerContact);
     const careerData = useCareerProfile(state => state.data);
@@ -305,7 +305,6 @@ export default function CareerContactInfo() {
                     </form>
                 </DialogContent>
             </Dialog>
-            {contextHolder}
         </div>
     );
 }

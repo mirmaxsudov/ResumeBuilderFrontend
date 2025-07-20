@@ -20,7 +20,7 @@ import {TagsInput} from "./TagsInput";
 import {updateSkills} from "@/api/requests/profile/profile.api";
 
 const CareerSkills = () => {
-    const {contextHolder, showMessage} = useMyNotice();
+    const { showMessage} = useMyNotice();
     const data = useCareerProfile(state => state.data);
     const setSkills = useCareerProfile(state => state.setSkills);
     const [skills, setCareerSkills] = useState<string[]>([]);
@@ -216,7 +216,6 @@ const CareerSkills = () => {
                 </form>
             </DialogContent>
         </Dialog>
-        {contextHolder}
     </div>
 }
 

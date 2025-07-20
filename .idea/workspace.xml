@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Added public user profile files.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Fixed chat with attachments.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/requests/file/file.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/requests/file/file.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/become-hr/AdminChatBecomeHr.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/AdminChatBecomeHr.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatBecomeHr.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/become-hr/ChatWindow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useMyNotice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMyNotice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +77,7 @@
     &quot;com.codeium.enabled&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;abdurahmon&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Abdurahmon/G19 face/Projects/Resume Builder/resume_builder/src/app/(dashboard)/dashboard&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Abdurahmon/projects/chat full stack/chat-frontend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -149,7 +147,14 @@
       <workItem from="1752636807906" duration="19917000" />
       <workItem from="1752684909644" duration="6806000" />
       <workItem from="1752692243192" duration="63000" />
-      <workItem from="1752811841473" duration="2546000" />
+      <workItem from="1752811841473" duration="4545000" />
+      <workItem from="1752819060074" duration="663000" />
+      <workItem from="1752834400165" duration="614000" />
+      <workItem from="1752843176576" duration="901000" />
+      <workItem from="1752848487055" duration="20000" />
+      <workItem from="1752849549732" duration="613000" />
+      <workItem from="1752945762531" duration="854000" />
+      <workItem from="1753008171118" duration="1919000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -223,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752692264979</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Abdurahmon: Fixed chat with attachments.">
+      <option name="closed" value="true" />
+      <created>1752814717545</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1752814717545</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,7 +252,8 @@
     <MESSAGE value="Abdurahmon: Added based websocket logic and start to implement hr chat." />
     <MESSAGE value="Abdurahmon: Added chat for admins using websocket." />
     <MESSAGE value="Abdurahmon: Added public user profile files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Added public user profile files." />
+    <MESSAGE value="Abdurahmon: Fixed chat with attachments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Fixed chat with attachments." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
