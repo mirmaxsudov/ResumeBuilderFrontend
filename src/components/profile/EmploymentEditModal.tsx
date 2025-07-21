@@ -15,14 +15,10 @@ import {
 } from "../dashboard/ui/dialog";
 import {GripVertical, Trash2} from "lucide-react";
 import {Input} from "../dashboard/ui/input";
-import {Checkbox} from "../dashboard/ui/checkbox";
 import {Label} from "../dashboard/ui/label";
 import {RichTextEditor} from "../resume/rich-text-editor";
 import {Accordion, AccordionItem, AccordionTrigger, AccordionContent} from "../dashboard/ui/accordion";
-import {Popover, PopoverContent, PopoverTrigger} from "../dashboard/ui/popover";
-import {format} from "date-fns";
 import {ExperienceItemResponse} from "@/types/careerProfile/CareerProfileType";
-import {DayPicker} from "react-day-picker";
 
 type WrappedItem = {
     key: string;
@@ -37,7 +33,6 @@ interface Props {
     editedItems: EmploymentResponseItem[];
     setEditedItems: (items: EmploymentResponseItem[]) => void;
     setSaveLoading: (open: boolean) => void;
-    handleUpdate: () => Promise<void>;
 }
 
 export default function EmploymentEditModal(
@@ -49,7 +44,6 @@ export default function EmploymentEditModal(
         editedItems,
         setEditedItems,
         setSaveLoading,
-        handleUpdate,
     }: Props) {
     const [items, setItems] = useState<WrappedItem[]>(() =>
         editedItems.map((it, idx) => ({
@@ -242,19 +236,26 @@ export default function EmploymentEditModal(
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4 mb-4">
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 flex flex-col">
                                             <Label className="text-sm font-medium">Start Date</Label>
                                             <input
                                                 value={item.startDate}
                                                 onChange={(e) => change(key, "startDate", e.target.value)}
                                                 type={"datetime-local"}/>
                                         </div>
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 flex flex-col">
                                             <Label className="text-sm font-medium">End Date</Label>
-                                            <input
-                                                value={item.endDate}
-                                                onChange={(e) => change(key, "endDate", e.target.value)}
-                                                type={"datetime-local"}/>
+                                            {item.currentJob ? <>
+                                                <p className={"bg-[#DCFCE7] text-[#15803D] w-fit rounded-[4px] py-1 px-3"}>
+                                                    Current
+                                                </p>
+                                            </> : <>
+                                                <input
+                                                    value={item.endDate}
+                                                    onChange={(e) => change(key, "endDate", e.target.value)}
+                                                    type={"datetime-local"}
+                                                />
+                                            </>}
                                         </div>
                                     </div>
                                     <div className="space-y-2 mb-4">
@@ -267,13 +268,13 @@ export default function EmploymentEditModal(
                                         />
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox
+                                        <input
+                                            className={"size-4 peer cursor-pointer rounded-4 accent-[#2563EB]"}
+                                            type={"checkbox"}
                                             id={`current-${key}`}
                                             checked={item.currentJob}
-                                            onCheckedChange={(checked) => {
-                                                change(key, "currentJob", !!checked);
-                                                if (checked)
-                                                    change(key, "endDate", "");
+                                            onChange={() => {
+                                                change(key, "currentJob", !item.currentJob);
                                             }}
                                         />
                                         <Label
