@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Fixed chat with attachments.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Fixed career experience checkbox.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/request.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useMyNotice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useMyNotice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerAbout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerAbout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerEducation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerEducation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerExperience.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerExperience.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerLangauge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerLangauge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerSkills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerSkills.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/zustand/useCareerProfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/zustand/useCareerProfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/careerProfile/CareerProfileType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/careerProfile/CareerProfileType.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -105,11 +112,11 @@
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\public\assets\images\home" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\types\coverLetter" />
+      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(cover-page)" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(publicProfile)\profile" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\app\(dashboard)\app" />
       <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src" />
-      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\components\home" />
-      <recent name="C:\Abdurahmon\G19 face\Projects\Resume Builder\resume_builder\src\@Resume\components" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -154,7 +161,11 @@
       <workItem from="1752848487055" duration="20000" />
       <workItem from="1752849549732" duration="613000" />
       <workItem from="1752945762531" duration="854000" />
-      <workItem from="1753008171118" duration="1919000" />
+      <workItem from="1753008171118" duration="8437000" />
+      <workItem from="1753033993261" duration="838000" />
+      <workItem from="1753069313761" duration="497000" />
+      <workItem from="1753092884404" duration="473000" />
+      <workItem from="1753111598991" duration="3800000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -236,7 +247,31 @@
       <option name="project" value="LOCAL" />
       <updated>1752814717545</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Abdurahmon: Start to build cover letter pages.">
+      <option name="closed" value="true" />
+      <created>1753024528178</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1753024528178</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Abdurahmon: Start to build cover letter pages.">
+      <option name="closed" value="true" />
+      <created>1753024538663</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753024538663</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Abdurahmon: Fixed career experience checkbox.">
+      <option name="closed" value="true" />
+      <created>1753112737352</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753112737352</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +288,9 @@
     <MESSAGE value="Abdurahmon: Added chat for admins using websocket." />
     <MESSAGE value="Abdurahmon: Added public user profile files." />
     <MESSAGE value="Abdurahmon: Fixed chat with attachments." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Fixed chat with attachments." />
+    <MESSAGE value="Abdurahmon: Start to build cover letter pages." />
+    <MESSAGE value="Abdurahmon: Fixed career experience checkbox." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Fixed career experience checkbox." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

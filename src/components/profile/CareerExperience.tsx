@@ -10,6 +10,7 @@ import {ExperienceItemResponse} from "@/types/careerProfile/CareerProfileType";
 import {updateExperience} from "@/api/requests/profile/profile.api";
 import {NoticeEnum} from "@/enums/NoticeEnum";
 import EmploymentEditModal from "./EmploymentEditModal";
+import {Input} from "@/components/dashboard/ui/input";
 
 const CareerExperience = () => {
     const {showMessage} = useMyNotice();
@@ -46,7 +47,7 @@ const CareerExperience = () => {
             const transformedItems = data.experience.items.map(item => ({
                 id: item.id,
                 jobTitle: item.jobTitle,
-                companyName: "",
+                companyName: item.companyName,
                 startDate: item.startDate,
                 endDate: item.endDate,
                 priority: item.priority,
@@ -111,6 +112,7 @@ const CareerExperience = () => {
             const apiItems = editedEmploymentItems.map(item => ({
                 id: item.id === null ? null : item.id, // preserve null for new, number for existing
                 jobTitle: item.jobTitle,
+                companyName: item.companyName,
                 startDate: item.startDate,
                 endDate: item.currentJob ? "" : item.endDate,
                 priority: item.priority,
@@ -138,15 +140,12 @@ const CareerExperience = () => {
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-4">
                 {isEditingTitle ? (
-                    <input
-                        ref={titleRef}
-                        className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
-                        value={title}
-                        onChange={(e) =>
-                            setTitle(d => e.target.value)
-                        }
-                        onBlur={handleTitleSave}
-                        onKeyDown={handleTitleKeyDown}
+                    <Input ref={titleRef}
+                           className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                           value={title}
+                           onChange={e => setTitle(e.target.value)}
+                           onBlur={handleTitleSave}
+                           onKeyDown={handleTitleKeyDown}
                     />
                 ) : (
                     <h2

@@ -17,6 +17,7 @@ import {LangaugeResponseItem} from "@/types/careerProfile/CareerProfileType";
 import {lanLevelToNum} from "@/helpers/LanLevelToNum";
 import CareerLanguageEditModal from "./CareerLanguageEditModal";
 import {updateLanguages} from "@/api/requests/profile/profile.api";
+import {Input} from "@/components/dashboard/ui/input";
 
 export default function CareerLanguage() {
     const data = useCareerProfile((s) => s.data)!;
@@ -49,11 +50,26 @@ export default function CareerLanguage() {
             save();
     }, [saveLoading])
 
+    const saveJustTitle = async () => {
+        try {
+            const response = await updateLanguages(data.id, {
+                title,
+                items
+            })
+            setLanguageStore(response.data);
+            showMessage("Successfully updated", NoticeEnum.SUCCESS);
+        } catch (e) {
+            showMessage("Something went wrong", NoticeEnum.ERROR);
+        } finally {
+            setSaveLoading(false);
+        }
+    }
+
     const save = async () => {
         try {
             const response = await updateLanguages(data.id, {
                 title,
-                items: editedItems.filter(item => item.name || item.level)
+                items: editedItems.filter(item => item.name || item.level) || items
             })
             setLanguageStore(response.data);
             showMessage("Successfully updated", NoticeEnum.SUCCESS);
@@ -70,24 +86,25 @@ export default function CareerLanguage() {
             setTitle(data.language!.title);
         } else {
             setIsEditingTitle(false);
-            await save();
+            await saveJustTitle();
         }
     };
+
+    const handleTitleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") handleTitleSave();
+        if (e.key === "Escape") setIsEditingTitle(false);
+    }
 
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-4">
                 {isEditingTitle ? (
-                    <input
-                        ref={titleRef}
-                        className="border rounded-lg py-1 px-3 text-sm"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        onBlur={handleTitleSave}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") handleTitleSave();
-                            if (e.key === "Escape") setIsEditingTitle(false);
-                        }}
+                    <Input ref={titleRef}
+                           className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                           value={title}
+                           onChange={e => setTitle(e.target.value)}
+                           onBlur={handleTitleSave}
+                           onKeyDown={handleTitleKeyDown}
                     />
                 ) : (
                     <h2

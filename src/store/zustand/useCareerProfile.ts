@@ -1,6 +1,11 @@
-import { create } from "zustand";
-import { CareerProfileResponseType, ExperienceResponseType, LanguageResponseType, UpdateContactRequestType } from "@/types/careerProfile/CareerProfileType";
-import { ImageAttachmentResponse } from "@/types/attachment/ImageAttachmentType";
+import {create} from "zustand";
+import {
+    CareerProfileResponseType, EducationResponseType,
+    ExperienceResponseType,
+    LanguageResponseType,
+    UpdateContactRequestType
+} from "@/types/careerProfile/CareerProfileType";
+import {ImageAttachmentResponse} from "@/types/attachment/ImageAttachmentType";
 
 interface CareerProfileStore {
     data: CareerProfileResponseType;
@@ -11,11 +16,26 @@ interface CareerProfileStore {
     setSkills: (title: string, skills: string[]) => void;
     setLangauges: (language: LanguageResponseType) => void;
     setExperiences: (experience: ExperienceResponseType) => void;
+    setEducation: (education: EducationResponseType) => void;
     deleteProfileImage: () => void;
 }
 
 export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
     data: {} as CareerProfileResponseType,
+    setEducation: (education: EducationResponseType) => {
+        const currentData = get().data;
+        if (!currentData)
+            return;
+
+        set({
+            data: {
+                ...currentData,
+                education: {
+                    ...education
+                }
+            }
+        })
+    },
     setExperiences: (experience: ExperienceResponseType) => {
         const currentData = get().data;
         if (!currentData)
@@ -67,7 +87,7 @@ export const useCareerProfile = create<CareerProfileStore>((set, get) => ({
         })
     },
     setCareer: (career: CareerProfileResponseType) => {
-        set({ data: career });
+        set({data: career});
     },
     setProfileImage: (image: ImageAttachmentResponse) => {
         const currentDate = get().data;

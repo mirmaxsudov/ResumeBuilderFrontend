@@ -18,6 +18,7 @@ import {
     DialogFooter
 } from "../dashboard/ui/dialog";
 import {RichTextEditor} from "../resume/rich-text-editor";
+import {Input} from "@/components/dashboard/ui/input";
 
 const CareerAbout = () => {
     const {showMessage} = useMyNotice();
@@ -94,15 +95,15 @@ const CareerAbout = () => {
     return <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex justify-between items-center mb-4">
             {isEditingTitle ? (
-                <input
-                    ref={titleRef}
-                    className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
-                    value={editForm.title}
-                    onChange={(e) =>
-                        setEditForm((d) => ({...d, title: e.target.value}))
-                    }
-                    onBlur={handleTitleSave}
-                    onKeyDown={handleTitleKeyDown}
+                <Input ref={titleRef}
+                       className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                       value={editForm.title}
+                       onChange={e => setEditForm({
+                           ...editForm,
+                           title: e.target.value
+                       })}
+                       onBlur={handleTitleSave}
+                       onKeyDown={handleTitleKeyDown}
                 />
             ) : (
                 <h2

@@ -18,9 +18,10 @@ import {
 import clsx from "clsx";
 import {TagsInput} from "./TagsInput";
 import {updateSkills} from "@/api/requests/profile/profile.api";
+import {Input} from "@/components/dashboard/ui/input";
 
 const CareerSkills = () => {
-    const { showMessage} = useMyNotice();
+    const {showMessage} = useMyNotice();
     const data = useCareerProfile(state => state.data);
     const setSkills = useCareerProfile(state => state.setSkills);
     const [skills, setCareerSkills] = useState<string[]>([]);
@@ -110,15 +111,12 @@ const CareerSkills = () => {
     return <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex justify-between items-center mb-4">
             {isEditingTitle ? (
-                <input
-                    ref={titleRef}
-                    className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(d => e.target.value)
-                    }
-                    onBlur={handleTitleSave}
-                    onKeyDown={handleTitleKeyDown}
+                <Input ref={titleRef}
+                       className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                       value={title}
+                       onChange={e => setTitle(e.target.value)}
+                       onBlur={handleTitleSave}
+                       onKeyDown={handleTitleKeyDown}
                 />
             ) : (
                 <h2
