@@ -49,11 +49,12 @@ export interface ExperienceResponseType extends CareerBase {
 export interface ExperienceItemResponse {
     id: number | null,
     jobTitle: string,
+    companyName: string;
     startDate: string,
     endDate: string,
     priority: number,
     description: string,
-    currentJob: boolean;
+    currentJob: boolean,
 }
 
 export interface SummaryResponseType extends CareerBase {

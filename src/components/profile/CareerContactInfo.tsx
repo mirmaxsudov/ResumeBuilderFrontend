@@ -18,6 +18,7 @@ import useMyNotice from "@/hooks/useMyNotice";
 import {NoticeEnum} from "@/enums/NoticeEnum";
 import {useAppSelector} from "@/hooks/hooks";
 import {useCareerProfile} from "@/store/zustand/useCareerProfile";
+import {Input} from "@/components/dashboard/ui/input";
 
 export default function CareerContactInfo() {
     const {showMessage} = useMyNotice();
@@ -123,15 +124,12 @@ export default function CareerContactInfo() {
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center">
                 {isEditingTitle ? (
-                    <input
-                        ref={titleRef}
-                        className="border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"
-                        value={editForm.title}
-                        onChange={(e) =>
-                            setEditForm((d) => ({...d, title: e.target.value}))
-                        }
-                        onBlur={handleTitleSave}
-                        onKeyDown={handleTitleKeyDown}
+                    <Input ref={titleRef}
+                           className={"border rounded-lg mb-2 py-1 px-3 text-sm font-normal text-gray-900"}
+                           value={editForm.title}
+                           onChange={e => setEditForm({...editForm, title: e.target.value})}
+                           onBlur={handleTitleSave}
+                           onKeyDown={handleTitleKeyDown}
                     />
                 ) : (
                     <h2
