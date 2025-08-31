@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Fixed career experience checkbox.">
+    <list default="true" id="4401d9a5-5d38-4798-84f8-72447a9ec143" name="Changes" comment="Abdurahmon: Fixed career logics.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerAbout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerAbout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerContactInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerEducation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerEducation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerExperience.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerExperience.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/profile/CareerLangauge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerLangauge.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/CareerSkills.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/CareerSkills.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/zustand/useCareerProfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/zustand/useCareerProfile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/careerProfile/CareerProfileType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/careerProfile/CareerProfileType.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +157,9 @@
       <workItem from="1753033993261" duration="838000" />
       <workItem from="1753069313761" duration="497000" />
       <workItem from="1753092884404" duration="473000" />
-      <workItem from="1753111598991" duration="3800000" />
+      <workItem from="1753111598991" duration="3988000" />
+      <workItem from="1753191699218" duration="986000" />
+      <workItem from="1755326690264" duration="2803000" />
     </task>
     <task id="LOCAL-00001" summary="Init project &amp; added dashboard">
       <option name="closed" value="true" />
@@ -271,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753112737352</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Abdurahmon: Fixed career logics.">
+      <option name="closed" value="true" />
+      <created>1753115640224</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753115640224</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +292,8 @@
     <MESSAGE value="Abdurahmon: Fixed chat with attachments." />
     <MESSAGE value="Abdurahmon: Start to build cover letter pages." />
     <MESSAGE value="Abdurahmon: Fixed career experience checkbox." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Fixed career experience checkbox." />
+    <MESSAGE value="Abdurahmon: Fixed career logics." />
+    <option name="LAST_COMMIT_MESSAGE" value="Abdurahmon: Fixed career logics." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
