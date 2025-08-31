@@ -10,7 +10,7 @@ const Templates = async () => {
   const countOfResumes = await getCountOfResumes();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
       <Navigation />
       <TemplatesPage countOfResumes={countOfResumes.data} />
       <Footer />
