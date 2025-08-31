@@ -1,12 +1,12 @@
-import {Switch} from "../ui/switch";
-import {Button} from "../ui/button";
-import {useEffect, useState} from "react";
-import {get, update} from "@/api/requests/account/email-notification.api";
+import { Switch } from "../ui/switch";
+import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { get, update } from "@/api/requests/account/email-notification.api";
 import useMyNotice from "@/hooks/useMyNotice";
-import {NoticeEnum} from "@/enums/NoticeEnum";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../ui/card";
-import {Separator} from "../ui/separator";
-import {Bell, TrendingUp, Mail, Briefcase} from "lucide-react";
+import { NoticeEnum } from "@/enums/NoticeEnum";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Separator } from "../ui/separator";
+import { Bell, TrendingUp, Mail, Briefcase } from "lucide-react";
 
 const EmailNotifications = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -31,7 +31,7 @@ const EmailNotifications = () => {
             icon: Mail
         }
     ]);
-    const {showMessage} = useMyNotice();
+    const { showMessage } = useMyNotice();
 
     useEffect(() => {
         if (loading)
@@ -44,9 +44,9 @@ const EmailNotifications = () => {
             const data = response.data;
 
             setNotifications([
-                {...notifications[0], enabled: data.updateAndOffers},
-                {...notifications[1], enabled: data.resumeAnalytics},
-                {...notifications[2], enabled: data.resumeAndJobTipsNewsletter},
+                { ...notifications[0], enabled: data.updateAndOffers },
+                { ...notifications[1], enabled: data.resumeAnalytics },
+                { ...notifications[2], enabled: data.resumeAndJobTipsNewsletter },
             ])
         } catch (e) {
             console.log(e);
@@ -57,7 +57,7 @@ const EmailNotifications = () => {
 
     const handleToggle = async (id: number) => {
         const updatedNotifications = notifications.map(notification =>
-            notification.id === id ? {...notification, enabled: !notification.enabled} : notification
+            notification.id === id ? { ...notification, enabled: !notification.enabled } : notification
         );
 
         try {
@@ -82,7 +82,7 @@ const EmailNotifications = () => {
                     Manage your email preferences and stay updated with the latest features and opportunities.
                 </p>
             </div>
-            
+
             <Card className="shadow-sm border-0 bg-gradient-to-br from-white to-gray-50/50">
                 <CardHeader className="pb-4">
                     <CardTitle className="text-lg font-medium">Notification Preferences</CardTitle>
@@ -110,8 +110,8 @@ const EmailNotifications = () => {
                                         </div>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
-                                        <Switch 
-                                            checked={notification.enabled} 
+                                        <Switch
+                                            checked={notification.enabled}
                                             onCheckedChange={() => handleToggle(notification.id)}
                                             className="data-[state=checked]:bg-blue-600 ring-offset-1 ring-blue-600 ring-1"
                                         />
@@ -142,8 +142,8 @@ const EmailNotifications = () => {
                                 </p>
                             </div>
                         </div>
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             size="sm"
                             className="flex-shrink-0 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
                         >
