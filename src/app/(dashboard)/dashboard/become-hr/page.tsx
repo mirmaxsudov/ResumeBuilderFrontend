@@ -1,17 +1,17 @@
 "use client";
 
-import {Step, StepLabel, Stepper} from "@mui/material";
-import {useEffect, useState} from "react";
-import {Button} from "@/components/dashboard/ui/button";
+import { Step, StepLabel, Stepper } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/dashboard/ui/button";
 import HrHeroImage from "../../../../../public/images/hr/hr-hero-img.png";
 import Image from "next/image";
-import {Input} from "@/components/dashboard/ui/input";
-import {Textarea} from "@/components/dashboard/ui/textarea";
-import {z} from "zod";
+import { Input } from "@/components/dashboard/ui/input";
+import { Textarea } from "@/components/dashboard/ui/textarea";
+import { z } from "zod";
 import ChatWindow from "@/components/become-hr/ChatWindow";
-import {getBecomeHr, getChatMessages, newBecomeHr} from "@/api/requests/hr/become-hr.api";
-import {BecomeHrResponse} from "@/types/hr/BecomeHrType";
-import {TopLoader} from "@/helpers/TopLoader";
+import { getBecomeHr, getChatMessages, newBecomeHr } from "@/api/requests/hr/become-hr.api";
+import { BecomeHrResponse } from "@/types/hr/BecomeHrType";
+import { TopLoader } from "@/helpers/TopLoader";
 import ChatBecomeHr from "@/components/become-hr/ChatBecomeHr";
 
 const steps = ['Information', 'Enter your details', 'Chat with us'];
@@ -60,7 +60,7 @@ const BecomeHrPage = () => {
         try {
             const response = await getBecomeHr();
             if (response.data) {
-                const {companyName, description} = response.data;
+                const { companyName, description } = response.data;
                 setBecomeHrResponse(response.data);
                 setIsAlreadyBecomeHr(true);
                 setCompanyName(companyName);
@@ -69,7 +69,7 @@ const BecomeHrPage = () => {
         } catch (e) {
             console.log(e);
         } finally {
-            setLoadings(prev => ({...prev, isAlreadyBecomeHrLoading: false}));
+            setLoadings(prev => ({ ...prev, isAlreadyBecomeHrLoading: false }));
         }
     }
 
@@ -181,7 +181,7 @@ const BecomeHrPage = () => {
                                 value={companyName}
                                 disabled={isAlreadyBecomeHr}
                                 onChange={e => setCompanyName(e.target.value)}
-                                placeholder={"Enter your company name"}/>
+                                placeholder={"Enter your company name"} />
                             {errors.companyName && <p className="text-red-600 text-sm">{errors.companyName}</p>}
                         </div>
                         <div>
@@ -190,7 +190,7 @@ const BecomeHrPage = () => {
                                 disabled={isAlreadyBecomeHr}
                                 onChange={e => setDesc(e.target.value)}
                                 rows={16} maxLength={1000} className={"resize-none mb-1"}
-                                placeholder={"Enter about your company"}/>
+                                placeholder={"Enter about your company"} />
                             {errors.desc && <p className="text-red-600 text-sm">{errors.desc}</p>}
                         </div>
                     </div>
@@ -202,17 +202,17 @@ const BecomeHrPage = () => {
                             value={companyName}
                             disabled={true}
                             onChange={e => setCompanyName(e.target.value)}
-                            placeholder={"Enter your company name"}/>
+                            placeholder={"Enter your company name"} />
                         <Textarea
                             value={desc}
                             disabled={true}
                             onChange={e => setDesc(e.target.value)}
                             rows={16} maxLength={1000} className={"resize-none"}
-                            placeholder={"Enter about your company"}/>
+                            placeholder={"Enter about your company"} />
                     </div>
                     <div className={"h-full"}>
                         {isAlreadyBecomeHr &&
-                            <ChatBecomeHr params={{chatId: becomeHrResponse ? becomeHrResponse.chatId : -1}}/>}
+                            <ChatBecomeHr params={{ chatId: becomeHrResponse ? becomeHrResponse.chatId : -1 }} />}
                     </div>
                 </div>}
             </div>

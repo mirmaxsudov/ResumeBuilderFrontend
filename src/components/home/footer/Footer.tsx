@@ -58,10 +58,10 @@ const Footer = () => {
               <span className="text-xl font-bold">Resume Builder</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              The most trusted resume builder used by millions of professionals worldwide. 
+              The most trusted resume builder used by millions of professionals worldwide.
               Create ATS-optimized resumes that get you hired.
             </p>
-            
+
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-400">
@@ -99,7 +99,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     href={link.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
@@ -116,7 +116,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     href={link.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
@@ -134,7 +134,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 {footerLinks.company.map((link) => (
                   <li key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="text-gray-400 hover:text-white transition-colors duration-200"
                     >
@@ -150,7 +150,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 {footerLinks.support.map((link) => (
                   <li key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="text-gray-400 hover:text-white transition-colors duration-200"
                     >

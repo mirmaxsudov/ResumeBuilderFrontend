@@ -1,25 +1,79 @@
 import React from 'react'
+import { Card, CardContent } from '@/components/dashboard/ui/card'
+import { Button } from '@/components/dashboard/ui/button'
+import { Search, RefreshCw, Filter } from 'lucide-react'
 
-const NotFound = () => {
+interface NotFoundProps {
+  onRefresh?: () => void;
+  onClearFilters?: () => void;
+  hasFilters?: boolean;
+}
+
+const NotFound: React.FC<NotFoundProps> = ({ 
+  onRefresh, 
+  onClearFilters, 
+  hasFilters = false 
+}) => {
   return (
-    <div className='flex flex-col items-center justify-center text-center py-12 text-gray-500'>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        fill='none'
-        viewBox='0 0 24 24'
-        strokeWidth={1.5}
-        stroke='currentColor'
-        className='w-12 h-12 mb-4'
-      >
-        <path
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          d='M15.75 9V5.25M8.25 9V5.25M4.5 12.75v6.375A2.625 2.625 0 007.125 21.75h9.75A2.625 2.625 0 0019.5 19.125V12.75m-15 0h15m-15 0l1.5-6h12l1.5 6'
-        />
-      </svg>
-      <h3 className='text-lg font-semibold mb-2'>No roles found</h3>
-      <p className='text-sm'>Try a different keyword or reset the search.</p>
-    </div>
+    <Card className="border-dashed border-2 border-gray-200 bg-gray-50/50">
+      <CardContent className="flex flex-col items-center justify-center text-center py-16 px-6">
+        <div className="mb-6">
+          <div className="relative">
+            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-10 h-10 text-gray-400" />
+            </div>
+            <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+              <Filter className="w-4 h-4 text-blue-600" />
+            </div>
+          </div>
+        </div>
+        
+        <div className="space-y-3 mb-8">
+          <h3 className="text-xl font-semibold text-gray-900">
+            {hasFilters ? 'No roles match your filters' : 'No roles found'}
+          </h3>
+          <p className="text-gray-600 max-w-md">
+            {hasFilters 
+              ? 'Try adjusting your search terms or filters to find what you\'re looking for.'
+              : 'It looks like there are no roles available at the moment.'
+            }
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          {onRefresh && (
+            <Button
+              onClick={onRefresh}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Refresh
+            </Button>
+          )}
+          
+          {hasFilters && onClearFilters && (
+            <Button
+              onClick={onClearFilters}
+              variant="default"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+            >
+              <Filter className="w-4 h-4" />
+              Clear Filters
+            </Button>
+          )}
+        </div>
+
+        {!hasFilters && (
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg max-w-md">
+            <p className="text-sm text-blue-700">
+              💡 <strong>Tip:</strong> If you believe this is an error, 
+              try refreshing the page or contact support.
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
 
