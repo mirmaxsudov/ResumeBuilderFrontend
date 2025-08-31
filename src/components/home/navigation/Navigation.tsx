@@ -45,6 +45,12 @@ const Navigation = () => {
                             Features
                         </Link>
                         <Link
+                            href="/blog"
+                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                        >
+                            Blog
+                        </Link>
+                        <Link
                             href="/pricing"
                             className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
@@ -100,6 +106,13 @@ const Navigation = () => {
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Features
+                            </Link>
+                            <Link
+                                href="/blog"
+                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Blog
                             </Link>
                             <Link
                                 href="/pricing"

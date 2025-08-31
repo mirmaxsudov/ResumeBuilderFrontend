@@ -27,16 +27,15 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
       <main className="pt-16">
         <BlogHero />
         <BlogSearch />
         <BlogCategories />
-        <FeaturedArticles />
+        <FeaturedArticles />  
         <BlogGrid />
         <BlogNewsletter />
       </main>
-      
+
       <Footer />
     </div>
   );
