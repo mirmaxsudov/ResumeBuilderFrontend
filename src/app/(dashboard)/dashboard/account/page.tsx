@@ -5,7 +5,7 @@ import DeleteAccount from "@/components/dashboard/account/DeleteAccount";
 import ManageAccount from "@/components/dashboard/account/ManageAccount";
 import Plan from "@/components/dashboard/account/Plan";
 
-const Account = () => {    
+const Account = () => {
     return (
         <>
             <section className="account_section">

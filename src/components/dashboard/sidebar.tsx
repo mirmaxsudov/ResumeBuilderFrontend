@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
     LayoutDashboard,
     FileText,
@@ -16,20 +16,20 @@ import {
     FileUser,
     NotebookPen, Users,
 } from "lucide-react";
-import {useState, useEffect} from "react";
-import {Button} from "@/components/dashboard/ui/button";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/dashboard/ui/button";
 import {
     Sheet,
     SheetContent,
     SheetTrigger,
 } from "@/components/dashboard/ui/sheet";
-import {useAppSelector} from "@/hooks/hooks";
+import { useAppSelector } from "@/hooks/hooks";
 import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
-import {Dropdown} from "antd";
-import type {MenuProps} from "antd";
+import { Dropdown } from "antd";
+import type { MenuProps } from "antd";
 import Role from "@/enums/Role";
-import {GrUserAdmin} from "react-icons/gr";
-import {BiChat} from "react-icons/bi";
+import { GrUserAdmin } from "react-icons/gr";
+import { BiChat } from "react-icons/bi";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
 
@@ -37,8 +37,8 @@ interface SidebarProps {
     onStateChange?: (state: SidebarState) => void;
 }
 
-export default function Sidebar({onStateChange}: SidebarProps) {
-    const {user} = useAppSelector((state) => state.auth);
+export default function Sidebar({ onStateChange }: SidebarProps) {
+    const { user } = useAppSelector((state) => state.auth);
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [sidebarState, setSidebarState] = useState<SidebarState>("expanded");
@@ -89,7 +89,7 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             key: '1',
             label: (
                 <Link href="/dashboard/profile" className="flex items-center gap-2">
-                    <User className="w-4 h-4"/>
+                    <User className="w-4 h-4" />
                     <span>Profile</span>
                 </Link>
             ),
@@ -98,7 +98,7 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             key: '2',
             label: (
                 <Link href="/dashboard/account" className="flex items-center gap-2">
-                    <UserCircle className="w-4 h-4"/>
+                    <UserCircle className="w-4 h-4" />
                     <span>Account</span>
                 </Link>
             ),
@@ -107,7 +107,7 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             key: '3',
             label: (
                 <Link href="/dashboard/settings" className="flex items-center gap-2">
-                    <Settings className="w-4 h-4"/>
+                    <Settings className="w-4 h-4" />
                     <span>Settings</span>
                 </Link>
             ),
@@ -153,9 +153,17 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             href: "/dashboard/resumes",
             hasSubmenu: true,
             submenuItems: [
-                {icon: FileUser, label: "My Resumes", href: "/resume/my-resumes"},
-                {icon: FileText, label: "Resumes", href: "/resume/create-resume"},
-                {icon: NotebookPen, label: "Cover Pages", href: "/resume/cover-page.tsx"},
+                { icon: FileUser, label: "My Resumes", href: "/resume/my-resumes" },
+                { icon: FileText, label: "Resumes", href: "/resume/create-resume" },
+            ],
+            allowedRoles: [Role.HR, Role.ADMIN, Role.USER, Role.SUPER_ADMIN, Role.MANAGER]
+        },
+        {
+            icon: NotebookPen, label: "Cover Pages", href: "/cover-page",
+            hasSubmenu: true,
+            submenuItems: [
+                { icon: FileText, label: "My Cover Pages", href: "/cover-page" },
+                { icon: FileText, label: "Create Cover Page", href: "/cover-page/create" },
             ],
             allowedRoles: [Role.HR, Role.ADMIN, Role.USER, Role.SUPER_ADMIN, Role.MANAGER]
         },
@@ -182,7 +190,7 @@ export default function Sidebar({onStateChange}: SidebarProps) {
             <div className="p-4 border-b border-gray-200">
                 {sidebarState !== "hidden" && (
                     <Dropdown
-                        menu={{items: profileItems}}
+                        menu={{ items: profileItems }}
                         placement="bottomRight"
                         trigger={['click']}
                         overlayClassName="sidebar-profile-dropdown"
@@ -228,73 +236,73 @@ export default function Sidebar({onStateChange}: SidebarProps) {
                             return value.allowedRoles && value.allowedRoles.includes(user.role)
                         })
                         .map((item) => {
-                                const isActive = pathname === item.href || pathname === (`${item.href}/`);
-                                const isSubmenuExpanded = expandedSubmenus.has(item.label);
+                            const isActive = pathname === item.href || pathname === (`${item.href}/`);
+                            const isSubmenuExpanded = expandedSubmenus.has(item.label);
 
-                                return (
-                                    <li key={item.label}>
-                                        <Link
-                                            href={item.hasSubmenu ? "#" : item.href}
-                                            className={`flex items-center justify-between space-x-3 px-3 py-2 rounded-lg ${isActive
-                                                ? "nav-item-active bg-blue-50 text-blue-600"
-                                                : "nav-item-inactive"
+                            return (
+                                <li key={item.label}>
+                                    <Link
+                                        href={item.hasSubmenu ? "#" : item.href}
+                                        className={`flex items-center justify-between space-x-3 px-3 py-2 rounded-lg ${isActive
+                                            ? "nav-item-active bg-blue-50 text-blue-600"
+                                            : "nav-item-inactive"
                                             } nav-item`}
-                                            onClick={(e) => {
-                                                if (item.hasSubmenu) {
-                                                    e.preventDefault();
-                                                    toggleSubmenu(item.label);
-                                                } else {
-                                                    setMobileOpen(false);
-                                                }
-                                            }}
-                                        >
-                                            <div className="flex items-center space-x-3">
-                                                <item.icon
-                                                    size={18}
-                                                    className={isActive ? "text-blue-600" : "text-gray-500"}
-                                                />
-                                                {sidebarState === "expanded" && <span>{item.label}</span>}
-                                            </div>
-                                            {sidebarState === "expanded" && item.hasSubmenu && (
-                                                <ChevronRight
-                                                    size={16}
-                                                    className={`transition-transform duration-200 ${isActive ? "text-blue-600" : "text-gray-400"
+                                        onClick={(e) => {
+                                            if (item.hasSubmenu) {
+                                                e.preventDefault();
+                                                toggleSubmenu(item.label);
+                                            } else {
+                                                setMobileOpen(false);
+                                            }
+                                        }}
+                                    >
+                                        <div className="flex items-center space-x-3">
+                                            <item.icon
+                                                size={18}
+                                                className={isActive ? "text-blue-600" : "text-gray-500"}
+                                            />
+                                            {sidebarState === "expanded" && <span>{item.label}</span>}
+                                        </div>
+                                        {sidebarState === "expanded" && item.hasSubmenu && (
+                                            <ChevronRight
+                                                size={16}
+                                                className={`transition-transform duration-200 ${isActive ? "text-blue-600" : "text-gray-400"
                                                     } ${isSubmenuExpanded ? "rotate-90" : ""}`}
-                                                />
-                                            )}
-                                        </Link>
-
-                                        {/* Submenu Items */}
-                                        {item.hasSubmenu && isSubmenuExpanded && sidebarState === "expanded" && item.submenuItems && (
-                                            <ul className="ml-6 mt-1 list-none space-y-1">
-                                                {item.submenuItems.map((subItem) => {
-                                                    const isSubActive = pathname === subItem.href || pathname === (`${subItem.href}/`);
-                                                    return (
-                                                        <li key={subItem.label} className="list-none">
-                                                            <Link
-                                                                href={subItem.href}
-                                                                className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${isSubActive
-                                                                    ? "nav-item-active bg-blue-50 text-blue-600"
-                                                                    : "nav-item-inactive text-gray-600 hover:text-gray-900"
-                                                                } nav-item`}
-                                                                onClick={() => setMobileOpen(false)}
-                                                            >
-                                                                {subItem.icon && (
-                                                                    <subItem.icon
-                                                                        size={16}
-                                                                        className={isSubActive ? "text-blue-600" : "text-gray-500"}
-                                                                    />
-                                                                )}
-                                                                <span>{subItem.label}</span>
-                                                            </Link>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
+                                            />
                                         )}
-                                    </li>
-                                );
-                            }
+                                    </Link>
+
+                                    {/* Submenu Items */}
+                                    {item.hasSubmenu && isSubmenuExpanded && sidebarState === "expanded" && item.submenuItems && (
+                                        <ul className="ml-6 mt-1 list-none space-y-1">
+                                            {item.submenuItems.map((subItem) => {
+                                                const isSubActive = pathname === subItem.href || pathname === (`${subItem.href}/`);
+                                                return (
+                                                    <li key={subItem.label} className="list-none">
+                                                        <Link
+                                                            href={subItem.href}
+                                                            className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${isSubActive
+                                                                ? "nav-item-active bg-blue-50 text-blue-600"
+                                                                : "nav-item-inactive text-gray-600 hover:text-gray-900"
+                                                                } nav-item`}
+                                                            onClick={() => setMobileOpen(false)}
+                                                        >
+                                                            {subItem.icon && (
+                                                                <subItem.icon
+                                                                    size={16}
+                                                                    className={isSubActive ? "text-blue-600" : "text-gray-500"}
+                                                                />
+                                                            )}
+                                                            <span>{subItem.label}</span>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    )}
+                                </li>
+                            );
+                        }
                         )
                     }
                 </ul>
@@ -311,12 +319,12 @@ export default function Sidebar({onStateChange}: SidebarProps) {
                         size="icon"
                         className="h-10 w-10 rounded-lg shadow-sm"
                     >
-                        <Menu className="h-6 w-6"/>
+                        <Menu className="h-6 w-6" />
                         <span className="sr-only">Toggle menu</span>
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="p-0 w-64">
-                    <SidebarContent/>
+                    <SidebarContent />
                 </SheetContent>
             </Sheet>
         </div>
@@ -324,16 +332,16 @@ export default function Sidebar({onStateChange}: SidebarProps) {
 
     return (
         <>
-            <MobileMenuTrigger/>
+            <MobileMenuTrigger />
             <aside
                 className={`fixed top-16 left-0 h-[calc(100vh-64px)] hidden md:flex flex-col bg-white z-20 overflow-hidden shadow-sm transition-all duration-300 ${sidebarState === "expanded"
                     ? "w-64"
                     : sidebarState === "collapsed"
                         ? "w-20"
                         : "w-0"
-                }`}
+                    }`}
             >
-                <SidebarContent/>
+                <SidebarContent />
             </aside>
         </>
     );

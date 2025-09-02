@@ -1,6 +1,6 @@
-import {CoverLetterResponseType} from "@/types/coverLetter/CoverLetterType";
+import { CoverLetterResponseType } from "@/types/coverLetter/CoverLetterType";
 
-const CoverLetterN1 = ({data}: { data: CoverLetterResponseType }) => {
+const CoverLetterN1 = ({ data }: { data: CoverLetterResponseType }) => {
     return (
         <div
             style={{
@@ -30,7 +30,7 @@ const CoverLetterN1 = ({data}: { data: CoverLetterResponseType }) => {
                             'repeating-linear-gradient(90deg, #f0f0f0 0px, #f0f0f0 2px, transparent 2px, transparent 4px)',
                     }}
                 />
-                <div style={{padding: '2rem'}}>
+                <div style={{ padding: '2rem' }}>
                     <header>
                         <h1
                             style={{
@@ -69,7 +69,7 @@ const CoverLetterN1 = ({data}: { data: CoverLetterResponseType }) => {
                         </p>
                     </section>
 
-                    <footer style={{marginTop: '1.5rem'}}>
+                    <footer style={{ marginTop: '1.5rem' }}>
                         <p
                             style={{
                                 margin: 0,
@@ -88,16 +88,16 @@ const CoverLetterN1 = ({data}: { data: CoverLetterResponseType }) => {
                                 fontSize: '.95rem',
                             }}
                         >
-              <span
-                  style={{
-                      width: '.75rem',
-                      height: '.75rem',
-                      borderRadius: '50%',
-                      marginRight: '.5rem',
-                      backgroundColor: 'red',
-                      display: 'inline-block',
-                  }}
-              />
+                            <span
+                                style={{
+                                    width: '.75rem',
+                                    height: '.75rem',
+                                    borderRadius: '50%',
+                                    marginRight: '.5rem',
+                                    backgroundColor: 'red',
+                                    display: 'inline-block',
+                                }}
+                            />
                             {data.email}
                         </div>
                     </footer>
