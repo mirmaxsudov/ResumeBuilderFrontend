@@ -15,4 +15,4 @@ interface CoverLetterResponseType {
     type: CoverLetterEnum
 }
 
-export type {CoverLetterResponseType};
+export type { CoverLetterResponseType };
