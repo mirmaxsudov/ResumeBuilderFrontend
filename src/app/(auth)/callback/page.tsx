@@ -36,7 +36,23 @@ export default function CallbackPage() {
             }
 
             showMessage("Successfully", NoticeEnum.SUCCESS)
-            router.push('/dashboard');
+
+            // Determine where to go after auth
+            let target = '/dashboard';
+            try {
+                const param = params.get('redirect');
+                let saved: string | null = null;
+                try { saved = localStorage.getItem('redirectAfterLogin'); } catch (e) { /* ignore */ }
+                const candidate = param || saved;
+                if (candidate && candidate.startsWith('/')) {
+                    target = candidate;
+                }
+                if (saved) localStorage.removeItem('redirectAfterLogin');
+            } catch (e) {
+                // ignore errors and fallback to dashboard
+            }
+
+            router.push(target);
         };
 
         showMessage("Fetching", NoticeEnum.LOADING);
