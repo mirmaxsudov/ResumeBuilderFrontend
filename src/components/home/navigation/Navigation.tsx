@@ -2,17 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X} from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useAppSelector } from "@/hooks/hooks";
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const { token, user } = useAppSelector(state => state.auth);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-
+        const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -65,7 +64,8 @@ const Navigation = () => {
                     </div>
 
                     {/* Desktop CTA Buttons */}
-                    <div className="hidden md:flex items-center space-x-4">
+                    {/* If not registered */}
+                    {(!token && !user) ? <div className="hidden md:flex items-center space-x-4">
                         <Link
                             href="/login"
                             className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
@@ -78,7 +78,14 @@ const Navigation = () => {
                         >
                             Get Started Free
                         </Link>
-                    </div>
+                    </div> : <>
+                        <Link
+                            href="/dashboard"
+                            className="md:flex hidden bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
+                        >
+                            Go to Dashboard
+                        </Link>
+                    </>}
 
                     {/* Mobile menu button */}
                     <button
@@ -128,7 +135,7 @@ const Navigation = () => {
                             >
                                 Help
                             </Link>
-                            <div className="pt-4 border-t border-gray-200">
+                            {(!token && !user) ? <div className="pt-4 border-t border-gray-200">
                                 <Link
                                     href="/login"
                                     className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
@@ -143,7 +150,15 @@ const Navigation = () => {
                                 >
                                     Get Started Free
                                 </Link>
-                            </div>
+                            </div> : <>
+                                <Link
+                                    href="/dashboard"
+                                    className="block px-3 py-2 bg-blue-600 text-white rounded-md font-medium mt-2 text-center"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Go to Dashboard
+                                </Link>
+                            </>}
                         </div>
                     </div>
                 )}

@@ -1,35 +1,60 @@
 "use client";
 
 import Image from "next/image";
-import React, {useState, useEffect} from "react";
-import {FaGithub} from "react-icons/fa";
-import {Input, Button, Form} from "antd";
-import {MailOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined} from "@ant-design/icons";
-import {NoticeEnum} from "@/enums/NoticeEnum";
+import React, { useState, useEffect } from "react";
+import { FaGithub } from "react-icons/fa";
+import { Input, Button, Form } from "antd";
+import { MailOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { NoticeEnum } from "@/enums/NoticeEnum";
 import useMyNotice from "@/hooks/useMyNotice";
 import validateEmail from "@/helpers/validateEmail";
 import validatePassword from "@/helpers/validatePassword";
-import {login} from "@/api/requests/auth/auth.api";
-import {useAppDispatch, useAppSelector} from "@/hooks/hooks";
-import {setValues} from "@/store/auth/authSlice";
-import {useRouter} from "next/navigation";
-import {registerWithGoogle} from "@/helpers/registerWithGoogle";
+import { login } from "@/api/requests/auth/auth.api";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { setValues } from "@/store/auth/authSlice";
+import { useRouter, useSearchParams } from "next/navigation";
+import { registerWithGoogle } from "@/helpers/registerWithGoogle";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [form] = Form.useForm();
-    const {showMessage} = useMyNotice();
+    const { showMessage } = useMyNotice();
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const {token} = useAppSelector((state) => state.auth);
+    const { token } = useAppSelector((state) => state.auth);
+    const searchParams = useSearchParams();
+
+    // Persist intended redirect so OAuth flows can restore it
+    useEffect(() => {
+        const redirectParam = searchParams.get('redirect');
+        if (redirectParam && redirectParam.startsWith('/')) {
+            try {
+                localStorage.setItem('redirectAfterLogin', redirectParam);
+            } catch (e) {
+                // ignore storage errors
+            }
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (token) {
-            router.push("/dashboard");
+            let target = '/dashboard';
+            try {
+                const saved = localStorage.getItem('redirectAfterLogin');
+                const param = searchParams.get('redirect');
+                const candidate = param || saved;
+                if (candidate && candidate.startsWith('/')) {
+                    target = candidate;
+                }
+                if (saved) localStorage.removeItem('redirectAfterLogin');
+            } catch (e) {
+                // ignore storage errors
+            }
+            router.push(target);
         }
-    }, [token, router]);
+    }, [token, router, searchParams]);
 
     const handleSubmit = async (values: any) => {
         try {
@@ -57,7 +82,21 @@ const Login = () => {
                 user: response.data
             }));
 
-            router.push("/dashboard");
+            // Resolve redirect target
+            let target = '/dashboard';
+            try {
+                const saved = localStorage.getItem('redirectAfterLogin');
+                const param = searchParams.get('redirect');
+                const candidate = param || saved;
+                if (candidate && candidate.startsWith('/')) {
+                    target = candidate;
+                }
+                if (saved) localStorage.removeItem('redirectAfterLogin');
+            } catch (e) {
+                // ignore storage errors
+            }
+
+            router.push(target);
 
         } catch (error: any) {
             showMessage(error.response?.data?.message || "Failed to login", NoticeEnum.ERROR);
@@ -70,7 +109,7 @@ const Login = () => {
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-            
+
             <div className="relative flex min-h-screen">
                 {/* Left Side - Hero Section */}
                 <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 relative overflow-hidden">
@@ -80,7 +119,7 @@ const Login = () => {
                         <div className="absolute top-40 right-20 w-96 h-96 bg-purple-300 opacity-10 rounded-full animate-blob animation-delay-2000"></div>
                         <div className="absolute bottom-20 left-40 w-80 h-80 bg-indigo-300 opacity-10 rounded-full animate-blob animation-delay-4000"></div>
                     </div>
-                    
+
                     <div className="relative z-10 flex items-center justify-center w-full p-12">
                         <div className="text-center text-white max-w-md">
                             <div className="mb-8">
@@ -93,11 +132,11 @@ const Login = () => {
                                     Welcome Back to Resume Builder
                                 </h1>
                                 <p className="text-xl opacity-90 leading-relaxed">
-                                    Create professional resumes that get you hired. 
+                                    Create professional resumes that get you hired.
                                     Join thousands of professionals who trust our platform.
                                 </p>
                             </div>
-                            
+
                             {/* Features */}
                             <div className="space-y-4 text-left">
                                 <div className="flex items-center space-x-3">
@@ -168,7 +207,7 @@ const Login = () => {
                                 className="w-full py-3 px-4 border border-gray-300 rounded-xl flex items-center justify-center gap-3 text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
                                 onClick={() => window.location.href = "/oauth2/authorization/github"}
                             >
-                                <FaGithub className="w-5 h-5"/>
+                                <FaGithub className="w-5 h-5" />
                                 Continue with GitHub
                             </button>
                         </div>
@@ -196,15 +235,15 @@ const Login = () => {
                                 <Form.Item
                                     name="email"
                                     rules={[
-                                        {required: true, message: "Please input your email!"},
-                                        {type: "email", message: "Please enter a valid email!"}
+                                        { required: true, message: "Please input your email!" },
+                                        { type: "email", message: "Please enter a valid email!" }
                                     ]}
                                     className="mb-0"
                                 >
                                     <Input
                                         size="large"
                                         placeholder="Enter your email"
-                                        prefix={<MailOutlined className="text-gray-400"/>}
+                                        prefix={<MailOutlined className="text-gray-400" />}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         className="h-12 rounded-xl border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
@@ -219,15 +258,15 @@ const Login = () => {
                                 <Form.Item
                                     name="password"
                                     rules={[
-                                        {required: true, message: "Please input your password!"},
-                                        {min: 8, message: "Password must be at least 8 characters!"}
+                                        { required: true, message: "Please input your password!" },
+                                        { min: 8, message: "Password must be at least 8 characters!" }
                                     ]}
                                     className="mb-0"
                                 >
                                     <Input.Password
                                         size="large"
                                         placeholder="Enter your password"
-                                        prefix={<LockOutlined className="text-gray-400"/>}
+                                        prefix={<LockOutlined className="text-gray-400" />}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         className="h-12 rounded-xl border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"

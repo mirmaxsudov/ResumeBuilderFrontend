@@ -4,6 +4,7 @@ import '@ant-design/v5-patch-for-react-19';
 import 'antd/dist/reset.css';
 import "./globals.css";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
+import AuthChecker from "@/components/auth/AuthChecker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
       >
         <ReduxProvider>
-          {children}
+          <AuthChecker
+            roles={[]}
+            withAuth={false}
+          >
+            {children}
+          </AuthChecker>
         </ReduxProvider>
       </body>
     </html>
