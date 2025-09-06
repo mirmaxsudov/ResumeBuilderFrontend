@@ -5,6 +5,8 @@ import 'antd/dist/reset.css';
 import "./globals.css";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
 import AuthChecker from "@/components/auth/AuthChecker";
+import { ThemeProvider } from "@/components/dashboard/theme-provider";
+import AppThemeProvider from "@/components/providers/AppThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,18 +31,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-background text-foreground`}
       >
-        <ReduxProvider>
-          <AuthChecker
-            roles={[]}
-            withAuth={false}
-          >
-            {children}
-          </AuthChecker>
-        </ReduxProvider>
+        {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
+          <ReduxProvider>
+            <AppThemeProvider>
+              <AuthChecker roles={[]} withAuth={false}>
+                {children}
+              </AuthChecker>
+            </AppThemeProvider>
+          </ReduxProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

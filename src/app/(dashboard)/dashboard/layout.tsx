@@ -12,6 +12,7 @@ import { clearAuth } from "@/store/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { logout } from "@/api/requests/auth/auth.api";
 import { NotificationDropdown } from "@/components/dashboard/NotificationDropdown";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 export default function RootLayout({
   children,
@@ -80,18 +81,19 @@ export default function RootLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="fixed top-0 left-0 right-0 h-16 border-b border-gray-200 bg-white z-30 shadow-sm">
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="fixed top-0 left-0 right-0 h-16 border-b border-border bg-card z-30 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between h-full">
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center">
               <div className="bg-blue-600 text-white font-bold rounded-lg p-1 mr-1">
                 R
               </div>
-              <span className="font-semibold text-gray-800">Resume</span>
+              <span className="font-semibold text-foreground">Resume</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
             <Button className="bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-sm btn-hover">
               Upgrade Now
             </Button>
@@ -112,7 +114,7 @@ export default function RootLayout({
       <div className="flex pt-16">
         <Sidebar onStateChange={setSidebarState} />
         <main
-          className={`flex-1 min-h-[calc(100vh-64px)] overflow-auto bg-gray-50 transition-all duration-300 ${sidebarState === "expanded"
+          className={`flex-1 min-h-[calc(100vh-64px)] overflow-auto bg-background transition-all duration-300 ${sidebarState === "expanded"
             ? "md:ml-64"
             : sidebarState === "collapsed"
               ? "md:ml-20"
