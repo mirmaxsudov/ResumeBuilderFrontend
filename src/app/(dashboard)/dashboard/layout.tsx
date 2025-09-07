@@ -93,7 +93,7 @@ export default function RootLayout({
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <Button className="bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-sm btn-hover">
               Upgrade Now
             </Button>

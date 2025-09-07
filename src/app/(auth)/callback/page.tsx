@@ -8,12 +8,13 @@ import { setValues } from '@/store/auth/authSlice';
 import AuthUserPreviewType from '@/types/auth/AuthUserPreviewType';
 import useMyNotice from '@/hooks/useMyNotice';
 import { NoticeEnum } from '@/enums/NoticeEnum';
+import LoadingAnimation from '@/helpers/LoadingAnimation';
 
 export default function CallbackPage() {
     const params = useSearchParams();
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const {  showMessage } = useMyNotice();
+    const { showMessage } = useMyNotice();
 
     useEffect(() => {
         const initAuth = async () => {
@@ -60,11 +61,6 @@ export default function CallbackPage() {
     }, [params, dispatch, router]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-                <h1 className="text-2xl font-semibold mb-4">Loading user…</h1>
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
-            </div>
-        </div>
+        <LoadingAnimation title='Loading user' />
     );
 }

@@ -105,7 +105,7 @@ const CareersPage = () => {
                     <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                       <span className="flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
-                        San Francisco, CA
+                        Uzbekistan, Tashkent
                       </span>
                       <span className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
@@ -175,7 +175,7 @@ const CareersPage = () => {
                     <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                       <span className="flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
-                        San Francisco, CA
+                        Uzbekistan, Tashkent
                       </span>
                       <span className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />

@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 type SortKey = "titleAsc" | "titleDesc";
 
-const PAGE_SIZE_OPTIONS = [6, 9, 12];
+const PAGE_SIZE_OPTIONS = [5, 8, 11];
 
 const CoverLetterPage = () => {
     const { showMessage } = useMyNotice();
@@ -26,7 +26,7 @@ const CoverLetterPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [items, setItems] = useState<CoverLetterResponseType[]>([]);
     const [page, setPage] = useState<number>(1);
-    const [size, setSize] = useState<number>(9);
+    const [size, setSize] = useState<number>(8);
     const [total, setTotal] = useState<number>(0);
     const [search, setSearch] = useState<string>("");
     const [searchInput, setSearchInput] = useState<string>("");
@@ -237,7 +237,7 @@ const CoverLetterPage = () => {
                                 <div className="mt-3 text-xs text-gray-500 line-clamp-2">
                                     {item.letterDetails}
                                 </div>
-                                <div className="mt-4 flex items-center justify-between">
+                                <div className="mt-4 flex flex-col gap-2 justify-between">
                                     <div className="text-xs text-gray-400">Template: {item.type}</div>
                                     <div className="flex items-center gap-2">
                                         <Button variant="outline" className="h-8 px-3 text-xs" onClick={() => openPreview(item)}>
@@ -278,8 +278,8 @@ const CoverLetterPage = () => {
                     current={page}
                     total={total}
                     pageSize={size}
-                    onChange={(p) => setPage(p)}
                     showSizeChanger={false}
+                    onChange={p => setPage(p)}
                 />
             </div>
 

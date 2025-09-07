@@ -12,7 +12,7 @@ const Resume6 = () => {
       firstName: "Rick",
       lastName: "Tang",
       title: "Product Designer",
-      address: "San Francisco, California",
+      address: "Uzbekistan, Tashkentlifornia",
       phone: "(315) 802-8179",
       email: "ricktang@gmail.com",
       socials: [

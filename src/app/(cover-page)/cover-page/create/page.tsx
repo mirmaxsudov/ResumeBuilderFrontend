@@ -15,20 +15,26 @@ import { Textarea } from "@/components/dashboard/ui/textarea";
 import type { CoverLetterResponseType } from "@/types/coverLetter/CoverLetterType";
 import { Download, FilePlus2, Save, Share2, Sparkles, Wand2 } from "lucide-react";
 import useMyNotice from "@/hooks/useMyNotice";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CoverLetterApi from '@/api/requests/cover-letter/coverLetterApi';
 import { useAppSelector } from "@/hooks/hooks";
 import { createQuery } from "@/helpers/createQuery";
+import LoadingAnimation from "@/helpers/LoadingAnimation";
 
 const CoverLetterCreatePage = () => {
     const [title, setTitle] = useState("Cover Letter Title");
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [selectedTemplate, setSelectedTemplate] = useState<CoverLetterEnum>(CoverLetterEnum.COVER_LETTER_N1);
     const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
-    const [isInit, setInit] = useState<boolean>(false);
+    const [isInit, setInit] = useState<boolean>(() => {
+        if (typeof window === "undefined") return false;
+        return new URLSearchParams(window.location.search).get("type") === "new";
+    });
+    const hasInitializedRef = useRef<boolean>(false);
     const { showMessage } = useMyNotice();
     const router = useRouter();
     const searchParams = useSearchParams();
+
     const { user } = useAppSelector(state => state.auth);
 
     const [formData, setFormData] = useState<CoverLetterResponseType>({
@@ -60,9 +66,10 @@ const CoverLetterCreatePage = () => {
 
     const initCoverLetter = async () => {
         const response = await CoverLetterApi.create(formData);
-        setFormData(response.data)
-        createQueryFun("type", "update", searchParams);
-    }
+        setFormData(response.data);
+        const newQuery = createQueryFun("type", "update", searchParams);
+        router.replace(`?${newQuery}`);
+    };
 
 
     const handleTitleClick = () => {
@@ -151,17 +158,22 @@ const CoverLetterCreatePage = () => {
         { key: CoverLetterEnum.COVER_LETTER_N1, name: "Elegant Stripe" },
     ];
 
-    if (isInit || searchParams.get("type") === "new") {
-        setInit(true);
-        initCoverLetter();
-        return <>
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-2xl font-semibold mb-4">Creating…</h1>
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
-                </div>
-            </div>
-        </>
+    useEffect(() => {
+        const spType = searchParams?.get("type") ?? (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("type") : null);
+        const isNew = spType === "new";
+        if (isNew && !hasInitializedRef.current) {
+            hasInitializedRef.current = true;
+            setInit(true);
+            initCoverLetter().finally(() => setInit(false));
+        }
+    }, [searchParams]);
+
+    if (isInit) {
+        return (
+            <>
+                <LoadingAnimation title="Creating" />
+            </>
+        );
     }
 
     return (

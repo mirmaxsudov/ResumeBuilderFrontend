@@ -19,8 +19,6 @@ export default function AuthChecker({
     const router = useRouter();
     const { token, user } = useAppSelector((state) => state.auth);
 
-    console.log(window.location.href);
-
     useEffect(() => {
         if (!withAuth) return;
 

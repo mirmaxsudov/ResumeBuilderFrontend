@@ -66,7 +66,7 @@ const Navigation = () => {
                     {/* Desktop CTA Buttons */}
                     {/* If not registered */}
                     {(!token && !user) ? <div className="hidden md:flex items-center space-x-4">
-                        <ThemeToggle />
+                        {/* <ThemeToggle /> */}
                         <Link
                             href="/login"
                             className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
@@ -80,7 +80,7 @@ const Navigation = () => {
                             Get Started Free
                         </Link>
                     </div> : <>
-                        <ThemeToggle />
+                        {/* <ThemeToggle /> */}
                         <Link
                             href="/dashboard"
                             className="md:flex hidden bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
