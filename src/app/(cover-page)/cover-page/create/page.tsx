@@ -9,35 +9,40 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/d
 import { ScrollArea } from "@/components/dashboard/ui/scroll-area";
 import { Separator } from "@/components/dashboard/ui/separator";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/dashboard/ui/input";
 import { Textarea } from "@/components/dashboard/ui/textarea";
 import type { CoverLetterResponseType } from "@/types/coverLetter/CoverLetterType";
 import { Download, FilePlus2, Save, Share2, Sparkles, Wand2 } from "lucide-react";
 import useMyNotice from "@/hooks/useMyNotice";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import CoverLetterApi from '@/api/requests/cover-letter/coverLetterApi';
+import { useAppSelector } from "@/hooks/hooks";
+import { createQuery } from "@/helpers/createQuery";
 
 const CoverLetterCreatePage = () => {
     const [title, setTitle] = useState("Cover Letter Title");
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [selectedTemplate, setSelectedTemplate] = useState<CoverLetterEnum>(CoverLetterEnum.COVER_LETTER_N1);
     const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+    const [isInit, setInit] = useState<boolean>(false);
     const { showMessage } = useMyNotice();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const { user } = useAppSelector(state => state.auth);
 
     const [formData, setFormData] = useState<CoverLetterResponseType>({
         id: null,
         title: "Cover Letter Title",
-        firstname: "John",
-        lastname: "Doe",
-        address: "123 Main St, City, Country",
-        jobTitle: "Software Engineer",
-        email: "john.doe@example.com",
-        phoneNumber: "+1234567890",
-        companyName: "Tech Solutions Inc.",
-        managerName: "Jane Smith",
-        letterDetails:
-            "I am writing to express my interest in the Software Engineer position at Tech Solutions Inc. I believe my skills and experience make me a perfect fit for this role.",
+        firstname: user.firstName,
+        lastname: user.lastname,
+        address: "",
+        jobTitle: "",
+        email: user.email,
+        phoneNumber: "",
+        companyName: "",
+        managerName: "",
+        letterDetails: "",
         type: CoverLetterEnum.COVER_LETTER_N1,
     });
 
@@ -50,6 +55,15 @@ const CoverLetterCreatePage = () => {
             titleInputRef.current.select();
         }
     }, [isEditingTitle]);
+
+    const createQueryFun = useCallback(createQuery, [searchParams]);
+
+    const initCoverLetter = async () => {
+        const response = await CoverLetterApi.create(formData);
+        setFormData(response.data)
+        createQueryFun("type", "update", searchParams);
+    }
+
 
     const handleTitleClick = () => {
         setIsEditingTitle(true);
@@ -72,7 +86,6 @@ const CoverLetterCreatePage = () => {
     };
 
     const handleSave = () => {
-        // Placeholder persistence
         showMessage("Saved", NoticeEnum.SUCCESS);
     };
 
@@ -137,6 +150,19 @@ const CoverLetterCreatePage = () => {
     const templates: Array<{ key: CoverLetterEnum; name: string }> = [
         { key: CoverLetterEnum.COVER_LETTER_N1, name: "Elegant Stripe" },
     ];
+
+    if (isInit || searchParams.get("type") === "new") {
+        setInit(true);
+        initCoverLetter();
+        return <>
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-2xl font-semibold mb-4">Creating…</h1>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
+                </div>
+            </div>
+        </>
+    }
 
     return (
         <div className="bg-[#F3F4F6] min-h-screen w-full">

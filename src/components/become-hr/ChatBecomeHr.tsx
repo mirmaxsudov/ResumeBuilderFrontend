@@ -2,12 +2,12 @@
 
 import {useEffect, useRef, useState} from "react";
 import {useAppSelector} from "@/hooks/hooks";
-import {Client, IMessage, StompSubscription} from "@stomp/stompjs";
-import SockJS from "sockjs-client";
+import { IMessage, StompSubscription } from "@stomp/stompjs";
 import {BecomeHrMessageResponse} from "@/types/hr/BecomeHrType";
 import {getChatMessages} from "@/api/requests/hr/become-hr.api";
 import {uploadFiles} from "@/api/requests/file/file.api";
 import ChatWindow from "@/components/become-hr/ChatWindow";
+import { useStomp } from "@/components/providers/StompProvider";
 
 type ChatBecomeHrProps = {
     params: { chatId: number };
@@ -17,7 +17,7 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
     const {chatId} = params;
     const [messages, setMessages] = useState<BecomeHrMessageResponse[]>([]);
     const user = useAppSelector((s) => s.auth.user);
-    const clientRef = useRef<Client | null>(null);
+    const { connected, subscribe, unsubscribe, publish } = useStomp();
     const subscriptionRef = useRef<StompSubscription | null>(null);
 
     // 1) fetch initial history
@@ -27,48 +27,19 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
             .catch(console.error);
     }, [chatId]);
 
-    // 2) connect stomp once user is known
+    // 2) subscribe once global stomp is connected
     useEffect(() => {
-        if (!user) return;
-
-        console.log("Connecting to STOMP broker...");
-
-        const client = new Client({
-            // Use SockJS on /ws endpoint
-            webSocketFactory: () => new SockJS("http://localhost:8008/ws"),
-            connectHeaders: {
-                token: user.accessToken,
-            },
-            debug: (str) => {
-                console.log("[STOMP]", str);
-            },
-            onConnect: () => {
-                console.log("Connected to STOMP broker");
-                // subscribe to chat room topic
-                const sub = client.subscribe(
-                    `/topic/chat/${chatId}`,
-                    (message: IMessage) => {
-                        const body = JSON.parse(message.body) as BecomeHrMessageResponse;
-                        setMessages((prev) => [...prev, body]);
-                    }
-                );
-                subscriptionRef.current = sub;
-            },
-            onStompError: (frame) => {
-                console.error("Broker error", frame);
-            },
+        if (!user?.accessToken || !connected) return;
+        const sub = subscribe(`/topic/chat/${chatId}`, (message: IMessage) => {
+            const body = JSON.parse(message.body) as BecomeHrMessageResponse;
+            setMessages((prev) => [...prev, body]);
         });
-
-        client.activate();
-        clientRef.current = client;
-
+        subscriptionRef.current = sub;
         return () => {
-            // cleanup on unmount or chatId/user change
-            subscriptionRef.current?.unsubscribe();
-            client.deactivate();
-            clientRef.current = null;
+            unsubscribe(subscriptionRef.current);
+            subscriptionRef.current = null;
         };
-    }, [chatId, user]);
+    }, [chatId, user?.accessToken, connected, subscribe, unsubscribe]);
 
     // 3) send handler: upload then publish
     const handleSend = async (text: string, files: File[]) => {
@@ -89,13 +60,10 @@ export default function ChatBecomeHr({params}: ChatBecomeHrProps) {
             attachments: attachments.map(id => ({id})),
         };
 
-        clientRef.current?.publish({
-            destination: "/app/chat.sendMessage",
-            body: JSON.stringify(payload),
-        });
+        publish("/app/chat.sendMessage", JSON.stringify(payload));
     };
 
-    if (!user) return null;
+    if (!user || !user.accessToken) return null;
 
     return (
         <ChatWindow

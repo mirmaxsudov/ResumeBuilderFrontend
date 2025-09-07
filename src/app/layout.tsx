@@ -4,6 +4,7 @@ import '@ant-design/v5-patch-for-react-19';
 import 'antd/dist/reset.css';
 import "./globals.css";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
+import { StompProvider } from "@/components/providers/StompProvider";
 import AuthChecker from "@/components/auth/AuthChecker";
 import { ThemeProvider } from "@/components/dashboard/theme-provider";
 import AppThemeProvider from "@/components/providers/AppThemeProvider";
@@ -38,9 +39,11 @@ export default function RootLayout({
         {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
           <ReduxProvider>
             <AppThemeProvider>
-              <AuthChecker roles={[]} withAuth={false}>
-                {children}
-              </AuthChecker>
+              <StompProvider>
+                <AuthChecker roles={[]} withAuth={false}>
+                  {children}
+                </AuthChecker>
+              </StompProvider>
             </AppThemeProvider>
           </ReduxProvider>
         {/* </ThemeProvider> */}
