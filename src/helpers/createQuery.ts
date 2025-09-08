@@ -4,4 +4,4 @@ export const createQuery = (name: string, val: string, searchParams: ReadonlyURL
     const params = new URLSearchParams(searchParams.toString());
     params.set(name, val);
     return params.toString();
-}
+} 

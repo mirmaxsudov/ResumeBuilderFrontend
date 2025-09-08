@@ -66,7 +66,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-400">
                 <Mail className="w-4 h-4" />
-                <span>support@resumebuilder.com</span>
+                <span>abdurahmonmirmaxsudov2804@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-400">
                 <Phone className="w-4 h-4" />
