@@ -9,35 +9,46 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/d
 import { ScrollArea } from "@/components/dashboard/ui/scroll-area";
 import { Separator } from "@/components/dashboard/ui/separator";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/dashboard/ui/input";
 import { Textarea } from "@/components/dashboard/ui/textarea";
 import type { CoverLetterResponseType } from "@/types/coverLetter/CoverLetterType";
 import { Download, FilePlus2, Save, Share2, Sparkles, Wand2 } from "lucide-react";
 import useMyNotice from "@/hooks/useMyNotice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import CoverLetterApi from '@/api/requests/cover-letter/coverLetterApi';
+import { useAppSelector } from "@/hooks/hooks";
+import { createQuery } from "@/helpers/createQuery";
+import LoadingAnimation from "@/helpers/LoadingAnimation";
 
 const CoverLetterCreatePage = () => {
     const [title, setTitle] = useState("Cover Letter Title");
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [selectedTemplate, setSelectedTemplate] = useState<CoverLetterEnum>(CoverLetterEnum.COVER_LETTER_N1);
     const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+    const [isInit, setInit] = useState<boolean>(() => {
+        if (typeof window === "undefined") return false;
+        return new URLSearchParams(window.location.search).get("type") === "new";
+    });
+    const hasInitializedRef = useRef<boolean>(false);
     const { showMessage } = useMyNotice();
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const { user } = useAppSelector(state => state.auth);
 
     const [formData, setFormData] = useState<CoverLetterResponseType>({
         id: null,
         title: "Cover Letter Title",
-        firstname: "John",
-        lastname: "Doe",
-        address: "123 Main St, City, Country",
-        jobTitle: "Software Engineer",
-        email: "john.doe@example.com",
-        phoneNumber: "+1234567890",
-        companyName: "Tech Solutions Inc.",
-        managerName: "Jane Smith",
-        letterDetails:
-            "I am writing to express my interest in the Software Engineer position at Tech Solutions Inc. I believe my skills and experience make me a perfect fit for this role.",
+        firstname: user.firstName,
+        lastname: user.lastname,
+        address: "",
+        jobTitle: "",
+        email: user.email,
+        phoneNumber: "",
+        companyName: "",
+        managerName: "",
+        letterDetails: "",
         type: CoverLetterEnum.COVER_LETTER_N1,
     });
 
@@ -50,6 +61,16 @@ const CoverLetterCreatePage = () => {
             titleInputRef.current.select();
         }
     }, [isEditingTitle]);
+
+    const createQueryFun = useCallback(createQuery, [searchParams]);
+
+    const initCoverLetter = async () => {
+        const response = await CoverLetterApi.create(formData);
+        setFormData(response.data);
+        const newQuery = createQueryFun("type", "update", searchParams);
+        router.replace(`?${newQuery}`);
+    };
+
 
     const handleTitleClick = () => {
         setIsEditingTitle(true);
@@ -72,7 +93,6 @@ const CoverLetterCreatePage = () => {
     };
 
     const handleSave = () => {
-        // Placeholder persistence
         showMessage("Saved", NoticeEnum.SUCCESS);
     };
 
@@ -137,6 +157,24 @@ const CoverLetterCreatePage = () => {
     const templates: Array<{ key: CoverLetterEnum; name: string }> = [
         { key: CoverLetterEnum.COVER_LETTER_N1, name: "Elegant Stripe" },
     ];
+
+    useEffect(() => {
+        const spType = searchParams?.get("type") ?? (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("type") : null);
+        const isNew = spType === "new";
+        if (isNew && !hasInitializedRef.current) {
+            hasInitializedRef.current = true;
+            setInit(true);
+            initCoverLetter().finally(() => setInit(false));
+        }
+    }, [searchParams]);
+
+    if (isInit) {
+        return (
+            <>
+                <LoadingAnimation title="Creating" />
+            </>
+        );
+    }
 
     return (
         <div className="bg-[#F3F4F6] min-h-screen w-full">

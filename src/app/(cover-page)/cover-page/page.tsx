@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 type SortKey = "titleAsc" | "titleDesc";
 
-const PAGE_SIZE_OPTIONS = [6, 9, 12];
+const PAGE_SIZE_OPTIONS = [5, 8, 11];
 
 const CoverLetterPage = () => {
     const { showMessage } = useMyNotice();
@@ -26,7 +26,7 @@ const CoverLetterPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [items, setItems] = useState<CoverLetterResponseType[]>([]);
     const [page, setPage] = useState<number>(1);
-    const [size, setSize] = useState<number>(9);
+    const [size, setSize] = useState<number>(8);
     const [total, setTotal] = useState<number>(0);
     const [search, setSearch] = useState<string>("");
     const [searchInput, setSearchInput] = useState<string>("");
@@ -77,7 +77,6 @@ const CoverLetterPage = () => {
                 try {
                     const res = await CoverLetterApi.deleteById(id);
                     showMessage(res.message || "Deleted", NoticeEnum.SUCCESS);
-                    // Refresh current page
                     const refreshed = await CoverLetterApi.getAll(size, page - 1, search);
                     setItems(refreshed.data.coverLetters || []);
                     setTotal(refreshed.data.total || 0);
@@ -111,7 +110,6 @@ const CoverLetterPage = () => {
     };
 
     const onDownload = () => {
-        // Print the preview area
         try {
             window.print();
         } catch {
@@ -156,7 +154,7 @@ const CoverLetterPage = () => {
                             <DropdownMenuItem className="cursor-pointer" onClick={() => setSort("titleDesc")}>Title Z-A</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Link href="/cover-page/create">
+                    <Link href="/cover-page/create?type=new">
                         <Button className="gap-2"><FilePlus2 className="h-4 w-4" /> New Cover Letter</Button>
                     </Link>
                 </div>
@@ -171,7 +169,7 @@ const CoverLetterPage = () => {
                         <h3 className="font-medium text-gray-900">Keep your applications moving</h3>
                         <p className="text-sm text-gray-600">Create, preview, and manage cover letters tailored to each job post.</p>
                     </div>
-                    <Link href="/cover-page/create">
+                    <Link href="/cover-page/create?type=new">
                         <Button variant="outline" className="whitespace-nowrap rounded-full hover:bg-white/50 btn-hover">Create New</Button>
                     </Link>
                 </div>
@@ -180,7 +178,7 @@ const CoverLetterPage = () => {
             {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Create New Card */}
-                <Link href="/cover-page/create" className="border rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 h-full bg-white shadow-sm card-hover">
+                <Link href="/cover-page/create?type=new" className="border rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 h-full bg-white shadow-sm card-hover">
                     <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600">
                         <FilePlus2 size={24} />
                     </div>
@@ -239,7 +237,7 @@ const CoverLetterPage = () => {
                                 <div className="mt-3 text-xs text-gray-500 line-clamp-2">
                                     {item.letterDetails}
                                 </div>
-                                <div className="mt-4 flex items-center justify-between">
+                                <div className="mt-4 flex flex-col gap-2 justify-between">
                                     <div className="text-xs text-gray-400">Template: {item.type}</div>
                                     <div className="flex items-center gap-2">
                                         <Button variant="outline" className="h-8 px-3 text-xs" onClick={() => openPreview(item)}>
@@ -280,8 +278,8 @@ const CoverLetterPage = () => {
                     current={page}
                     total={total}
                     pageSize={size}
-                    onChange={(p) => setPage(p)}
                     showSizeChanger={false}
+                    onChange={p => setPage(p)}
                 />
             </div>
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useAppSelector } from "@/hooks/hooks";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,8 +18,7 @@ const Navigation = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-white"
-            }`}>
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-card/95 backdrop-blur-md shadow-lg" : "bg-background"}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
@@ -26,38 +26,38 @@ const Navigation = () => {
                         <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
                             <span className="text-white font-bold text-sm">RB</span>
                         </div>
-                        <span className="text-xl font-bold text-gray-900">Resume Builder</span>
+                        <span className="text-xl font-bold text-foreground">Resume Builder</span>
                     </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         <Link
                             href="/resume-templates"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Templates
                         </Link>
                         <Link
                             href="/features"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Features
                         </Link>
                         <Link
                             href="/blog"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Blog
                         </Link>
                         <Link
                             href="/pricing"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Pricing
                         </Link>
                         <Link
                             href="/help"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Help
                         </Link>
@@ -66,9 +66,10 @@ const Navigation = () => {
                     {/* Desktop CTA Buttons */}
                     {/* If not registered */}
                     {(!token && !user) ? <div className="hidden md:flex items-center space-x-4">
+                        {/* <ThemeToggle /> */}
                         <Link
                             href="/login"
-                            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                            className="text-foreground/80 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
                             Sign In
                         </Link>
@@ -79,6 +80,7 @@ const Navigation = () => {
                             Get Started Free
                         </Link>
                     </div> : <>
+                        {/* <ThemeToggle /> */}
                         <Link
                             href="/dashboard"
                             className="md:flex hidden bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
@@ -90,7 +92,7 @@ const Navigation = () => {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
+                        className="md:hidden p-2 rounded-md text-foreground/80 hover:text-blue-600 hover:bg-accent transition-colors duration-200"
                     >
                         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
@@ -98,47 +100,47 @@ const Navigation = () => {
 
                 {/* Mobile Navigation */}
                 {isMenuOpen && (
-                    <div className="md:hidden bg-white border-t border-gray-200">
+                    <div className="md:hidden bg-card border-t border-border">
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             <Link
                                 href="/resume-templates"
-                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Templates
                             </Link>
                             <Link
                                 href="/features"
-                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Features
                             </Link>
                             <Link
                                 href="/blog"
-                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Blog
                             </Link>
                             <Link
                                 href="/pricing"
-                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Pricing
                             </Link>
                             <Link
                                 href="/help"
-                                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Help
                             </Link>
-                            {(!token && !user) ? <div className="pt-4 border-t border-gray-200">
+                            {(!token && !user) ? <div className="pt-4 border-t border-border">
                                 <Link
                                     href="/login"
-                                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                                    className="block px-3 py-2 text-foreground/80 hover:text-blue-600 hover:bg-accent rounded-md transition-colors duration-200"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Sign In

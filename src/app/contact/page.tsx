@@ -152,7 +152,7 @@ const ContactPage = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">Visit Us</h3>
                       <p className="text-gray-600 mb-2">123 Resume Street</p>
-                      <p className="text-gray-600 mb-2">San Francisco, CA 94105</p>
+                      <p className="text-gray-600 mb-2">Uzbekistan, Tashkent 94105</p>
                       <p className="text-gray-600 mb-2">United States</p>
                     </div>
                   </div>

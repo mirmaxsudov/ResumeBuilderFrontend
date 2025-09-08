@@ -39,7 +39,7 @@ export interface EducationItemResponseType extends CareerBase {
     city: string,
     description: string,
     priority: number,
-    currentStudy: true
+    currentStudy: boolean
 }
 
 export interface ExperienceResponseType extends CareerBase {
@@ -94,4 +94,22 @@ export interface UpdateLanguageRequestType {
     items: LanaguageRequestItem[];
 }
 
-export type UpdateExperienceType = Omit<ExperienceResponseType, "id">   
+export type UpdateExperienceType = Omit<ExperienceResponseType, "id">  
+
+// Education update request types
+export interface EducationRequestItem {
+    id: number | null;
+    title: string;
+    degree: string;
+    startDate: string;
+    endDate: string;
+    city: string;
+    description: string;
+    priority: number;
+    currentStudy: boolean;
+}
+
+export interface UpdateEducationType {
+    title: string;
+    items: EducationRequestItem[];
+}

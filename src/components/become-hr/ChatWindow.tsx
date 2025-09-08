@@ -4,6 +4,7 @@ import React, {useRef, useState, ChangeEvent, KeyboardEvent, useEffect} from "re
 import {PaperclipIcon} from "lucide-react";
 import {Button} from "@/components/dashboard/ui/button";
 import {BecomeHrMessageResponse} from "@/types/hr/BecomeHrType";
+import BASE_URL from "@/constants/url";
 
 export type Attachment = {
     id: number;
@@ -82,7 +83,7 @@ export default function ChatWindow(
                                             {/*    />*/}
                                             {/*) : (*/}
                                             <a
-                                                href={"http://localhost:8008/api/v1/attachment/download/" + att.id}
+                                                href={`${BASE_URL}/api/v1/attachment/download/${att.id}`}
                                                 download
                                                 className="flex items-center space-x-2 bg-gray-200 p-2 rounded hover:bg-gray-300"
                                             >

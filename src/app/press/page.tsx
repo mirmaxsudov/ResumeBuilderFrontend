@@ -347,7 +347,7 @@ const PressPage = () => {
                     <p className="text-gray-600">
                       <strong>Address:</strong><br />
                       123 Resume Street<br />
-                      San Francisco, CA 94105
+                      Uzbekistan, Tashkent 94105
                     </p>
                   </div>
                 </div>

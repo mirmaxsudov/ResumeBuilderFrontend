@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 * {
-    /*outline: 1px solid red;*/
+    /* outline: 1px solid red; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 @layer utilities {
@@ -88,6 +91,14 @@
         --sidebar-accent-foreground: 240 4.8% 95.9%;
         --sidebar-border: 240 3.7% 15.9%;
         --sidebar-ring: 217.2 91.2% 59.8%;
+    }
+
+    /* Base colors wired to CSS variables for light/dark */
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
     }
 }
 

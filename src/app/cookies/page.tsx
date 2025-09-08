@@ -181,7 +181,7 @@ const CookiesPage = () => {
                     <strong>Phone:</strong> +1 (555) 123-4567
                   </p>
                   <p className="text-gray-600 mb-2">
-                    <strong>Address:</strong> 123 Resume Street, San Francisco, CA 94105
+                    <strong>Address:</strong> 123 Resume Street, Uzbekistan, Tashkent 94105
                   </p>
                 </div>
 

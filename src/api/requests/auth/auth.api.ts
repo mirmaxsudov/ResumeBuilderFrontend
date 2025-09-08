@@ -2,14 +2,14 @@ import $api from "@/api/request";
 import Role from "@/enums/Role";
 import ApiResponse from "@/types/ApiResponse";
 import AuthUserPreviewType from "@/types/auth/AuthUserPreviewType";
-import {MyRoleResponse} from "@/types/auth/MyRoleResponse";
+import { MyRoleResponse } from "@/types/auth/MyRoleResponse";
 
 const BASE_AUTH_URL: string = "/api/v1/auth";
 
 const login = async (login: string, password: string): Promise<ApiResponse<AuthUserPreviewType>> => {
     const response = await $api.post<ApiResponse<AuthUserPreviewType>>(
         `${BASE_AUTH_URL}/login`,
-        {login, password},
+        { login, password },
     )
 
     console.log(response.data);
@@ -59,4 +59,4 @@ const changePasswordForAuth = async (oldPassword: string, newPassword: string): 
     return response.data;
 }
 
-export {login, logout, changeRole, getMyRoles, getMe, changePasswordForAuth};
+export { login, logout, changeRole, getMyRoles, getMe, changePasswordForAuth };
