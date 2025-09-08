@@ -4,7 +4,7 @@ type ContactRequestType = {
     firstname: string,
     lastname: string,
     email: string,
-    subject: ContactSubjectEnum,
+    subject: ContactSubjectEnum | string,
     message: string
 }
 

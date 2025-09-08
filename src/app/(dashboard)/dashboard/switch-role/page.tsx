@@ -37,21 +37,17 @@ const Page = () => {
     useEffect(() => {
         let filtered = roles;
 
-        // Apply search filter
         if (searchTerm) {
             filtered = filtered.filter(role =>
                 role.role.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
-        // Apply type filter
-        if (filterType === 'current') {
+        if (filterType === 'current')
             filtered = filtered.filter(role => role.role === user?.role);
-        } else if (filterType === 'other') {
+        else if (filterType === 'other')
             filtered = filtered.filter(role => role.role !== user?.role);
-        }
 
-        // Apply sorting
         filtered.sort((a, b) => {
             const dateA = new Date(a.lastLoginAt || 0).getTime();
             const dateB = new Date(b.lastLoginAt || 0).getTime();
@@ -84,11 +80,10 @@ const Page = () => {
             setRoles(response.data);
             setFilteredRoles(response.data);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
+            if (axios.isAxiosError(error))
                 showMessage(error.response?.data.message, NoticeEnum.ERROR);
-            } else {
+            else
                 showMessage('An unexpected error occurred', NoticeEnum.ERROR);
-            }
         } finally {
             setLoading(false);
         }
@@ -107,7 +102,6 @@ const Page = () => {
         setSortOrder('desc');
     }
 
-    // Calculate statistics
     const totalRoles = roles.length;
     const currentRoleCount = roles.filter(role => role.role === user?.role).length;
     const otherRoleCount = totalRoles - currentRoleCount;
@@ -215,7 +209,6 @@ const Page = () => {
                                     </Badge>
                                 )}
                             </div>
-
                             <div className='flex items-center gap-2'>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -239,15 +232,12 @@ const Page = () => {
                     </CardHeader>
                 </Card>
 
-                {/* Statistics Section */}
                 {!loading && <StatisticsSection />}
 
-                {/* Filters and Search Card */}
                 <Card className='border-0 shadow-sm'>
                     <CardContent className='pt-6'>
                         <div className='flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between'>
                             <div className='flex flex-col sm:flex-row gap-4 flex-1 w-full'>
-                                {/* Search Input */}
                                 <div className='relative flex-1 max-w-md'>
                                     <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4' />
                                     <Input
@@ -267,7 +257,6 @@ const Page = () => {
                                     />
                                 </div>
 
-                                {/* Filter Dropdown */}
                                 <Select value={filterType} onValueChange={(value: 'all' | 'current' | 'other') => setFilterType(value)}>
                                     <SelectTrigger className='w-full sm:w-[180px]'>
                                         <Filter className='h-4 w-4 mr-2' />

@@ -1,28 +1,28 @@
 'use client'
 
-import React, {useState} from 'react'
-import {useRouter} from 'next/navigation'
-import {SwitchRoleCardProps} from './SwitchRoleCard'
-import {changeRole} from '@/api/requests/auth/auth.api'
-import {useAppDispatch, useAppSelector} from '@/hooks/hooks'
-import {setValues} from '@/store/auth/authSlice'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { SwitchRoleCardProps } from './SwitchRoleCard'
+import { changeRole } from '@/api/requests/auth/auth.api'
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
+import { setValues } from '@/store/auth/authSlice'
 import useMyNotice from '@/hooks/useMyNotice'
-import {NoticeEnum} from '@/enums/NoticeEnum'
-import {Button} from "@/components/dashboard/ui/button";
-import {Input} from "@/components/dashboard/ui/input";
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/dashboard/ui/dialog";
-import {Card, CardContent} from "@/components/dashboard/ui/card";
-import {Badge} from "@/components/dashboard/ui/badge";
-import {Label} from "@/components/dashboard/ui/label";
-import {Alert, AlertDescription} from "@/components/dashboard/ui/alert";
-import {ArrowRight, Shield, Eye, EyeOff, Loader2, AlertTriangle, Crown, Building2, Briefcase} from "lucide-react";
-import {cn} from "@/utils/utils";
+import { NoticeEnum } from '@/enums/NoticeEnum'
+import { Button } from "@/components/dashboard/ui/button";
+import { Input } from "@/components/dashboard/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/dashboard/ui/dialog";
+import { Card, CardContent } from "@/components/dashboard/ui/card";
+import { Badge } from "@/components/dashboard/ui/badge";
+import { Label } from "@/components/dashboard/ui/label";
+import { Alert, AlertDescription } from "@/components/dashboard/ui/alert";
+import { ArrowRight, Shield, Eye, EyeOff, Loader2, AlertTriangle, Crown, Building2, Briefcase } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 const SwitchRoleModal = ({
-                             setIsOpen,
-                             item,
-                             currentRole
-                         }: {
+    setIsOpen,
+    item,
+    currentRole
+}: {
     setIsOpen: (value: boolean) => void
     item: SwitchRoleCardProps
     currentRole: string
@@ -34,7 +34,7 @@ const SwitchRoleModal = ({
     const user = useAppSelector(state => state.auth.user);
     const dispatch = useAppDispatch();
     const router = useRouter()
-    const {showMessage} = useMyNotice();
+    const { showMessage } = useMyNotice();
 
     const handleSwitchRole = async () => {
         if (!password) {
@@ -47,7 +47,7 @@ const SwitchRoleModal = ({
 
         try {
             const data = await changeRole(item.role, password, user.email)
-            dispatch(setValues({token: data.data.accessToken, user: data.data}))
+            dispatch(setValues({ token: data.data.accessToken, user: data.data }))
             showMessage('Role switched successfully', NoticeEnum.SUCCESS)
             setIsOpen(false)
             router.push('/dashboard')
@@ -61,9 +61,8 @@ const SwitchRoleModal = ({
     }
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !loading) {
+        if (e.key === 'Enter' && !loading)
             handleSwitchRole()
-        }
     }
 
     const getRoleIcon = (roleName: string) => {
@@ -144,9 +143,9 @@ const SwitchRoleModal = ({
                                 <p className="text-xs text-gray-500">Current Role</p>
                             </div>
                         </div>
-                        
+
                         <ArrowRight className="h-5 w-5 text-gray-400" />
-                        
+
                         <div className="flex items-center gap-3">
                             <div className={cn('p-2 rounded-lg', newRoleTheme.iconBg)}>
                                 {getRoleIcon(item.role)}
@@ -162,7 +161,7 @@ const SwitchRoleModal = ({
                     <Alert>
                         <AlertTriangle className="h-4 w-4" />
                         <AlertDescription>
-                            This action requires your password for security verification. 
+                            This action requires your password for security verification.
                             You'll be redirected to the dashboard after successful role switch.
                         </AlertDescription>
                     </Alert>
