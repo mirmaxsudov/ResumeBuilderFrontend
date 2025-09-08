@@ -26,14 +26,12 @@ const Login = () => {
     const { token } = useAppSelector((state) => state.auth);
     const searchParams = useSearchParams();
 
-    // Persist intended redirect so OAuth flows can restore it
     useEffect(() => {
         const redirectParam = searchParams.get('redirect');
         if (redirectParam && redirectParam.startsWith('/')) {
             try {
                 localStorage.setItem('redirectAfterLogin', redirectParam);
             } catch (e) {
-                // ignore storage errors
             }
         }
     }, [searchParams]);
@@ -50,7 +48,6 @@ const Login = () => {
                 }
                 if (saved) localStorage.removeItem('redirectAfterLogin');
             } catch (e) {
-                // ignore storage errors
             }
             router.push(target);
         }
@@ -93,11 +90,9 @@ const Login = () => {
                 }
                 if (saved) localStorage.removeItem('redirectAfterLogin');
             } catch (e) {
-                // ignore storage errors
             }
 
             router.push(target);
-
         } catch (error: any) {
             showMessage(error.response?.data?.message || "Failed to login", NoticeEnum.ERROR);
         } finally {
@@ -107,19 +102,14 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-            {/* Background Pattern */}
             <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-
             <div className="relative flex min-h-screen">
-                {/* Left Side - Hero Section */}
                 <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 relative overflow-hidden">
-                    {/* Animated Background Elements */}
                     <div className="absolute inset-0">
                         <div className="absolute top-20 left-20 w-72 h-72 bg-white opacity-10 rounded-full animate-blob"></div>
                         <div className="absolute top-40 right-20 w-96 h-96 bg-purple-300 opacity-10 rounded-full animate-blob animation-delay-2000"></div>
                         <div className="absolute bottom-20 left-40 w-80 h-80 bg-indigo-300 opacity-10 rounded-full animate-blob animation-delay-4000"></div>
                     </div>
-
                     <div className="relative z-10 flex items-center justify-center w-full p-12">
                         <div className="text-center text-white max-w-md">
                             <div className="mb-8">
@@ -136,8 +126,6 @@ const Login = () => {
                                     Join thousands of professionals who trust our platform.
                                 </p>
                             </div>
-
-                            {/* Features */}
                             <div className="space-y-4 text-left">
                                 <div className="flex items-center space-x-3">
                                     <div className="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
@@ -167,11 +155,8 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Right Side - Login Form */}
                 <div className="flex w-full lg:w-1/2 bg-white justify-center items-center p-8">
                     <div className="w-full max-w-md">
-                        {/* Header */}
                         <div className="text-center mb-8">
                             <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                                 <svg className="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
@@ -185,8 +170,6 @@ const Login = () => {
                                 Sign in to your account to continue building your career
                             </p>
                         </div>
-
-                        {/* Social Login Buttons */}
                         <div className="space-y-3 mb-8">
                             <button
                                 type="button"
@@ -211,8 +194,6 @@ const Login = () => {
                                 Continue with GitHub
                             </button>
                         </div>
-
-                        {/* Divider */}
                         <div className="relative mb-8">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-gray-300"></div>
@@ -221,8 +202,6 @@ const Login = () => {
                                 <span className="px-2 bg-white text-gray-500">Or continue with email</span>
                             </div>
                         </div>
-
-                        {/* Login Form */}
                         <Form
                             form={form}
                             onFinish={handleSubmit}
@@ -250,7 +229,6 @@ const Login = () => {
                                     />
                                 </Form.Item>
                             </div>
-
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Password
@@ -274,7 +252,6 @@ const Login = () => {
                                     />
                                 </Form.Item>
                             </div>
-
                             <div className="flex items-center justify-between">
                                 <label className="flex items-center">
                                     <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -284,7 +261,6 @@ const Login = () => {
                                     Forgot password?
                                 </a>
                             </div>
-
                             <Button
                                 type="primary"
                                 htmlType="submit"
@@ -294,8 +270,6 @@ const Login = () => {
                                 Sign In
                             </Button>
                         </Form>
-
-                        {/* Sign Up Link */}
                         <div className="text-center mt-8">
                             <p className="text-gray-600">
                                 Don't have an account?{" "}

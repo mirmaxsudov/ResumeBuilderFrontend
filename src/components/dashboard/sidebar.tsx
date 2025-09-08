@@ -15,6 +15,8 @@ import {
     File,
     FileUser,
     NotebookPen, Users,
+    BotMessageSquare,
+    MessageSquareMore,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/dashboard/ui/button";
@@ -28,8 +30,8 @@ import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import Role from "@/enums/Role";
-import { GrUserAdmin } from "react-icons/gr";
-import { BiChat } from "react-icons/bi";
+import { GrSupport, GrUserAdmin } from "react-icons/gr";
+import { BiChat, BiSupport } from "react-icons/bi";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
 
@@ -137,6 +139,23 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
                     icon: UserCircle,
                     href: "/dashboard/users?role=hr",
                     label: "HRs"
+                }
+            ],
+            allowedRoles: [Role.ADMIN, Role.SUPER_ADMIN]
+        },
+        {
+            icon: BiSupport,
+            label: "Support",
+            hasSubmenu: true,
+            submenuItems: [
+                {
+                    icon: MessageSquareMore,
+                    href: "/dashboard/web-support",
+                    label: "Web Support"
+                }, {
+                    icon: BotMessageSquare,
+                    href: "/dashboard/tg-support",
+                    label: "Tg Support"
                 }
             ],
             allowedRoles: [Role.ADMIN, Role.SUPER_ADMIN]

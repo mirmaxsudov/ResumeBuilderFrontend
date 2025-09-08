@@ -185,7 +185,7 @@ const HelpPage = () => {
       title: "Email Support",
       description: "Get help via email within 24 hours",
       icon: Mail,
-      contact: "support@resumebuilder.com",
+      contact: "abdurahmonmirmaxsudov2804@gmail.com",
       response: "24 hours"
     },
     {
@@ -401,7 +401,7 @@ const HelpPage = () => {
             Don't hesitate to reach out if you need assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="mailto:support@resumebuilder.com">
+            <Link href="mailto:abdurahmonmirmaxsudov2804@gmail.com">
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center space-x-2">
                 <Mail className="w-5 h-5" />
                 <span>Contact Support</span>

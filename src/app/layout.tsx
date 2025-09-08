@@ -8,6 +8,7 @@ import { StompProvider } from "@/components/providers/StompProvider";
 import AuthChecker from "@/components/auth/AuthChecker";
 import { ThemeProvider } from "@/components/dashboard/theme-provider";
 import AppThemeProvider from "@/components/providers/AppThemeProvider";
+import { Toaster } from "@/components/dashboard/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,6 +47,7 @@ export default function RootLayout({
               </StompProvider>
             </AppThemeProvider>
           </ReduxProvider>
+          <Toaster richColors position={"top-center"}/>
         {/* </ThemeProvider> */}
       </body>
     </html>
