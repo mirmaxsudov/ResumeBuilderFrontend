@@ -10,7 +10,7 @@ import { CoverLetterResponseType } from "@/types/coverLetter/CoverLetterType";
 import CoverLetterApi from "@/api/requests/cover-letter/coverLetterApi";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
-import { Download, Eye, FilePlus2, MoreHorizontal, Pencil, RefreshCw, Search, Trash2, ArrowLeft } from "lucide-react";
+import { Download, Eye, FilePlus2, MoreHorizontal, Pencil, RefreshCw, Search, Trash2, ArrowLeft, Pen, Copy } from "lucide-react";
 import CoverLetterN1 from "@/@CoverLetter/components/CoverLetterN1";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -66,27 +66,6 @@ const CoverLetterPage = () => {
         return clone;
     }, [items, sort]);
 
-    const onDelete = async (id: number | null) => {
-        if (id == null) return;
-        Modal.confirm({
-            title: "Delete cover letter",
-            content: "Are you sure you want to delete this cover letter?",
-            okText: "Delete",
-            okButtonProps: { danger: true },
-            onOk: async () => {
-                try {
-                    const res = await CoverLetterApi.deleteById(id);
-                    showMessage(res.message || "Deleted", NoticeEnum.SUCCESS);
-                    const refreshed = await CoverLetterApi.getAll(size, page - 1, search);
-                    setItems(refreshed.data.coverLetters || []);
-                    setTotal(refreshed.data.total || 0);
-                } catch (e: any) {
-                    showMessage(e?.response?.data?.message || "Delete failed", NoticeEnum.ERROR);
-                }
-            }
-        });
-    };
-
     const onDuplicate = async (item: CoverLetterResponseType) => {
         try {
             const clone: CoverLetterResponseType = {
@@ -116,6 +95,8 @@ const CoverLetterPage = () => {
             showMessage("Download failed", NoticeEnum.ERROR);
         }
     };
+
+    const onUpdate = (coverLetterId: number | null) => router.push(`/cover-page/create?type=update${coverLetterId ? `&id=${coverLetterId}` : ''}`);
 
     return (
         <div className="max-w-7xl mx-auto p-4 md:p-6">
@@ -211,13 +192,16 @@ const CoverLetterPage = () => {
                                             </button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="bg-white" align="end">
+                                            <DropdownMenuItem className="cursor-pointer" onClick={() => onUpdate(item.id)}>
+                                                <Pen className="size-4 mr-2" /> Update
+                                            </DropdownMenuItem>
                                             <DropdownMenuItem className="cursor-pointer" onClick={() => openPreview(item)}>
                                                 <Eye className="h-4 w-4 mr-2" /> Preview
                                             </DropdownMenuItem>
                                             <DropdownMenuItem className="cursor-pointer" onClick={() => onDuplicate(item)}>
-                                                <Pencil className="h-4 w-4 mr-2" /> Duplicate
+                                                <Copy className="h-4 w-4 mr-2" /> Duplicate
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem className="cursor-pointer" onClick={() => onDelete(item.id)}>
+                                            <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => { }}>
                                                 <Trash2 className="h-4 w-4 mr-2 text-red-500" /> Delete
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
