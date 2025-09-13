@@ -49,6 +49,7 @@ const ContactPage = () => {
     },
   });
   const { showMessage } = useMyNotice();
+  const toastRef = useRef<{ id?: number | string }>({});
 
   const onSubmit = async (values: ContactFormInput) => {
     const payload: ContactRequestType = {
@@ -61,12 +62,12 @@ const ContactPage = () => {
 
 
     try {
-      showMessage("Sending...", NoticeEnum.LOADING);
+      showMessage("Sending...", NoticeEnum.LOADING, undefined, toastRef.current);
       await newContact(payload);
-      showMessage("Saved", NoticeEnum.SUCCESS);
+      showMessage("Saved", NoticeEnum.SUCCESS, undefined, toastRef.current);
       reset();
     } catch (e) {
-      showMessage("Something went wrong!", NoticeEnum.ERROR);
+      showMessage("Something went wrong!", NoticeEnum.ERROR, undefined, toastRef.current);
     }
   };
 

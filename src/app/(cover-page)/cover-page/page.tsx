@@ -109,7 +109,7 @@ const CoverLetterPage = () => {
                             if (typeof window !== 'undefined' && window.history.length > 1) router.back();
                             else router.push('/dashboard');
                         }}
-                    >
+                    >   
                         <ArrowLeft className="h-4 w-4" />
                         <span className="hidden sm:inline">Back</span>
                     </Button>

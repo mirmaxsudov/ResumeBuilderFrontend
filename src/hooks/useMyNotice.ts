@@ -1,4 +1,3 @@
-// hooks/useMyNotice.ts
 import { toast } from "sonner";
 import { NoticeEnum } from "@/enums/NoticeEnum";
 
