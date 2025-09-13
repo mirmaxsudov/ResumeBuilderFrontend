@@ -68,10 +68,10 @@ const Footer = () => {
                 <Mail className="w-4 h-4" />
                 <span>abdurahmonmirmaxsudov2804@gmail.com</span>
               </div>
-              <div className="flex items-center space-x-3 text-gray-400">
+              {/* <div className="flex items-center space-x-3 text-gray-400">
                 <Phone className="w-4 h-4" />
                 <span>+1 (555) 123-4567</span>
-              </div>
+              </div> */}
               <div className="flex items-center space-x-3 text-gray-400">
                 <MapPin className="w-4 h-4" />
                 <span>Uzbekistan, Tashkent</span>
