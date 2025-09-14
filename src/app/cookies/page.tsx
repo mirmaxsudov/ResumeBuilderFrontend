@@ -177,9 +177,9 @@ const CookiesPage = () => {
                   <p className="text-gray-600 mb-2">
                     <strong>Email:</strong> privacy@resumebuilder.com
                   </p>
-                  <p className="text-gray-600 mb-2">
+                  {/* <p className="text-gray-600 mb-2">
                     <strong>Phone:</strong> +1 (555) 123-4567
-                  </p>
+                  </p> */}
                   <p className="text-gray-600 mb-2">
                     <strong>Address:</strong> 123 Resume Street, Uzbekistan, Tashkent 94105
                   </p>

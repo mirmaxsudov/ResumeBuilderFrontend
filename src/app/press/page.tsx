@@ -340,10 +340,10 @@ const PressPage = () => {
                       <strong>Email:</strong><br />
                       press@resumebuilder.com
                     </p>
-                    <p className="text-gray-600">
+                    {/* <p className="text-gray-600">
                       <strong>Phone:</strong><br />
                       +1 (555) 123-4567
-                    </p>
+                    </p> */}
                     <p className="text-gray-600">
                       <strong>Address:</strong><br />
                       123 Resume Street<br />

@@ -38,16 +38,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-background text-foreground`}
       >
         {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
-          <ReduxProvider>
-            <AppThemeProvider>
-              <StompProvider>
-                <AuthChecker roles={[]} withAuth={false}>
-                  {children}
-                </AuthChecker>
-              </StompProvider>
-            </AppThemeProvider>
-          </ReduxProvider>
-          <Toaster richColors position={"top-center"}/>
+        <ReduxProvider>
+          <AppThemeProvider>
+            <StompProvider>
+              <AuthChecker roles={[]} withAuth={false}>
+                {children}
+              </AuthChecker>
+            </StompProvider>
+          </AppThemeProvider>
+        </ReduxProvider>
+        <Toaster richColors position={"top-center"} />
         {/* </ThemeProvider> */}
       </body>
     </html>

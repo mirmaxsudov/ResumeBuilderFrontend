@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { 
-  Search, 
-  HelpCircle, 
-  BookOpen, 
-  MessageCircle, 
-  Mail, 
-  Phone, 
+import {
+  Search,
+  HelpCircle,
+  BookOpen,
+  MessageCircle,
+  Mail,
+  Phone,
   ChevronDown,
   ChevronRight,
   Play,
@@ -205,8 +205,8 @@ const HelpPage = () => {
   ];
 
   const toggleFaq = (index: number) => {
-    setExpandedFaqs(prev => 
-      prev.includes(index) 
+    setExpandedFaqs(prev =>
+      prev.includes(index)
         ? prev.filter(i => i !== index)
         : [...prev, index]
     );
@@ -226,7 +226,7 @@ const HelpPage = () => {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Find answers to common questions, watch tutorials, and get support for your resume building journey.
             </p>
-            
+
             {/* Search */}
             <div className="max-w-2xl mx-auto relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -277,11 +277,10 @@ const HelpPage = () => {
                   <button
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 ${
-                      activeCategory === category.id
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 ${activeCategory === category.id
                         ? "bg-blue-100 text-blue-700"
                         : "text-gray-700 hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     <category.icon className="w-5 h-5" />
                     <span className="font-medium">{category.name}</span>
@@ -397,7 +396,7 @@ const HelpPage = () => {
             Still Need Help?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Our support team is here to help you create the perfect resume. 
+            Our support team is here to help you create the perfect resume.
             Don't hesitate to reach out if you need assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
