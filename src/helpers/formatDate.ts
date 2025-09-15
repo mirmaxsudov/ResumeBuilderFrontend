@@ -39,4 +39,14 @@ const formatDate = (date: Date): string => {
     return `${years} year${years !== 1 ? 's' : ''} ago`;
 };
 
+export const formatDateWithoutHour = (date: Date | string) => {
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    };
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    return formatter.format(typeof date === "string" ? new Date(date) : date);
+}
+
 export default formatDate;

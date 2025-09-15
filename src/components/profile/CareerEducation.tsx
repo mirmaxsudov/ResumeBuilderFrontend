@@ -1,19 +1,20 @@
 "use client";
 
-import {Eye, Edit, MoreVertical, GraduationCap, Calendar} from "lucide-react";
-import {Button} from "../dashboard/ui/button";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../dashboard/ui/dropdown-menu";
+import { Eye, Edit, MoreVertical, GraduationCap, Calendar } from "lucide-react";
+import { Button } from "../dashboard/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
 import useMyNotice from "@/hooks/useMyNotice";
-import {useCareerProfile} from "@/store/zustand/useCareerProfile";
-import {useEffect, useRef, useState} from "react";
-import {EducationItemResponseType, EducationRequestItem} from "@/types/careerProfile/CareerProfileType";
-import {Input} from "@/components/dashboard/ui/input";
-import {NoticeEnum} from "@/enums/NoticeEnum";
-import {updateEducation} from "@/api/requests/profile/profile.api";
+import { useCareerProfile } from "@/store/zustand/useCareerProfile";
+import { useEffect, useRef, useState } from "react";
+import { EducationItemResponseType, EducationRequestItem } from "@/types/careerProfile/CareerProfileType";
+import { Input } from "@/components/dashboard/ui/input";
+import { NoticeEnum } from "@/enums/NoticeEnum";
+import { updateEducation } from "@/api/requests/profile/profile.api";
 import EducationEditModal from "./EducationEditModal";
+import formatDate, { formatDateWithoutHour } from "@/helpers/formatDate";
 
 const CareerEducation = () => {
-    const {showMessage} = useMyNotice();
+    const { showMessage } = useMyNotice();
     // Zustand
     const data = useCareerProfile(state => state.data);
     const setZustandEducation = useCareerProfile(state => state.setEducation);
@@ -151,13 +152,13 @@ const CareerEducation = () => {
             {
                 isEditingTitle ? (
                     <Input ref={titleRef}
-                           className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
-                           value={title}
-                           onChange={e => setTitle(e.target.value)}
-                           onBlur={() => {
-                               handleTitleSave();
-                           }}
-                           onKeyDown={handleTitleKeyDown}
+                        className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        onBlur={() => {
+                            handleTitleSave();
+                        }}
+                        onKeyDown={handleTitleKeyDown}
                     />
                 ) : (
                     <h2
@@ -172,7 +173,7 @@ const CareerEducation = () => {
             <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreVertical className="h-4 w-4 text-black"/>
+                        <MoreVertical className="h-4 w-4 text-black" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-[#fff]" align="end">
@@ -180,14 +181,14 @@ const CareerEducation = () => {
                         e.stopPropagation();
                         handleEditEducation();
                     }}>
-                        <Edit className="mr-2 h-4 w-4"/>
+                        <Edit className="mr-2 h-4 w-4" />
                         <span>Edit</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={(e) => {
                         e.stopPropagation();
                         console.log("Select clicked");
                     }}>
-                        <Eye className="mr-2 h-4 w-4"/>
+                        <Eye className="mr-2 h-4 w-4" />
                         <span>Select</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -200,7 +201,7 @@ const CareerEducation = () => {
                     className={`border-l-2 ${edu.currentStudy ? "border-blue-500" : "border-gray-300"} pl-4 ml-2`}
                 >
                     <div className="flex items-center mb-1">
-                        <GraduationCap size={16} className={`${edu.currentStudy ? "text-blue-600" : "text-gray-500"} mr-2`}/>
+                        <GraduationCap size={16} className={`${edu.currentStudy ? "text-blue-600" : "text-gray-500"} mr-2`} />
                         <h3 className="font-medium text-gray-900">{edu.degree}</h3>
                         {edu.currentStudy && (
                             <span className="ml-2 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded">Current</span>
@@ -208,8 +209,8 @@ const CareerEducation = () => {
                     </div>
                     <p className="text-gray-700 mb-1">{edu.title}{edu.city ? `, ${edu.city}` : ""}</p>
                     <div className="flex items-center text-gray-500 text-sm mb-2">
-                        <Calendar size={14} className="mr-1"/>
-                        <span>{edu.startDate} - {edu.currentStudy ? "Present" : edu.endDate}</span>
+                        <Calendar size={14} className="mr-1" />
+                        <span>{formatDateWithoutHour(new Date(edu.startDate))} - {!edu.currentStudy ? "Present" : formatDateWithoutHour(new Date(edu.endDate))}</span>
                     </div>
                     <p className="text-gray-700">{edu.description}</p>
                 </div>
