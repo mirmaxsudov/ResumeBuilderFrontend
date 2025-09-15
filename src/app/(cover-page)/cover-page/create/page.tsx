@@ -28,6 +28,8 @@ const CoverLetterCreatePage = () => {
     const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
     const [isInit, setInit] = useState<boolean>(() => {
         if (typeof window === "undefined") return false;
+        if (new URLSearchParams(window.location.search).get("id"))
+            return false;
         return new URLSearchParams(window.location.search).get("type") === "new";
     });
     const hasInitializedRef = useRef<boolean>(false);
@@ -63,6 +65,34 @@ const CoverLetterCreatePage = () => {
     }, [isEditingTitle]);
 
     const createQueryFun = useCallback(createQuery, [searchParams]);
+
+
+    useEffect(() => {
+        const spId = searchParams?.get("id") ?? (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("id") : null);
+
+        if (!spId) {
+            const spType = searchParams?.get("type") ?? (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("type") : null);
+            const isNew = spType === "new";
+            if (isNew && !hasInitializedRef.current) {
+                hasInitializedRef.current = true;
+                setInit(true);
+                initCoverLetter().finally(() => setInit(false));
+            }
+        } else {
+            fetchCoverLettersById(+spId);
+        }
+    }, [searchParams]);
+
+    const fetchCoverLettersById = async (id: number) => {
+        if (!id)
+            return;
+
+        try {
+            const response = await CoverLetterApi.getById(id);
+            setFormData(response.data);
+        } catch (error) {
+        }
+    }
 
     const initCoverLetter = async () => {
         const response = await CoverLetterApi.create(formData);
@@ -157,16 +187,6 @@ const CoverLetterCreatePage = () => {
     const templates: Array<{ key: CoverLetterEnum; name: string }> = [
         { key: CoverLetterEnum.COVER_LETTER_N1, name: "Elegant Stripe" },
     ];
-
-    useEffect(() => {
-        const spType = searchParams?.get("type") ?? (typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("type") : null);
-        const isNew = spType === "new";
-        if (isNew && !hasInitializedRef.current) {
-            hasInitializedRef.current = true;
-            setInit(true);
-            initCoverLetter().finally(() => setInit(false));
-        }
-    }, [searchParams]);
 
     if (isInit) {
         return (

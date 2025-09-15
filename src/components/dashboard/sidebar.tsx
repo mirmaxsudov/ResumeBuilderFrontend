@@ -30,7 +30,7 @@ import GenerateProfileIcon from "@/helpers/GenerateProfileIcon";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import Role from "@/enums/Role";
-import { GrSupport, GrUserAdmin } from "react-icons/gr";
+import { GrUserAdmin } from "react-icons/gr";
 import { BiChat, BiSupport } from "react-icons/bi";
 
 type SidebarState = "expanded" | "collapsed" | "hidden";
@@ -291,7 +291,6 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
                                         )}
                                     </Link>
 
-                                    {/* Submenu Items */}
                                     {item.hasSubmenu && isSubmenuExpanded && sidebarState === "expanded" && item.submenuItems && (
                                         <ul className="ml-6 mt-1 list-none space-y-1">
                                             {item.submenuItems.map((subItem) => {
@@ -302,14 +301,14 @@ export default function Sidebar({ onStateChange }: SidebarProps) {
                                                             href={subItem.href}
                                                             className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${isSubActive
                                                                 ? "nav-item-active bg-blue-50 text-blue-600"
-                                                                : "nav-item-inactive text-gray-600 hover:text-gray-900"
+                                                                : "nav-item-inactive text-gray-600 hoXver:text-gray-900"
                                                                 } nav-item`}
                                                             onClick={() => setMobileOpen(false)}
                                                         >
                                                             {subItem.icon && (
                                                                 <subItem.icon
                                                                     size={16}
-                                                                    className={isSubActive ? "text-blue-600" : "text-gray-500"}
+                                                                    class   Name={isSubActive ? "text-blue-600" : "text-gray-500"}
                                                                 />
                                                             )}
                                                             <span>{subItem.label}</span>

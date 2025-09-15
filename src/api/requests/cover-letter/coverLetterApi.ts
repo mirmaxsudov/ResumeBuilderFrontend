@@ -29,6 +29,10 @@ const CoverLetterApi = {
         });
         return response.data;
     },
+    getById: async (id: number): Promise<ApiResponse<CoverLetterResponseType>> => {
+        const response = await $api.get<ApiResponse<CoverLetterResponseType>>(BASE_COVER_LETTER_URL + `/get/${id}`);
+        return response.data;
+    },
     deleteById: async (id: number): Promise<ApiResponse<string>> => {
         const response = await $api.delete<ApiResponse<string>>(BASE_COVER_LETTER_URL + "/delete/" + id);
         return response.data;

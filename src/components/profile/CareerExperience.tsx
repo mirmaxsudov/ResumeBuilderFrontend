@@ -1,19 +1,20 @@
 "use client"
 
-import {Eye, Edit, MoreVertical, Briefcase, Calendar} from "lucide-react";
-import {Button} from "../dashboard/ui/button";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../dashboard/ui/dropdown-menu";
+import { Eye, Edit, MoreVertical, Briefcase, Calendar } from "lucide-react";
+import { Button } from "../dashboard/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dashboard/ui/dropdown-menu";
 import useMyNotice from "@/hooks/useMyNotice";
-import {useCareerProfile} from "@/store/zustand/useCareerProfile";
-import {useEffect, useRef, useState} from "react";
-import {ExperienceItemResponse} from "@/types/careerProfile/CareerProfileType";
-import {updateExperience} from "@/api/requests/profile/profile.api";
-import {NoticeEnum} from "@/enums/NoticeEnum";
+import { useCareerProfile } from "@/store/zustand/useCareerProfile";
+import { useEffect, useRef, useState } from "react";
+import { ExperienceItemResponse } from "@/types/careerProfile/CareerProfileType";
+import { updateExperience } from "@/api/requests/profile/profile.api";
+import { NoticeEnum } from "@/enums/NoticeEnum";
 import EmploymentEditModal from "./EmploymentEditModal";
-import {Input} from "@/components/dashboard/ui/input";
+import { Input } from "@/components/dashboard/ui/input";
+import { formatDateWithoutHour } from "@/helpers/formatDate";
 
 const CareerExperience = () => {
-    const {showMessage} = useMyNotice();
+    const { showMessage } = useMyNotice();
     // Zustand
     const data = useCareerProfile(state => state.data);
     const setZustandExperiences = useCareerProfile(state => state.setExperiences);
@@ -141,11 +142,11 @@ const CareerExperience = () => {
             <div className="flex justify-between items-center mb-4">
                 {isEditingTitle ? (
                     <Input ref={titleRef}
-                           className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
-                           value={title}
-                           onChange={e => setTitle(e.target.value)}
-                           onBlur={handleTitleSave}
-                           onKeyDown={handleTitleKeyDown}
+                        className={"border rounded-lg py-1 px-3 text-sm font-normal text-gray-900"}
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        onBlur={handleTitleSave}
+                        onKeyDown={handleTitleKeyDown}
                     />
                 ) : (
                     <h2
@@ -161,7 +162,7 @@ const CareerExperience = () => {
                 }}>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreVertical className="h-4 w-4 text-black"/>
+                            <MoreVertical className="h-4 w-4 text-black" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-[#fff]" align="end">
@@ -170,31 +171,31 @@ const CareerExperience = () => {
                             setIsDropdownOpen(false);
                             handleEditEmployment();
                         }}>
-                            <Edit className="mr-2 h-4 w-4"/>
+                            <Edit className="mr-2 h-4 w-4" />
                             <span>Edit</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={(e) => {
                             e.stopPropagation();
                             console.log("Select clicked");
                         }}>
-                            <Eye className="mr-2 h-4 w-4"/>
+                            <Eye className="mr-2 h-4 w-4" />
                             <span>Select</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
             <div className="space-y-6">
-                {experiences.map((exp, index) => (
+                {experiences.map(exp => (
                     <div
                         key={exp.id}
                         className={`border-l-2 ${exp.currentJob ? "border-blue-500" : "border-gray-300"
-                        } pl-4 ml-2`}
+                            } pl-4 ml-2`}
                     >
                         <div className="flex items-center mb-1">
                             <Briefcase
                                 size={16}
                                 className={`${exp.currentJob ? "text-blue-600" : "text-gray-500"
-                                } mr-2`}
+                                    } mr-2`}
                             />
                             <h3 className="font-medium text-gray-900">
                                 {exp.jobTitle}
@@ -205,8 +206,8 @@ const CareerExperience = () => {
                             )}
                         </div>
                         <div className="flex items-center text-gray-500 text-sm mb-2">
-                            <Calendar size={14} className="mr-1"/>
-                            <span>{exp.startDate} - {exp.currentJob ? "Present" : exp.endDate}</span>
+                            <Calendar size={14} className="mr-1" />
+                            <span>{formatDateWithoutHour(exp.startDate)} - {exp.currentJob ? "Present" : formatDateWithoutHour(exp.endDate)}</span>
                         </div>
                         <p className="text-gray-700">{exp.description}</p>
                     </div>

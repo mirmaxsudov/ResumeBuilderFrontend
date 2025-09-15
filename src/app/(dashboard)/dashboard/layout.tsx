@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/api/requests/auth/auth.api";
 import { NotificationDropdown } from "@/components/dashboard/NotificationDropdown";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 
 export default function RootLayout({
   children,
@@ -113,18 +114,20 @@ export default function RootLayout({
       </header>
       <div className="flex pt-16">
         <Sidebar onStateChange={setSidebarState} />
-        <main
-          className={`flex-1 min-h-[calc(100vh-64px)] overflow-auto bg-background transition-all duration-300 ${sidebarState === "expanded"
-            ? "md:ml-64"
-            : sidebarState === "collapsed"
-              ? "md:ml-20"
-              : "md:ml-0"
-            }`}
-        >
-          <div className="max-w-full mx-auto p-6 animate-fadeIn">
-            {children}
-          </div>
-        </main>
+        <ReactQueryProvider>
+          <main
+            className={`flex-1 min-h-[calc(100vh-64px)] overflow-auto bg-background transition-all duration-300 ${sidebarState === "expanded"
+              ? "md:ml-64"
+              : sidebarState === "collapsed"
+                ? "md:ml-20"
+                : "md:ml-0"
+              }`}
+          >
+            <div className="max-w-full mx-auto p-6 animate-fadeIn">
+              {children}
+            </div>
+          </main>
+        </ReactQueryProvider>
       </div>
     </div>
   );

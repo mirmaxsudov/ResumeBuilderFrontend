@@ -5,11 +5,10 @@ import { Loader2, Mail, MapPin, } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactSubjectEnum } from "@/enums/ContactSubjectEnum";
-import { newContact } from "@/api/requests/support/contact.api";
 import type { ContactRequestType } from "@/types/support/contactType";
 import useMyNotice from "@/hooks/useMyNotice";
 import { NoticeEnum } from "@/enums/NoticeEnum";
+import SupportContactApis from "@/api/requests/support/contact.api";
 
 const Navigation = dynamic(() => import("@/components/home/navigation/Navigation"));
 const Footer = dynamic(() => import("@/components/home/footer/Footer"));
@@ -63,7 +62,7 @@ const ContactPage = () => {
 
     try {
       showMessage("Sending...", NoticeEnum.LOADING, undefined, toastRef.current);
-      await newContact(payload);
+      await SupportContactApis.newContact(payload);
       showMessage("Saved", NoticeEnum.SUCCESS, undefined, toastRef.current);
       reset();
     } catch (e) {
