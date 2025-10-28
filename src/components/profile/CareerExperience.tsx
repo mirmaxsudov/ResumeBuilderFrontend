@@ -206,10 +206,12 @@ const CareerExperience = () => {
                             )}
                         </div>
                         <div className="flex items-center text-gray-500 text-sm mb-2">
-                            <Calendar size={14} className="mr-1" />
+                        <Calendar size={14} className="mr-1" />
                             <span>{formatDateWithoutHour(exp.startDate)} - {exp.currentJob ? "Present" : formatDateWithoutHour(exp.endDate)}</span>
                         </div>
-                        <p className="text-gray-700">{exp.description}</p>
+                        <p className="text-gray-700" dangerouslySetInnerHTML={{
+                            __html: exp.description
+                        }}></p>
                     </div>
                 ))}
             </div>
@@ -223,7 +225,6 @@ const CareerExperience = () => {
             editedItems={editedEmploymentItems}
             setEditedItems={setEditedEmploymentItems}
             setSaveLoading={setSaveLoading}
-            handleUpdate={handleSaveEmployment}
         />
     </>
 }

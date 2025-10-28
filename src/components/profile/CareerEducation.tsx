@@ -212,7 +212,9 @@ const CareerEducation = () => {
                         <Calendar size={14} className="mr-1" />
                         <span>{formatDateWithoutHour(new Date(edu.startDate))} - {!edu.currentStudy ? "Present" : formatDateWithoutHour(new Date(edu.endDate))}</span>
                     </div>
-                    <p className="text-gray-700">{edu.description}</p>
+                    <p className="text-gray-700" dangerouslySetInnerHTML={{
+                        __html: edu.description
+                    }}></p>
                 </div>
             ))}
         </div>

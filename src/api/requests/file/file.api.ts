@@ -10,7 +10,7 @@ const uploadFile = async (file: File | Blob): Promise<number> => {
     const response = await $api.post<ApiResponse<number>>(
         `${BASE_FILE_URL}/upload`,
         formData,
-        {headers: {"Content-Type": "multipart/form-data"}},
+        { headers: { "Content-Type": "multipart/form-data" } },
     );
 
     return response.data.data;
@@ -24,7 +24,7 @@ const uploadFiles = async (files: File[]): Promise<ApiResponse<number[]>> => {
         `${BASE_FILE_URL}/uploads`,
         formData,
         {
-            headers: {"Content-Type": "multipart/form-data"},
+            headers: { "Content-Type": "multipart/form-data" },
         },
     );
 
@@ -35,4 +35,4 @@ const deleteById = async (id: number): Promise<void> => {
     await $api.delete(`${BASE_FILE_URL}/${id}`);
 };
 
-export {uploadFile, uploadFiles, deleteById};
+export { uploadFile, uploadFiles, deleteById };
